@@ -468,7 +468,20 @@
         ["Australia"] = "🇦🇺", ["Nueva Zelanda"] = "🇳🇿", ["Fiyi"] = "🇫🇯", ["Papúa Nueva Guinea"] = "🇵🇬"
     };
 
-    private string GetCountryFlag(string country) => CountryFlags.TryGetValue(country, out var flag) ? flag : "🏳️";
+    private string GetCountryFlag(string country)
+    {
+        if (CountryFlags.TryGetValue(country, out var flag)) return flag;
+        var st = RadioState.AllStations.FirstOrDefault(s => string.Equals(s.Country, country, StringComparison.OrdinalIgnoreCase));
+        if (st is not null && !string.IsNullOrWhiteSpace(st.CountryCode) && st.CountryCode.Length == 2)
+        {
+            var cc = st.CountryCode.ToUpperInvariant();
+            if (cc[0] >= 'A' && cc[0] <= 'Z' && cc[1] >= 'A' && cc[1] <= 'Z')
+            {
+                return char.ConvertFromUtf32(0x1F1E6 + (cc[0] - 'A')) + char.ConvertFromUtf32(0x1F1E6 + (cc[1] - 'A'));
+            }
+        }
+        return "🌐";
+    }
 
     protected override void OnInitialized()
     {

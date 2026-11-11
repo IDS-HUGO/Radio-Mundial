@@ -320,12 +320,12 @@
 }
 
 .indicator-glow .indicator-led {
-    background-color: #ff4757;
-    box-shadow: 0 0 8px #ff4757, 0 0 14px #ff4757;
+    background-color: #b92b27;
+    box-shadow: 0 0 4px rgba(185, 43, 39, 0.7);
 }
 
 .indicator-glow .indicator-text {
-    color: #ff6b81;
+    color: #e59a8d;
 }
 
 /* Conmutador Táctil de Banda FM / AM */
@@ -392,7 +392,6 @@
 }
 
 .scale-active-glow {
-    filter: drop-shadow(0 0 4px rgba(245, 176, 65, 0.5));
     opacity: 1 !important;
 }
 
@@ -460,8 +459,8 @@
 .needle-core {
     width: 100%;
     height: 100%;
-    background: #ff3838;
-    box-shadow: 0 0 6px rgba(255, 56, 56, 0.9), 0 0 12px rgba(255, 56, 56, 0.6);
+    background: #c0392b;
+    box-shadow: 0 0 3px rgba(192, 57, 43, 0.6);
 }
 
 .needle-shadow {

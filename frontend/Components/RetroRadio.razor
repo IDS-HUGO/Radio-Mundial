@@ -189,39 +189,42 @@
             </div>
         </div>
 
-        <!-- Botones Selectores Rápidos Frontales tipo Push-Button con Banderas -->
-        <div class="retro-push-buttons">
-            <button class="btn-retro-push @(RadioState.SelectedCountry == "Todos" ? "push-active" : "")" 
-                    @onclick='() => RadioState.SetCountryFilter("Todos")'>
-                🌐 MUNDO
+        <!-- Botones Selectores Inferiores tipo Piano Keys (Control Analógico Real) -->
+        <div class="retro-push-buttons" aria-label="Teclas de control de la radio">
+            <button class="btn-retro-push @(RadioState.IsPlaying ? "push-active" : "")" 
+                    @onclick="RadioState.TogglePlayAsync" 
+                    title="Encender o apagar la radio">
+                ⏻ @(RadioState.IsPlaying ? "ENCENDIDO" : "APAGADO")
             </button>
-            <button class="btn-retro-push @(RadioState.SelectedCountry == "México" ? "push-active" : "")" 
-                    @onclick='() => RadioState.SetCountryFilter("México")'>
-                🇲🇽 MÉXICO
+            <button class="btn-retro-push @(RadioState.SelectedBand == "FM" ? "push-active" : "")" 
+                    @onclick='() => RadioState.SetBandFilter("FM")' 
+                    title="Banda FM (88 - 108 MHz)">
+                FM
             </button>
-            <button class="btn-retro-push @(RadioState.SelectedCountry == "Colombia" ? "push-active" : "")" 
-                    @onclick='() => RadioState.SetCountryFilter("Colombia")'>
-                🇨🇴 COLOMBIA
+            <button class="btn-retro-push @(RadioState.SelectedBand == "AM" ? "push-active" : "")" 
+                    @onclick='() => RadioState.SetBandFilter("AM")' 
+                    title="Banda AM (540 - 1600 kHz)">
+                AM
             </button>
-            <button class="btn-retro-push @(RadioState.SelectedCountry == "España" ? "push-active" : "")" 
-                    @onclick='() => RadioState.SetCountryFilter("España")'>
-                🇪🇸 ESPAÑA
+            <button class="btn-retro-push @(RadioState.SelectedBand == "TODAS" ? "push-active" : "")" 
+                    @onclick='() => RadioState.SetBandFilter("TODAS")' 
+                    title="Todas las bandas">
+                TODAS
             </button>
-            <button class="btn-retro-push @(RadioState.SelectedCountry == "Argentina" ? "push-active" : "")" 
-                    @onclick='() => RadioState.SetCountryFilter("Argentina")'>
-                🇦🇷 ARGENTINA
+            <button class="btn-retro-push" 
+                    @onclick="RadioState.TunePreviousStationAsync" 
+                    title="Sintonizar emisora anterior">
+                ◀ ANTERIOR
             </button>
-            <button class="btn-retro-push @(RadioState.SelectedCountry == "Estados Unidos" ? "push-active" : "")" 
-                    @onclick='() => RadioState.SetCountryFilter("Estados Unidos")'>
-                🇺🇸 USA
+            <button class="btn-retro-push" 
+                    @onclick="RadioState.TuneNextStationAsync" 
+                    title="Sintonizar siguiente emisora">
+                SIGUIENTE ▶
             </button>
-            <button class="btn-retro-push @(RadioState.SelectedCountry == "Reino Unido" ? "push-active" : "")" 
-                    @onclick='() => RadioState.SetCountryFilter("Reino Unido")'>
-                🇬🇧 UK
-            </button>
-            <button class="btn-retro-push @(RadioState.SelectedCountry == "Francia" ? "push-active" : "")" 
-                    @onclick='() => RadioState.SetCountryFilter("Francia")'>
-                🇫🇷 FRANCIA
+            <button class="btn-retro-push @(RadioState.IsMuted ? "push-active" : "")" 
+                    @onclick="RadioState.ToggleMuteAsync" 
+                    title="Silenciar o activar sonido">
+                @(RadioState.IsMuted ? "🔇 MUTE" : "🔊 AUDIO")
             </button>
         </div>
     </div>

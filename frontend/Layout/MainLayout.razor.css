@@ -7,30 +7,27 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: #101114;
-    background-image: 
-        radial-gradient(1400px 600px at 50% -80px, rgba(230, 126, 34, 0.14), transparent 70%),
-        linear-gradient(180deg, #13141a 0%, #0d0e11 100%);
-    color: #f5f0e3;
+    background-color: var(--bg-main);
+    color: var(--text-main);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     position: relative;
+    transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 .app-topbar {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background: rgba(18, 19, 24, 0.94);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(230, 126, 34, 0.28);
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .topbar-container {
-    max-width: 1440px;
+    max-width: 1560px;
     margin: 0 auto;
-    padding: 0.65rem 1.5rem;
+    padding: 0.65rem 1.25rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -39,35 +36,32 @@
 .brand-group {
     display: flex;
     align-items: center;
-    gap: 0.85rem;
+    gap: 0.75rem;
 }
 
 .brand-link {
     display: flex;
     align-items: center;
-    gap: 0.55rem;
+    gap: 0.5rem;
     text-decoration: none;
-    color: #f5f0e3;
+    color: var(--text-main);
     font-weight: 800;
     font-size: 1.25rem;
     letter-spacing: -0.02em;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
     transition: opacity 0.18s ease;
 }
 
 .brand-link:hover {
     opacity: 0.9;
-    color: #ffffff;
+    color: var(--text-main);
 }
 
 .brand-icon {
     font-size: 1.35rem;
-    filter: drop-shadow(0 2px 4px rgba(230, 126, 34, 0.4));
 }
 
 .brand-accent {
-    color: #e67e22;
-    text-shadow: 0 0 12px rgba(230, 126, 34, 0.5);
+    color: var(--accent-amber);
 }
 
 .brand-tagline {
@@ -76,10 +70,9 @@
     letter-spacing: 0.12em;
     padding: 3px 8px;
     border-radius: 4px;
-    background: rgba(230, 126, 34, 0.15);
-    color: #f5b041;
-    border: 1px solid rgba(230, 126, 34, 0.4);
-    box-shadow: inset 0 0 8px rgba(230, 126, 34, 0.15);
+    background: rgba(197, 159, 84, 0.15);
+    color: var(--text-highlight);
+    border: 1px solid var(--border-color);
 }
 
 .topbar-status-group {
@@ -92,63 +85,41 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     font-weight: 700;
-    padding: 3px 11px;
+    padding: 3px 10px;
     border-radius: 20px;
     letter-spacing: 0.04em;
     text-transform: uppercase;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
 }
 
 .status-live {
-    background: rgba(255, 56, 56, 0.16);
-    color: #ff5252;
-    border: 1px solid rgba(255, 56, 56, 0.45);
-    box-shadow: 0 0 10px rgba(255, 56, 56, 0.2);
+    color: var(--text-main);
 }
 
 .pulse-dot {
-    width: 7px;
-    height: 7px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    background-color: #ff3838;
-    box-shadow: 0 0 8px #ff3838;
-    animation: live-pulse 1.6s infinite ease-in-out;
+    background-color: var(--needle-red);
+    box-shadow: 0 0 4px var(--needle-red);
 }
 
 .status-audio {
-    background: rgba(230, 126, 34, 0.12);
-    color: #f5b041;
-    border: 1px solid rgba(230, 126, 34, 0.35);
+    color: var(--text-highlight);
 }
 
 .app-main-content {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 96px; /* Espacio para que el reproductor persistente nunca tape contenido */
+    padding-bottom: 95px; /* Espacio para barra de audio fija */
 }
 
-@keyframes live-pulse {
-    0% {
-        transform: scale(0.9);
-        opacity: 0.7;
-    }
-    50% {
-        transform: scale(1.25);
-        opacity: 1;
-        box-shadow: 0 0 12px #ff3838;
-    }
-    100% {
-        transform: scale(0.9);
-        opacity: 0.7;
-    }
-}
-
-/* Responsivo */
 @media (max-width: 640px) {
     .topbar-container {
-        padding: 0.5rem 1rem;
+        padding: 0.5rem 0.85rem;
     }
     .brand-tagline {
         display: none;

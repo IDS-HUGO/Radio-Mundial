@@ -273,12 +273,15 @@ class InMemoryStationRepository(IStationRepository):
         return results[:limit]
 
     def get_filter_options(self) -> FilterOptions:
-        countries = [
-            "México", "Colombia", "España", "Argentina", "Estados Unidos",
-            "Reino Unido", "Francia", "Chile", "Perú", "Brasil", "Alemania",
-            "Italia", "Japón", "Canadá", "Suiza"
-        ]
-        genres = [
+        cache_countries = sorted(list({s.country for s in self._cache if s.country}))
+        if "México" in cache_countries:
+            cache_countries.remove("México")
+            countries = ["México"] + cache_countries
+        else:
+            countries = cache_countries
+
+        cache_genres = sorted(list({s.genre for s in self._cache if s.genre}))
+        genres = cache_genres if cache_genres else [
             "Pop & Éxitos", "Rock Alternativo", "Rock & Metal", "Regional Mexicano & Banda",
             "Noticias & Opinión", "Jazz & Fusión", "Salsa & Cumbia", "Romántica & Baladas",
             "Música Clásica", "Hip-Hop & Urbano", "Electrónica & Dance"
@@ -289,8 +292,8 @@ class InMemoryStationRepository(IStationRepository):
         return FilterOptions(
             countries=countries,
             states=MEXICO_STATES,
-            cities=cities[:60],
-            localities=localities[:40],
+            cities=cities[:100],
+            localities=localities[:60],
             genres=genres,
             total_stations=self.total_count
         )

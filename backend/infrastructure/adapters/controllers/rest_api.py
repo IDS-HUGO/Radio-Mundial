@@ -1,13 +1,13 @@
 """
 Adapter: REST API Controller
-Endpoints REST FastAPI desacoplados mediante casos de uso.
+Endpoints REST FastAPI desacoplados mediante casos de uso con soporte de caché perimetral (CDN/Edge).
 Author: Hugo Francisco Luis Inclan
 Copyright (c) 2026 Hugo Francisco Luis Inclan
 """
 
 from __future__ import annotations
 
-from fastapi import APIRouter, Query, HTTPException, status
+from fastapi import APIRouter, Query, HTTPException, Response, status
 from domain.entities import Station, FilterOptions
 from domain.exceptions import StationNotFoundException
 from application.use_cases import (
@@ -39,11 +39,12 @@ def init_rest_controller(
 @router.get("/api/health", tags=["Salud"])
 async def health_check() -> dict[str, str]:
     """Chequeo de salud del servicio para orquestadores y balanceadores."""
-    return {"status": "ok", "app": "Radio Mundial API", "version": "4.5"}
+    return {"status": "ok", "app": "Radio Mundial API", "version": "5.0"}
 
 
 @router.get("/api/stations", response_model=list[Station])
 async def get_stations(
+    response: Response,
     continent: str | None = Query(None, description="Filtrar por continente (América, Europa, Asia, África, Oceanía)"),
     country: str | None = Query(None, description="Filtrar por país"),
     state: str | None = Query(None, description="Filtrar por estado o provincia"),
@@ -56,34 +57,56 @@ async def get_stations(
     """Retorna emisoras filtradas con catálogo pre-calentado y consulta bajo demanda."""
     if _get_stations_uc is None:
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="API inicializando...")
+    
+    # Cabeceras de caché perimetral para alta concurrencia
+    response.headers["Cache-Control"] = "public, max-age=1800, s-maxage=86400, stale-while-revalidate=600"
+    response.headers["Vary"] = "Accept-Encoding"
+
+    # Sanitizar parámetros contra objetos Query de FastAPI
+    c_cont = continent if isinstance(continent, str) else None
+    c_country = country if isinstance(country, str) else None
+    c_state = state if isinstance(state, str) else None
+    c_city = city if isinstance(city, str) else None
+    c_genre = genre if isinstance(genre, str) else None
+    c_band = band if isinstance(band, str) else None
+    c_search = search if isinstance(search, str) else None
+    c_limit = limit if isinstance(limit, int) else 150
+
     return await _get_stations_uc.execute(
-        continent=continent,
-        country=country,
-        state=state,
-        city=city,
-        genre=genre,
-        band=band,
-        search=search,
-        limit=limit
+        continent=c_cont,
+        country=c_country,
+        state=c_state,
+        city=c_city,
+        genre=c_genre,
+        band=c_band,
+        search=c_search,
+        limit=c_limit
     )
 
 
 @router.get("/api/filters", response_model=FilterOptions)
 async def get_filters(
+    response: Response,
     continent: str | None = Query(None, description="Filtrar opciones por continente")
 ) -> FilterOptions:
     """Retorna la lista de continentes, países, estados, ciudades y géneros indexados."""
     if _get_filters_uc is None:
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="API inicializando...")
-    return _get_filters_uc.execute(continent=continent)
+    
+    response.headers["Cache-Control"] = "public, max-age=3600, s-maxage=86400, stale-while-revalidate=1200"
+    response.headers["Vary"] = "Accept-Encoding"
+
+    c_cont = continent if isinstance(continent, str) else None
+    return _get_filters_uc.execute(continent=c_cont)
 
 
 @router.get("/api/stations/{station_id}", response_model=Station)
-async def get_station_by_id(station_id: str) -> Station:
+async def get_station_by_id(station_id: str, response: Response) -> Station:
     """Obtiene los detalles de una estación específica por ID."""
     if _get_station_by_id_uc is None:
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="API inicializando...")
     try:
+        response.headers["Cache-Control"] = "public, max-age=3600, s-maxage=86400"
         return _get_station_by_id_uc.execute(station_id)
     except StationNotFoundException as ex:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(ex))

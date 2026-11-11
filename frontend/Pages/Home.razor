@@ -62,7 +62,7 @@
             <!-- Métricas de Estudio Analógico -->
             <div class="d-flex align-items-center gap-2 studio-metrics-group">
                 <div class="studio-metric-card" title="Estaciones mostradas en pantalla">
-                    <span class="metric-val">@RadioState.FilteredStations.Count</span>
+                    <span class="metric-val">@Math.Min(_displayLimit, RadioState.FilteredStations.Count)</span>
                     <span class="metric-sub">@RadioState.T("ON_SCREEN")</span>
                 </div>
                 <div class="studio-metric-card" title="Estaciones disponibles en catálogo">
@@ -367,8 +367,8 @@
         }
         else
         {
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-2 row-cols-xxl-3 g-3 mb-5">
-                @foreach (var station in RadioState.FilteredStations)
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-2 row-cols-xxl-3 g-3 mb-4">
+                @foreach (var station in RadioState.FilteredStations.Take(_displayLimit))
                 {
                     var isCurrent = RadioState.ActiveStation?.Id == station.Id;
                     var isPlayingThis = isCurrent && RadioState.IsPlaying;
@@ -436,6 +436,15 @@
                     </div>
                 }
             </div>
+
+            @if (RadioState.FilteredStations.Count > _displayLimit)
+            {
+                <div class="load-more-wrapper text-center my-4">
+                    <button class="btn-load-more" @onclick="LoadMoreStations" title="@RadioState.T("LOAD_MORE")">
+                        <span>➕ @RadioState.T("LOAD_MORE") (@(RadioState.FilteredStations.Count - _displayLimit) @RadioState.T("REMAINING"))</span>
+                    </button>
+                </div>
+            }
         }
     };
 }
@@ -443,6 +452,18 @@
 @code {
     private bool IsSideBySide { get; set; } = true;
     private bool ShowFmAmGuide { get; set; } = false;
+    private int _displayLimit = 48;
+    private const int PageSize = 48;
+
+    private void LoadMoreStations()
+    {
+        _displayLimit += PageSize;
+    }
+
+    private void ResetDisplayLimit()
+    {
+        _displayLimit = PageSize;
+    }
 
     private static readonly Dictionary<string, string> CountryFlags = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -516,31 +537,37 @@
 
     private void OnContinentChanged(ChangeEventArgs e)
     {
+        ResetDisplayLimit();
         RadioState.SetContinentFilter(e.Value?.ToString() ?? "Todos");
     }
 
     private void OnCountryChanged(ChangeEventArgs e)
     {
+        ResetDisplayLimit();
         RadioState.SetCountryFilter(e.Value?.ToString() ?? "Todos");
     }
 
     private void OnStateChanged(ChangeEventArgs e)
     {
+        ResetDisplayLimit();
         RadioState.SetStateFilter(e.Value?.ToString() ?? "Todos");
     }
 
     private void OnCityChanged(ChangeEventArgs e)
     {
+        ResetDisplayLimit();
         RadioState.SetCityFilter(e.Value?.ToString() ?? "Todas");
     }
 
     private void OnGenreChanged(ChangeEventArgs e)
     {
+        ResetDisplayLimit();
         RadioState.SetGenreFilter(e.Value?.ToString() ?? "Todos");
     }
 
     private void OnSearchInput(ChangeEventArgs e)
     {
+        ResetDisplayLimit();
         RadioState.SetSearchQuery(e.Value?.ToString() ?? string.Empty);
     }
 

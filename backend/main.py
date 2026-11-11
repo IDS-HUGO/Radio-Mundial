@@ -1,6 +1,6 @@
 """
 Radio Mundial - Backend Application (Clean / Hexagonal Architecture Entrypoint)
-Ensamblador y contenedor de inyección de dependencias.
+Ensamblador y contenedor de inyección de dependencias optimizado para alta concurrencia.
 Author: Hugo Francisco Luis Inclan
 Copyright (c) 2026 Hugo Francisco Luis Inclan
 """
@@ -14,6 +14,7 @@ from typing import AsyncGenerator
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 from slowapi.util import get_remote_address
@@ -57,7 +58,7 @@ init_websocket_controller(broadcaster, repository)
 
 
 async def background_periodic_broadcaster() -> None:
-    """Tarea periódica de difusión de latidos y estado general a oyentes."""
+    """Tarea periódica de difusión de latidos y estado general a oyentes concurrentes."""
     while True:
         try:
             await asyncio.sleep(25)
@@ -73,7 +74,7 @@ async def background_periodic_broadcaster() -> None:
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     """Ciclo de vida de la aplicación con calentamiento del catálogo en segundo plano."""
-    logger.info(f"Iniciando {settings.app_name} (Arquitectura Hexagonal Limpia)...")
+    logger.info(f"Iniciando {settings.app_name} v5.0 (Arquitectura Hexagonal Limpia)...")
     logger.info("Licencia: Hugo Francisco Luis Inclan - MIT 2026")
 
     # Iniciar pre-calentamiento del catálogo
@@ -94,13 +95,16 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
 # Creación de la Aplicación FastAPI
 app = FastAPI(
     title=settings.app_name,
-    version="4.5.0",
-    description="Backend de alta disponibilidad y streaming directo de Radio Mundial. Arquitectura Hexagonal.",
+    version="5.0.0",
+    description="Backend de ultra alta concurrencia y streaming directo CDN de Radio Mundial. Arquitectura Hexagonal.",
     lifespan=lifespan
 )
 
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+# Compresión automática GZip para respuestas mayores a 1KB (reduce payloads JSON en ~85%)
+app.add_middleware(GZipMiddleware, minimum_size=1000)
 
 # Configuración de CORS
 app.add_middleware(

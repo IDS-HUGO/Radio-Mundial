@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 """
-Global Radio Harvester 5.0 - Radio Mundial
-Massive, worldwide radio catalog expansion covering 170+ countries across all 5 continents:
-- América
-- Europa
-- Asia
-- África
-- Oceanía
+Global Radio Harvester 6.0 - Radio Mundial
+Massive, worldwide radio catalog expansion covering 225+ countries and territories across all 5 continents:
+- América (North, Central, Caribbean, South)
+- Europa (Western, Eastern, Nordic, Mediterranean)
+- Asia (East, South, Southeast, Central, Middle East)
+- África (North, West, Central, East, Southern)
+- Oceanía (Australia, New Zealand, Polynesia, Melanesia, Micronesia)
+
 Strictly preserves existing verified stations (Tapachula, Matías Romero, Oaxaca, 32 Mexican states, etc.)
-and enriches the world catalog to 1,500+ verified stations.
+and enriches the world catalog to 3,500+ verified stations.
 
 Author: Hugo Francisco Luis Inclan (c) 2026
 """
@@ -29,7 +30,7 @@ SSL_CTX.check_hostname = False
 SSL_CTX.verify_mode = ssl.CERT_NONE
 
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) RadioMundial/5.0"
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) RadioMundial/6.0"
 }
 
 MIRRORS = [
@@ -46,213 +47,523 @@ def normalize_text(text: str | None) -> str:
         if unicodedata.category(c) != "Mn"
     ).strip()
 
-# COUNTRY REGISTRY: code -> (Spanish Name, Continent, Default State, Default City, Target Limit)
+# EXHAUSTIVE COUNTRY REGISTRY: code -> (Spanish Name, Continent, Default State, Default City, Target Limit)
 GLOBAL_COUNTRIES = {
-    # === AMÉRICA (Norte, Centro, Caribe, Sur) ===
-    "MX": ("México", "América", "Ciudad de México", "Ciudad de México", 30),
-    "US": ("Estados Unidos", "América", "Nueva York", "Nueva York", 30),
-    "CA": ("Canadá", "América", "Ontario", "Toronto", 20),
-    "GT": ("Guatemala", "América", "Guatemala", "Ciudad de Guatemala", 10),
+    # ==========================================
+    # === AMÉRICA (Norte, Centro, Caribe, Sur) ==
+    # ==========================================
+    "MX": ("México", "América", "Ciudad de México", "Ciudad de México", 90),
+    "US": ("Estados Unidos", "América", "Nueva York", "Nueva York", 120),
+    "CA": ("Canadá", "América", "Ontario", "Toronto", 60),
+    "GT": ("Guatemala", "América", "Guatemala", "Ciudad de Guatemala", 12),
     "BZ": ("Belice", "América", "Belice", "Ciudad de Belice", 5),
-    "SV": ("El Salvador", "América", "San Salvador", "San Salvador", 10),
-    "HN": ("Honduras", "América", "Francisco Morazán", "Tegucigalpa", 10),
-    "NI": ("Nicaragua", "América", "Managua", "Managua", 10),
-    "CR": ("Costa Rica", "América", "San José", "San José", 12),
-    "PA": ("Panamá", "América", "Panamá", "Ciudad de Panamá", 10),
-    "CU": ("Cuba", "América", "La Habana", "La Habana", 8),
-    "DO": ("República Dominicana", "América", "Distrito Nacional", "Santo Domingo", 12),
-    "PR": ("Puerto Rico", "América", "San Juan", "San Juan", 10),
-    "HT": ("Haití", "América", "Oeste", "Puerto Príncipe", 5),
-    "JM": ("Jamaica", "América", "Kingston", "Kingston", 8),
-    "BS": ("Bahamas", "América", "Nueva Providencia", "Nasáu", 5),
-    "TT": ("Trinidad y Tobago", "América", "Puerto España", "Puerto España", 6),
-    "BB": ("Barbados", "América", "Saint Michael", "Bridgetown", 4),
-    "LC": ("Santa Lucía", "América", "Castries", "Castries", 4),
-    "GD": ("Granada", "América", "Saint George", "Saint George", 4),
-    "VC": ("San Vicente y las Granadinas", "América", "Saint George", "Kingstown", 4),
-    "AG": ("Antigua y Barbuda", "América", "Saint John", "Saint John", 4),
-    "DM": ("Dominica", "América", "Saint George", "Roseau", 4),
-    "KN": ("San Cristóbal y Nieves", "América", "Saint George Basseterre", "Basseterre", 4),
-    "CO": ("Colombia", "América", "Cundinamarca", "Bogotá", 25),
-    "VE": ("Venezuela", "América", "Distrito Capital", "Caracas", 15),
-    "EC": ("Ecuador", "América", "Pichincha", "Quito", 15),
-    "PE": ("Perú", "América", "Lima", "Lima", 20),
-    "BR": ("Brasil", "América", "São Paulo", "São Paulo", 25),
-    "BO": ("Bolivia", "América", "La Paz", "La Paz", 12),
-    "PY": ("Paraguay", "América", "Central", "Asunción", 12),
-    "CL": ("Chile", "América", "Región Metropolitana", "Santiago", 20),
-    "AR": ("Argentina", "América", "Buenos Aires", "Buenos Aires", 25),
-    "UY": ("Uruguay", "América", "Montevideo", "Montevideo", 12),
-    "GY": ("Guyana", "América", "Demerara-Mahaica", "Georgetown", 4),
-    "SR": ("Surinam", "América", "Paramaribo", "Paramaribo", 4),
-    "AW": ("Aruba", "América", "Oranjestad", "Oranjestad", 4),
-    "CW": ("Curazao", "América", "Willemstad", "Willemstad", 4),
+    "SV": ("El Salvador", "América", "San Salvador", "San Salvador", 12),
+    "HN": ("Honduras", "América", "Francisco Morazán", "Tegucigalpa", 12),
+    "NI": ("Nicaragua", "América", "Managua", "Managua", 12),
+    "CR": ("Costa Rica", "América", "San José", "San José", 15),
+    "PA": ("Panamá", "América", "Panamá", "Ciudad de Panamá", 12),
+    "CU": ("Cuba", "América", "La Habana", "La Habana", 10),
+    "DO": ("República Dominicana", "América", "Distrito Nacional", "Santo Domingo", 15),
+    "PR": ("Puerto Rico", "América", "San Juan", "San Juan", 15),
+    "HT": ("Haití", "América", "Oeste", "Puerto Príncipe", 8),
+    "JM": ("Jamaica", "América", "Kingston", "Kingston", 10),
+    "BS": ("Bahamas", "América", "Nueva Providencia", "Nasáu", 6),
+    "TT": ("Trinidad y Tobago", "América", "Puerto España", "Puerto España", 8),
+    "BB": ("Barbados", "América", "Saint Michael", "Bridgetown", 6),
+    "LC": ("Santa Lucía", "América", "Castries", "Castries", 6),
+    "GD": ("Granada", "América", "Saint George", "Saint George", 5),
+    "VC": ("San Vicente y las Granadinas", "América", "Saint George", "Kingstown", 5),
+    "AG": ("Antigua y Barbuda", "América", "Saint John", "Saint John", 5),
+    "DM": ("Dominica", "América", "Saint George", "Roseau", 5),
+    "KN": ("San Cristóbal y Nieves", "América", "Saint George Basseterre", "Basseterre", 5),
+    "CO": ("Colombia", "América", "Cundinamarca", "Bogotá", 60),
+    "VE": ("Venezuela", "América", "Distrito Capital", "Caracas", 20),
+    "EC": ("Ecuador", "América", "Pichincha", "Quito", 20),
+    "PE": ("Perú", "América", "Lima", "Lima", 45),
+    "BR": ("Brasil", "América", "São Paulo", "São Paulo", 70),
+    "BO": ("Bolivia", "América", "La Paz", "La Paz", 15),
+    "PY": ("Paraguay", "América", "Central", "Asunción", 15),
+    "CL": ("Chile", "América", "Región Metropolitana", "Santiago", 45),
+    "AR": ("Argentina", "América", "Buenos Aires", "Buenos Aires", 70),
+    "UY": ("Uruguay", "América", "Montevideo", "Montevideo", 15),
+    "GY": ("Guyana", "América", "Demerara-Mahaica", "Georgetown", 6),
+    "SR": ("Surinam", "América", "Paramaribo", "Paramaribo", 6),
+    "AW": ("Aruba", "América", "Oranjestad", "Oranjestad", 6),
+    "CW": ("Curazao", "América", "Willemstad", "Willemstad", 6),
+    "BQ": ("Bonaire", "América", "Kralendijk", "Kralendijk", 6),
+    "AI": ("Anguila", "América", "The Valley", "The Valley", 5),
+    "BM": ("Bermudas", "América", "Hamilton", "Hamilton", 5),
+    "FK": ("Islas Malvinas", "América", "Puerto Argentino", "Puerto Argentino", 4),
+    "GF": ("Guayana Francesa", "América", "Cayena", "Cayena", 5),
+    "GL": ("Groenlandia", "América", "Sermersooq", "Nuuk", 5),
+    "GP": ("Guadalupe", "América", "Basse-Terre", "Basse-Terre", 8),
+    "KY": ("Islas Caimán", "América", "George Town", "George Town", 6),
+    "MQ": ("Martinica", "América", "Fort-de-France", "Fort-de-France", 8),
+    "MS": ("Montserrat", "América", "Brades", "Brades", 3),
+    "PM": ("San Pedro y Miquelón", "América", "San Pedro", "San Pedro", 3),
+    "SX": ("San Martín", "América", "Philipsburg", "Philipsburg", 4),
+    "UM": ("Islas Ultramarinas de EE.UU.", "América", "Islas Menores", "Wake", 6),
+    "VG": ("Islas Vírgenes Británicas", "América", "Road Town", "Road Town", 5),
+    "VI": ("Islas Vírgenes de EE.UU.", "América", "Charlotte Amalie", "Charlotte Amalie", 6),
 
-    # === EUROPA ===
-    "ES": ("España", "Europa", "Comunidad de Madrid", "Madrid", 25),
-    "PT": ("Portugal", "Europa", "Lisboa", "Lisboa", 15),
-    "FR": ("Francia", "Europa", "Île-de-France", "París", 25),
-    "IT": ("Italia", "Europa", "Lacio", "Roma", 25),
-    "DE": ("Alemania", "Europa", "Baviera", "Múnich", 25),
-    "GB": ("Reino Unido", "Europa", "Inglaterra", "Londres", 25),
-    "IE": ("Irlanda", "Europa", "Leinster", "Dublín", 15),
-    "CH": ("Suiza", "Europa", "Berna", "Berna", 15),
-    "AT": ("Austria", "Europa", "Viena", "Viena", 15),
-    "BE": ("Bélgica", "Europa", "Bruselas", "Bruselas", 15),
-    "NL": ("Países Bajos", "Europa", "Holanda del Norte", "Ámsterdam", 20),
-    "LU": ("Luxemburgo", "Europa", "Luxemburgo", "Ciudad de Luxemburgo", 6),
-    "MC": ("Mónaco", "Europa", "Mónaco", "Mónaco", 4),
-    "AD": ("Andorra", "Europa", "Andorra la Vieja", "Andorra la Vieja", 4),
-    "SM": ("San Marino", "Europa", "San Marino", "San Marino", 4),
-    "VA": ("Ciudad del Vaticano", "Europa", "Vaticano", "Ciudad del Vaticano", 3),
-    "LI": ("Liechtenstein", "Europa", "Vaduz", "Vaduz", 3),
-    "SE": ("Suecia", "Europa", "Estocolmo", "Estocolmo", 15),
-    "NO": ("Noruega", "Europa", "Oslo", "Oslo", 15),
-    "DK": ("Dinamarca", "Europa", "Hovedstaden", "Copenhague", 15),
-    "FI": ("Finlandia", "Europa", "Uusimaa", "Helsinki", 15),
-    "IS": ("Islandia", "Europa", "Höfuðborgarsvæðið", "Reikiavik", 6),
-    "PL": ("Polonia", "Europa", "Mazovia", "Varsovia", 20),
-    "CZ": ("República Checa", "Europa", "Praga", "Praga", 15),
-    "SK": ("Eslovaquia", "Europa", "Bratislava", "Bratislava", 12),
-    "HU": ("Hungría", "Europa", "Budapest", "Budapest", 15),
-    "RO": ("Rumanía", "Europa", "Bucarest", "Bucarest", 15),
-    "BG": ("Bulgaria", "Europa", "Sofía", "Sofía", 12),
-    "GR": ("Grecia", "Europa", "Ática", "Atenas", 20),
-    "CY": ("Chipre", "Europa", "Nicosia", "Nicosia", 8),
-    "MT": ("Malta", "Europa", "La Valeta", "La Valeta", 6),
-    "HR": ("Croacia", "Europa", "Zagreb", "Zagreb", 12),
-    "SI": ("Eslovenia", "Europa", "Liubliana", "Liubliana", 10),
-    "RS": ("Serbia", "Europa", "Belgrado", "Belgrado", 12),
-    "BA": ("Bosnia y Herzegovina", "Europa", "Sarajevo", "Sarajevo", 10),
-    "ME": ("Montenegro", "Europa", "Podgorica", "Podgorica", 6),
-    "MK": ("Macedonia del Norte", "Europa", "Skopie", "Skopie", 8),
-    "AL": ("Albania", "Europa", "Tirana", "Tirana", 8),
-    "EE": ("Estonia", "Europa", "Harju", "Tallin", 8),
-    "LV": ("Letonia", "Europa", "Riga", "Riga", 8),
-    "LT": ("Lituania", "Europa", "Vilna", "Vilna", 8),
-    "UA": ("Ucrania", "Europa", "Kiev", "Kiev", 15),
-    "BY": ("Bielorrusia", "Europa", "Minsk", "Minsk", 8),
-    "MD": ("Moldavia", "Europa", "Chisináu", "Chisináu", 8),
-    "RU": ("Rusia", "Europa", "Moscú", "Moscú", 20),
+    # ==========================================
+    # === EUROPA ===============================
+    # ==========================================
+    "ES": ("España", "Europa", "Comunidad de Madrid", "Madrid", 80),
+    "PT": ("Portugal", "Europa", "Lisboa", "Lisboa", 35),
+    "FR": ("Francia", "Europa", "Île-de-France", "París", 80),
+    "IT": ("Italia", "Europa", "Lacio", "Roma", 70),
+    "DE": ("Alemania", "Europa", "Baviera", "Múnich", 100),
+    "GB": ("Reino Unido", "Europa", "Inglaterra", "Londres", 80),
+    "IE": ("Irlanda", "Europa", "Leinster", "Dublín", 20),
+    "CH": ("Suiza", "Europa", "Berna", "Berna", 40),
+    "AT": ("Austria", "Europa", "Viena", "Viena", 40),
+    "BE": ("Bélgica", "Europa", "Bruselas", "Bruselas", 40),
+    "NL": ("Países Bajos", "Europa", "Holanda del Norte", "Ámsterdam", 50),
+    "LU": ("Luxemburgo", "Europa", "Luxemburgo", "Ciudad de Luxemburgo", 8),
+    "MC": ("Mónaco", "Europa", "Mónaco", "Mónaco", 5),
+    "AD": ("Andorra", "Europa", "Andorra la Vieja", "Andorra la Vieja", 5),
+    "SM": ("San Marino", "Europa", "San Marino", "San Marino", 5),
+    "VA": ("Ciudad del Vaticano", "Europa", "Vaticano", "Ciudad del Vaticano", 5),
+    "LI": ("Liechtenstein", "Europa", "Vaduz", "Vaduz", 4),
+    "SE": ("Suecia", "Europa", "Estocolmo", "Estocolmo", 40),
+    "NO": ("Noruega", "Europa", "Oslo", "Oslo", 35),
+    "DK": ("Dinamarca", "Europa", "Hovedstaden", "Copenhague", 35),
+    "FI": ("Finlandia", "Europa", "Uusimaa", "Helsinki", 35),
+    "IS": ("Islandia", "Europa", "Höfuðborgarsvæðið", "Reikiavik", 8),
+    "PL": ("Polonia", "Europa", "Mazovia", "Varsovia", 50),
+    "CZ": ("República Checa", "Europa", "Praga", "Praga", 20),
+    "SK": ("Eslovaquia", "Europa", "Bratislava", "Bratislava", 15),
+    "HU": ("Hungría", "Europa", "Budapest", "Budapest", 20),
+    "RO": ("Rumanía", "Europa", "Bucarest", "Bucarest", 20),
+    "BG": ("Bulgaria", "Europa", "Sofía", "Sofía", 15),
+    "GR": ("Grecia", "Europa", "Ática", "Atenas", 50),
+    "CY": ("Chipre", "Europa", "Nicosia", "Nicosia", 10),
+    "MT": ("Malta", "Europa", "La Valeta", "La Valeta", 8),
+    "HR": ("Croacia", "Europa", "Zagreb", "Zagreb", 15),
+    "SI": ("Eslovenia", "Europa", "Liubliana", "Liubliana", 12),
+    "RS": ("Serbia", "Europa", "Belgrado", "Belgrado", 15),
+    "BA": ("Bosnia y Herzegovina", "Europa", "Sarajevo", "Sarajevo", 12),
+    "ME": ("Montenegro", "Europa", "Podgorica", "Podgorica", 8),
+    "MK": ("Macedonia del Norte", "Europa", "Skopie", "Skopie", 10),
+    "AL": ("Albania", "Europa", "Tirana", "Tirana", 10),
+    "EE": ("Estonia", "Europa", "Harju", "Tallin", 10),
+    "LV": ("Letonia", "Europa", "Riga", "Riga", 10),
+    "LT": ("Lituania", "Europa", "Vilna", "Vilna", 10),
+    "UA": ("Ucrania", "Europa", "Kiev", "Kiev", 20),
+    "BY": ("Bielorrusia", "Europa", "Minsk", "Minsk", 10),
+    "MD": ("Moldavia", "Europa", "Chisináu", "Chisináu", 10),
+    "RU": ("Rusia", "Europa", "Moscú", "Moscú", 60),
+    "FO": ("Islas Feroe", "Europa", "Tórshavn", "Tórshavn", 6),
+    "GG": ("Guernsey", "Europa", "Saint Peter Port", "Saint Peter Port", 3),
+    "GI": ("Gibraltar", "Europa", "Gibraltar", "Gibraltar", 5),
+    "IM": ("Isla de Man", "Europa", "Douglas", "Douglas", 6),
+    "JE": ("Jersey", "Europa", "Saint Helier", "Saint Helier", 4),
+    "XK": ("Kosovo", "Europa", "Pristina", "Pristina", 8),
 
-    # === ASIA ===
-    "JP": ("Japón", "Asia", "Kantō", "Tokio", 25),
-    "KR": ("Corea del Sur", "Asia", "Gyeonggi", "Seúl", 20),
-    "CN": ("China", "Asia", "Beijing", "Pekín", 25),
-    "TW": ("Taiwán", "Asia", "Taipei", "Taipéi", 15),
-    "HK": ("Hong Kong", "Asia", "Hong Kong", "Hong Kong", 12),
-    "MO": ("Macao", "Asia", "Macao", "Macao", 4),
-    "MN": ("Mongolia", "Asia", "Ulán Bator", "Ulán Bator", 5),
-    "IN": ("India", "Asia", "Maharashtra", "Bombay", 25),
-    "PK": ("Pakistán", "Asia", "Sind", "Karachi", 12),
-    "BD": ("Bangladesh", "Asia", "Daca", "Daca", 10),
-    "LK": ("Sri Lanka", "Asia", "Colombo", "Colombo", 8),
-    "NP": ("Nepal", "Asia", "Bagmati", "Katmandú", 8),
-    "BT": ("Bután", "Asia", "Timbu", "Timbu", 3),
-    "MV": ("Maldivas", "Asia", "Malé", "Malé", 4),
-    "ID": ("Indonesia", "Asia", "Java Occidental", "Yakarta", 20),
-    "PH": ("Filipinas", "Asia", "Gran Manila", "Manila", 20),
-    "TH": ("Tailandia", "Asia", "Bangkok", "Bangkok", 15),
-    "VN": ("Vietnam", "Asia", "Hanoi", "Hanói", 15),
-    "MY": ("Malasia", "Asia", "Kuala Lumpur", "Kuala Lumpur", 15),
-    "SG": ("Singapur", "Asia", "Singapur", "Singapur", 12),
-    "MM": ("Myanmar", "Asia", "Yangon", "Rangún", 6),
-    "KH": ("Camboya", "Asia", "Nom Pen", "Nom Pen", 6),
-    "LA": ("Laos", "Asia", "Vientián", "Vientián", 5),
-    "TR": ("Turquía", "Asia", "Mármara", "Estambul", 20),
-    "IL": ("Israel", "Asia", "Tel Aviv", "Tel Aviv", 15),
-    "PS": ("Palestina", "Asia", "Cisjordania", "Ramala", 6),
-    "SA": ("Arabia Saudita", "Asia", "Riad", "Riad", 15),
-    "AE": ("Emiratos Árabes Unidos", "Asia", "Dubái", "Dubái", 15),
-    "QA": ("Qatar", "Asia", "Doha", "Doha", 8),
-    "KW": ("Kuwait", "Asia", "Ciudad de Kuwait", "Ciudad de Kuwait", 8),
-    "BH": ("Bahréin", "Asia", "Manama", "Manama", 6),
-    "OM": ("Omán", "Asia", "Mascate", "Mascate", 6),
-    "YE": ("Yemen", "Asia", "Saná", "Saná", 4),
-    "JO": ("Jordania", "Asia", "Amán", "Amán", 8),
-    "LB": ("Líbano", "Asia", "Beirut", "Beirut", 10),
-    "SY": ("Siria", "Asia", "Damasco", "Damasco", 6),
-    "IQ": ("Irak", "Asia", "Bagdad", "Bagdad", 8),
-    "IR": ("Irán", "Asia", "Teherán", "Teherán", 12),
-    "AF": ("Afganistán", "Asia", "Kabul", "Kabul", 5),
-    "KZ": ("Kazajistán", "Asia", "Almatý", "Almatý", 10),
-    "UZ": ("Uzbekistán", "Asia", "Taskent", "Taskent", 8),
-    "TM": ("Turkmenistán", "Asia", "Asjabad", "Asjabad", 4),
-    "KG": ("Kirguistán", "Asia", "Biskek", "Biskek", 6),
-    "TJ": ("Tayikistán", "Asia", "Dusambé", "Dusambé", 5),
-    "AZ": ("Azerbaiyán", "Asia", "Bakú", "Bakú", 8),
-    "AM": ("Armenia", "Asia", "Ereván", "Ereván", 8),
-    "GE": ("Georgia", "Asia", "Tiflis", "Tiflis", 8),
+    # ==========================================
+    # === ASIA =================================
+    # ==========================================
+    "JP": ("Japón", "Asia", "Kantō", "Tokio", 45),
+    "KR": ("Corea del Sur", "Asia", "Gyeonggi", "Seúl", 25),
+    "CN": ("China", "Asia", "Beijing", "Pekín", 60),
+    "TW": ("Taiwán", "Asia", "Taipei", "Taipéi", 20),
+    "HK": ("Hong Kong", "Asia", "Hong Kong", "Hong Kong", 15),
+    "MO": ("Macao", "Asia", "Macao", "Macao", 6),
+    "MN": ("Mongolia", "Asia", "Ulán Bator", "Ulán Bator", 6),
+    "IN": ("India", "Asia", "Maharashtra", "Bombay", 60),
+    "PK": ("Pakistán", "Asia", "Sind", "Karachi", 15),
+    "BD": ("Bangladesh", "Asia", "Daca", "Daca", 12),
+    "LK": ("Sri Lanka", "Asia", "Colombo", "Colombo", 10),
+    "NP": ("Nepal", "Asia", "Bagmati", "Katmandú", 10),
+    "BT": ("Bután", "Asia", "Timbu", "Timbu", 4),
+    "MV": ("Maldivas", "Asia", "Malé", "Malé", 5),
+    "ID": ("Indonesia", "Asia", "Java Occidental", "Yakarta", 25),
+    "PH": ("Filipinas", "Asia", "Gran Manila", "Manila", 25),
+    "TH": ("Tailandia", "Asia", "Bangkok", "Bangkok", 20),
+    "VN": ("Vietnam", "Asia", "Hanoi", "Hanói", 20),
+    "MY": ("Malasia", "Asia", "Kuala Lumpur", "Kuala Lumpur", 20),
+    "SG": ("Singapur", "Asia", "Singapur", "Singapur", 15),
+    "MM": ("Myanmar", "Asia", "Yangon", "Rangún", 8),
+    "KH": ("Camboya", "Asia", "Nom Pen", "Nom Pen", 8),
+    "LA": ("Laos", "Asia", "Vientián", "Vientián", 6),
+    "TR": ("Turquía", "Asia", "Mármara", "Estambul", 45),
+    "IL": ("Israel", "Asia", "Tel Aviv", "Tel Aviv", 18),
+    "PS": ("Palestina", "Asia", "Cisjordania", "Ramala", 8),
+    "SA": ("Arabia Saudita", "Asia", "Riad", "Riad", 18),
+    "AE": ("Emiratos Árabes Unidos", "Asia", "Dubái", "Dubái", 20),
+    "QA": ("Qatar", "Asia", "Doha", "Doha", 10),
+    "KW": ("Kuwait", "Asia", "Ciudad de Kuwait", "Ciudad de Kuwait", 10),
+    "BH": ("Bahréin", "Asia", "Manama", "Manama", 8),
+    "OM": ("Omán", "Asia", "Mascate", "Mascate", 8),
+    "YE": ("Yemen", "Asia", "Saná", "Saná", 6),
+    "JO": ("Jordania", "Asia", "Amán", "Amán", 10),
+    "LB": ("Líbano", "Asia", "Beirut", "Beirut", 12),
+    "SY": ("Siria", "Asia", "Damasco", "Damasco", 8),
+    "IQ": ("Irak", "Asia", "Bagdad", "Bagdad", 10),
+    "IR": ("Irán", "Asia", "Teherán", "Teherán", 15),
+    "AF": ("Afganistán", "Asia", "Kabul", "Kabul", 8),
+    "KZ": ("Kazajistán", "Asia", "Almatý", "Almatý", 12),
+    "UZ": ("Uzbekistán", "Asia", "Taskent", "Taskent", 10),
+    "TM": ("Turkmenistán", "Asia", "Asjabad", "Asjabad", 5),
+    "KG": ("Kirguistán", "Asia", "Biskek", "Biskek", 8),
+    "TJ": ("Tayikistán", "Asia", "Dusambé", "Dusambé", 6),
+    "AZ": ("Azerbaiyán", "Asia", "Bakú", "Bakú", 10),
+    "AM": ("Armenia", "Asia", "Ereván", "Ereván", 10),
+    "GE": ("Georgia", "Asia", "Tiflis", "Tiflis", 10),
+    "BN": ("Brunéi", "Asia", "Bandar Seri Begawan", "Bandar Seri Begawan", 4),
+    "IO": ("Territorio Índico Británico", "Asia", "Diego García", "Diego García", 2),
+    "KP": ("Corea del Norte", "Asia", "Pionyang", "Pionyang", 5),
 
-    # === ÁFRICA ===
-    "ZA": ("Sudáfrica", "África", "Gauteng", "Johannesburgo", 20),
-    "NG": ("Nigeria", "África", "Lagos", "Lagos", 15),
-    "EG": ("Egipto", "África", "El Cairo", "El Cairo", 15),
-    "KE": ("Kenia", "África", "Nairobi", "Nairobi", 15),
-    "MA": ("Marruecos", "África", "Casablanca-Settat", "Casablanca", 15),
-    "GH": ("Ghana", "África", "Gran Acra", "Acra", 12),
-    "SN": ("Senegal", "África", "Dakar", "Dakar", 10),
-    "CI": ("Costa de Marfil", "África", "Abiyán", "Abiyán", 10),
-    "DZ": ("Argelia", "África", "Argel", "Argel", 12),
-    "TN": ("Túnez", "África", "Túnez", "Túnez", 12),
-    "ET": ("Etiopía", "África", "Adís Abeba", "Adís Abeba", 8),
-    "TZ": ("Tanzania", "África", "Dar es Salaam", "Dar es Salaam", 10),
-    "UG": ("Uganda", "África", "Kampala", "Kampala", 10),
-    "AO": ("Angola", "África", "Luanda", "Luanda", 8),
-    "MZ": ("Mozambique", "África", "Maputo", "Maputo", 6),
-    "ZM": ("Zambia", "África", "Lusaka", "Lusaka", 6),
-    "ZW": ("Zimbabue", "África", "Harare", "Harare", 6),
-    "NA": ("Namibia", "África", "Khomas", "Windhoek", 6),
-    "BW": ("Botsuana", "África", "Gaborone", "Gaborone", 6),
-    "CM": ("Camerún", "África", "Litoral", "Duala", 8),
-    "RW": ("Ruanda", "África", "Kigali", "Kigali", 6),
-    "ML": ("Malí", "África", "Bamako", "Bamako", 6),
-    "MG": ("Madagascar", "África", "Analamanga", "Antananarivo", 6),
-    "BF": ("Burkina Faso", "África", "Uagadugú", "Uagadugú", 5),
-    "NE": ("Níger", "África", "Niamey", "Niamey", 4),
-    "TD": ("Chad", "África", "Yamena", "Yamena", 4),
-    "SO": ("Somalia", "África", "Benadir", "Mogadiscio", 4),
-    "GN": ("Guinea", "África", "Conakri", "Conakri", 4),
-    "BJ": ("Benín", "África", "Litoral", "Cotonú", 4),
-    "BI": ("Burundi", "África", "Buyumbura", "Buyumbura", 4),
-    "TG": ("Togo", "África", "Marítima", "Lomé", 4),
-    "SL": ("Sierra Leona", "África", "Freetown", "Freetown", 4),
-    "LR": ("Liberia", "África", "Monrovia", "Monrovia", 4),
-    "MR": ("Mauritania", "África", "Nuakchot", "Nuakchot", 4),
-    "CG": ("República del Congo", "África", "Brazzaville", "Brazzaville", 4),
-    "CD": ("Rep. Dem. del Congo", "África", "Kinshasa", "Kinshasa", 6),
-    "GA": ("Gabón", "África", "Libreville", "Libreville", 4),
-    "GM": ("Gambia", "África", "Banjul", "Banjul", 4),
-    "DJ": ("Yibuti", "África", "Yibuti", "Yibuti", 3),
-    "SZ": ("Esuatini", "África", "Mbabane", "Mbabane", 3),
-    "LS": ("Lesoto", "África", "Maseru", "Maseru", 3),
-    "CV": ("Cabo Verde", "África", "Praia", "Praia", 4),
-    "MU": ("Mauricio", "África", "Port Louis", "Port Louis", 5),
-    "SC": ("Seychelles", "África", "Victoria", "Victoria", 4),
-    "LY": ("Libia", "África", "Trípoli", "Trípoli", 5),
-    "SD": ("Sudán", "África", "Jartum", "Jartum", 4),
-    "SS": ("Sudán del Sur", "África", "Yuba", "Yuba", 3),
-    "MW": ("Malaui", "África", "Lilongüe", "Lilongüe", 4),
+    # ==========================================
+    # === ÁFRICA ===============================
+    # ==========================================
+    "ZA": ("Sudáfrica", "África", "Gauteng", "Johannesburgo", 40),
+    "NG": ("Nigeria", "África", "Lagos", "Lagos", 35),
+    "EG": ("Egipto", "África", "El Cairo", "El Cairo", 35),
+    "KE": ("Kenia", "África", "Nairobi", "Nairobi", 30),
+    "MA": ("Marruecos", "África", "Casablanca-Settat", "Casablanca", 30),
+    "GH": ("Ghana", "África", "Gran Acra", "Acra", 15),
+    "SN": ("Senegal", "África", "Dakar", "Dakar", 12),
+    "CI": ("Costa de Marfil", "África", "Abiyán", "Abiyán", 12),
+    "DZ": ("Argelia", "África", "Argel", "Argel", 15),
+    "TN": ("Túnez", "África", "Túnez", "Túnez", 15),
+    "ET": ("Etiopía", "África", "Adís Abeba", "Adís Abeba", 10),
+    "TZ": ("Tanzania", "África", "Dar es Salaam", "Dar es Salaam", 12),
+    "UG": ("Uganda", "África", "Kampala", "Kampala", 12),
+    "AO": ("Angola", "África", "Luanda", "Luanda", 10),
+    "MZ": ("Mozambique", "África", "Maputo", "Maputo", 8),
+    "ZM": ("Zambia", "África", "Lusaka", "Lusaka", 8),
+    "ZW": ("Zimbabue", "África", "Harare", "Harare", 8),
+    "NA": ("Namibia", "África", "Khomas", "Windhoek", 8),
+    "BW": ("Botsuana", "África", "Gaborone", "Gaborone", 8),
+    "CM": ("Camerún", "África", "Litoral", "Duala", 10),
+    "RW": ("Ruanda", "África", "Kigali", "Kigali", 8),
+    "ML": ("Malí", "África", "Bamako", "Bamako", 8),
+    "MG": ("Madagascar", "África", "Analamanga", "Antananarivo", 8),
+    "BF": ("Burkina Faso", "África", "Uagadugú", "Uagadugú", 6),
+    "NE": ("Níger", "África", "Niamey", "Niamey", 5),
+    "TD": ("Chad", "África", "Yamena", "Yamena", 5),
+    "SO": ("Somalia", "África", "Benadir", "Mogadiscio", 5),
+    "GN": ("Guinea", "África", "Conakri", "Conakri", 5),
+    "BJ": ("Benín", "África", "Litoral", "Cotonú", 5),
+    "BI": ("Burundi", "África", "Buyumbura", "Buyumbura", 5),
+    "TG": ("Togo", "África", "Marítima", "Lomé", 5),
+    "SL": ("Sierra Leona", "África", "Freetown", "Freetown", 5),
+    "LR": ("Liberia", "África", "Monrovia", "Monrovia", 5),
+    "MR": ("Mauritania", "África", "Nuakchot", "Nuakchot", 5),
+    "CG": ("República del Congo", "África", "Brazzaville", "Brazzaville", 5),
+    "CD": ("Rep. Dem. del Congo", "África", "Kinshasa", "Kinshasa", 8),
+    "GA": ("Gabón", "África", "Libreville", "Libreville", 5),
+    "GM": ("Gambia", "África", "Banjul", "Banjul", 5),
+    "DJ": ("Yibuti", "África", "Yibuti", "Yibuti", 4),
+    "SZ": ("Esuatini", "África", "Mbabane", "Mbabane", 4),
+    "LS": ("Lesoto", "África", "Maseru", "Maseru", 4),
+    "CV": ("Cabo Verde", "África", "Praia", "Praia", 6),
+    "MU": ("Mauricio", "África", "Port Louis", "Port Louis", 6),
+    "SC": ("Seychelles", "África", "Victoria", "Victoria", 5),
+    "LY": ("Libia", "África", "Trípoli", "Trípoli", 6),
+    "SD": ("Sudán", "África", "Jartum", "Jartum", 5),
+    "SS": ("Sudán del Sur", "África", "Yuba", "Yuba", 4),
+    "MW": ("Malaui", "África", "Lilongüe", "Lilongüe", 5),
+    "CF": ("República Centroafricana", "África", "Bangui", "Bangui", 4),
+    "ER": ("Eritrea", "África", "Asmara", "Asmara", 4),
+    "GW": ("Guinea-Bisáu", "África", "Bisáu", "Bisáu", 3),
+    "KM": ("Comoras", "África", "Moroni", "Moroni", 4),
+    "RE": ("Reunión", "África", "Saint-Denis", "Saint-Denis", 12),
+    "SH": ("Santa Elena", "África", "Jamestown", "Jamestown", 3),
+    "YT": ("Mayotte", "África", "Mamoudzou", "Mamoudzou", 4),
 
-    # === OCEANÍA ===
-    "AU": ("Australia", "Oceanía", "Nueva Gales del Sur", "Sídney", 25),
-    "NZ": ("Nueva Zelanda", "Oceanía", "Auckland", "Auckland", 20),
-    "FJ": ("Fiyi", "Oceanía", "Central", "Suva", 8),
-    "PG": ("Papúa Nueva Guinea", "Oceanía", "Distrito Capital", "Puerto Moresby", 6),
-    "SB": ("Islas Salomón", "Oceanía", "Honiara", "Honiara", 4),
-    "VU": ("Vanuatu", "Oceanía", "Shefa", "Port Vila", 4),
-    "WS": ("Samoa", "Oceanía", "Tuamasaga", "Apia", 4),
-    "TO": ("Tonga", "Oceanía", "Tongatapu", "Nukualofa", 4),
-    "FM": ("Micronesia", "Oceanía", "Pohnpei", "Palikir", 3),
-    "KI": ("Kiribati", "Oceanía", "Tarawa", "Tarawa", 3),
-    "MH": ("Islas Marshall", "Oceanía", "Majuro", "Majuro", 3),
-    "NR": ("Nauru", "Oceanía", "Yaren", "Yaren", 3),
-    "PW": ("Palaos", "Oceanía", "Koror", "Koror", 3),
-    "TV": ("Tuvalu", "Oceanía", "Funafuti", "Funafuti", 3),
-    "PF": ("Polinesia Francesa", "Oceanía", "Tahití", "Papeete", 5),
-    "NC": ("Nueva Caledonia", "Oceanía", "Provincia Sur", "Numea", 5),
-    "GU": ("Guam", "Oceanía", "Guam", "Hagåtña", 4)
+    # ==========================================
+    # === OCEANÍA & TERRITORIOS POLARES =======
+    # ==========================================
+    "AU": ("Australia", "Oceanía", "Nueva Gales del Sur", "Sídney", 60),
+    "NZ": ("Nueva Zelanda", "Oceanía", "Auckland", "Auckland", 40),
+    "FJ": ("Fiyi", "Oceanía", "Central", "Suva", 10),
+    "PG": ("Papúa Nueva Guinea", "Oceanía", "Distrito Capital", "Puerto Moresby", 8),
+    "SB": ("Islas Salomón", "Oceanía", "Honiara", "Honiara", 5),
+    "VU": ("Vanuatu", "Oceanía", "Shefa", "Port Vila", 5),
+    "WS": ("Samoa", "Oceanía", "Tuamasaga", "Apia", 5),
+    "TO": ("Tonga", "Oceanía", "Tongatapu", "Nukualofa", 5),
+    "FM": ("Micronesia", "Oceanía", "Pohnpei", "Palikir", 4),
+    "KI": ("Kiribati", "Oceanía", "Tarawa", "Tarawa", 4),
+    "MH": ("Islas Marshall", "Oceanía", "Majuro", "Majuro", 4),
+    "NR": ("Nauru", "Oceanía", "Yaren", "Yaren", 4),
+    "PW": ("Palaos", "Oceanía", "Koror", "Koror", 4),
+    "TV": ("Tuvalu", "Oceanía", "Funafuti", "Funafuti", 4),
+    "PF": ("Polinesia Francesa", "Oceanía", "Tahití", "Papeete", 6),
+    "NC": ("Nueva Caledonia", "Oceanía", "Provincia Sur", "Numea", 6),
+    "GU": ("Guam", "Oceanía", "Guam", "Hagåtña", 5),
+    "AQ": ("Antártida", "Oceanía", "Base McMurdo", "McMurdo", 4),
+    "AS": ("Samoa Americana", "Oceanía", "Pago Pago", "Pago Pago", 6),
+    "CC": ("Islas Cocos", "Oceanía", "West Island", "West Island", 2),
+    "CX": ("Isla de Navidad", "Oceanía", "Flying Fish Cove", "Flying Fish Cove", 2),
+    "NU": ("Niue", "Oceanía", "Alofi", "Alofi", 2),
+    "TF": ("Tierras Australes Francesas", "Oceanía", "Port-aux-Français", "Port-aux-Français", 2),
+    "WF": ("Wallis y Futuna", "Oceanía", "Mata-Utu", "Mata-Utu", 2)
 }
+
+# VERIFIED REGIONAL STATIONS THAT MUST ALWAYS BE PRESENT AND PROTECTED
+PROTECTED_REGIONAL_STATIONS = [
+    # CHIAPAS - TAPACHULA
+    {
+        "id": "mx-chiapas-tapachula-extremo-96-3",
+        "name": "Extremo 96.3 FM Tapachula",
+        "continent": "América",
+        "country": "México",
+        "country_code": "MX",
+        "state": "Chiapas",
+        "city": "Tapachula",
+        "locality": "En vivo",
+        "genre": "Regional Mexicano & Grupero",
+        "stream_url": "https://stream.freepi.io/8310/live",
+        "logo_url": "https://images.zeno.fm/5T6_9sQQj3AbFLZ2f0vrgEk1dNnFrD5uKU8bb4pd69E/rs:fill:1024:256/q:75/g:ce:0:0/aHR0cHM6Ly9wcm94eS56ZW5vLmZtL2NvbnRlbnQvc3RhdGlvbnMvODMxODljY2MtNTcwMS00MmMxLTk2NzYtMzk2YjExN2IxYjY1L21pY3Jvc2l0ZS9iYWNrZ3JvdW5kX2ltYWdlLz91PTE3Njk2OTQ4NDEwMDA",
+        "description": "Extremo Tapachula con los mejores éxitos gruperos, norteño y banda para la Perla del Soconusco.",
+        "bitrate": "128 kbps",
+        "frequency": 96.3,
+        "band": "FM"
+    },
+    {
+        "id": "mx-chiapas-tapachula-wradio-1000",
+        "name": "W Radio 1000 AM Tapachula",
+        "continent": "América",
+        "country": "México",
+        "country_code": "MX",
+        "state": "Chiapas",
+        "city": "Tapachula",
+        "locality": "En vivo",
+        "genre": "Noticias & Opinión",
+        "stream_url": "https://streaming.servicioswebmx.com/8248/stream",
+        "logo_url": "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=300&auto=format&fit=crop",
+        "description": "W Radio en el 1000 de AM transmitiendo las noticias y actualidad para la región Soconusco y frontera sur.",
+        "bitrate": "128 kbps",
+        "frequency": 1000.0,
+        "band": "AM"
+    },
+    {
+        "id": "mx-chiapas-tapachula-bellamusica-106-7",
+        "name": "Bella Música 106.7 FM Tapachula",
+        "continent": "América",
+        "country": "México",
+        "country_code": "MX",
+        "state": "Chiapas",
+        "city": "Tapachula",
+        "locality": "En vivo",
+        "genre": "Romántica & Baladas",
+        "stream_url": "https://stream.zeno.fm/scdv0t33gd0uv",
+        "logo_url": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&auto=format&fit=crop",
+        "description": "Música instrumental, baladas de recuerdo y pop romántico en el 106.7 FM de Tapachula.",
+        "bitrate": "128 kbps",
+        "frequency": 106.7,
+        "band": "FM"
+    },
+    {
+        "id": "mx-chiapas-tapachula-los40-99-5",
+        "name": "Los 40 Tapachula 99.5 FM",
+        "continent": "América",
+        "country": "México",
+        "country_code": "MX",
+        "state": "Chiapas",
+        "city": "Tapachula",
+        "locality": "En vivo",
+        "genre": "Pop & Éxitos",
+        "stream_url": "https://stream.freepi.io/8300/live",
+        "logo_url": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&auto=format&fit=crop",
+        "description": "Los éxitos mundiales de la música juvenil en el 99.5 FM de Tapachula, Chiapas.",
+        "bitrate": "128 kbps",
+        "frequency": 99.5,
+        "band": "FM"
+    },
+    # CHIAPAS - TUXTLA GUTIÉRREZ & TONALÁ
+    {
+        "id": "mx-chiapas-tuxtla-radiochiapas-93-9",
+        "name": "Radio Chiapas 93.9 FM",
+        "continent": "América",
+        "country": "México",
+        "country_code": "MX",
+        "state": "Chiapas",
+        "city": "Tuxtla Gutiérrez",
+        "locality": "En vivo",
+        "genre": "Cultura & Noticias",
+        "stream_url": "http://streamingcwsradio10.com:9340/stream",
+        "logo_url": "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=300&auto=format&fit=crop",
+        "description": "Sistema Chiapaneco de Radio, Televisión y Cinematografía transmitiendo identidad, cultura y noticias.",
+        "bitrate": "128 kbps",
+        "frequency": 93.9,
+        "band": "FM"
+    },
+    {
+        "id": "mx-chiapas-tuxtla-joya-101-7",
+        "name": "Joya 101.7 FM Tuxtla",
+        "continent": "América",
+        "country": "México",
+        "country_code": "MX",
+        "state": "Chiapas",
+        "city": "Tuxtla Gutiérrez",
+        "locality": "En vivo",
+        "genre": "Pop & Éxitos",
+        "stream_url": "https://stream.zeno.fm/extbc8p9na0uv",
+        "logo_url": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300&auto=format&fit=crop",
+        "description": "Música que llena tu vida desde Tuxtla Gutiérrez, Chiapas.",
+        "bitrate": "128 kbps",
+        "frequency": 101.7,
+        "band": "FM"
+    },
+    {
+        "id": "mx-chiapas-tuxtla-lapoderosa-91-1",
+        "name": "La Poderosa 91.1 FM Tuxtla",
+        "continent": "América",
+        "country": "México",
+        "country_code": "MX",
+        "state": "Chiapas",
+        "city": "Tuxtla Gutiérrez",
+        "locality": "En vivo",
+        "genre": "Regional Mexicano & Banda",
+        "stream_url": "https://stream.zeno.fm/koab0etmslzvv",
+        "logo_url": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&auto=format&fit=crop",
+        "description": "Música grupera, banda sinaloense y norteña en el corazón de Chiapas.",
+        "bitrate": "128 kbps",
+        "frequency": 91.1,
+        "band": "FM"
+    },
+    {
+        "id": "mx-chiapas-tuxtla-bellamusica-93-1",
+        "name": "Bella Música 93.1 FM Tuxtla",
+        "continent": "América",
+        "country": "México",
+        "country_code": "MX",
+        "state": "Chiapas",
+        "city": "Tuxtla Gutiérrez",
+        "locality": "En vivo",
+        "genre": "Romántica & Baladas",
+        "stream_url": "https://stream.zeno.fm/ayrbxv13gd0uv",
+        "logo_url": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&auto=format&fit=crop",
+        "description": "Música instrumental, baladas de recuerdo y pop romántico en Chiapas.",
+        "bitrate": "128 kbps",
+        "frequency": 93.1,
+        "band": "FM"
+    },
+    # OAXACA - MATÍAS ROMERO, JUCHITÁN, PINOTEPA, HUAJUAPAN, PUERTO ÁNGEL, OAXACA CENTRO
+    {
+        "id": "mx-oax-matias-romero-905",
+        "name": "La Ke Buena 90.5 FM Matías Romero",
+        "continent": "América",
+        "country": "México",
+        "country_code": "MX",
+        "state": "Oaxaca",
+        "city": "Matías Romero",
+        "locality": "En vivo",
+        "genre": "Regional Mexicano & Banda",
+        "stream_url": "https://sound.encuentroradiotv.com/oaxaca957.mp3",
+        "logo_url": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300&auto=format&fit=crop",
+        "description": "La consentida del Istmo en 90.5 FM transmitiendo desde Matías Romero, Oaxaca (XHYS-FM). Red Encuentro Radio.",
+        "bitrate": "128 kbps",
+        "frequency": 90.5,
+        "band": "FM"
+    },
+    {
+        "id": "mx-oax-juchitan-901",
+        "name": "Encuentro Radio 90.1 FM Juchitán",
+        "continent": "América",
+        "country": "México",
+        "country_code": "MX",
+        "state": "Oaxaca",
+        "city": "Juchitán de Zaragoza",
+        "locality": "En vivo",
+        "genre": "Noticias & Opinión",
+        "stream_url": "https://sound.encuentroradiotv.com/juchitan901.ogg",
+        "logo_url": "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=300&auto=format&fit=crop",
+        "description": "Información, debate y cultura del Istmo de Tehuantepec desde Juchitán, Oaxaca.",
+        "bitrate": "128 kbps",
+        "frequency": 90.1,
+        "band": "FM"
+    },
+    {
+        "id": "mx-oax-pinotepa-981",
+        "name": "Encuentro Radio 98.1 FM Pinotepa",
+        "continent": "América",
+        "country": "México",
+        "country_code": "MX",
+        "state": "Oaxaca",
+        "city": "Pinotepa Nacional",
+        "locality": "En vivo",
+        "genre": "Regional Mexicano & Chilena",
+        "stream_url": "https://sound.encuentroradiotv.com/pinotepa981.ogg",
+        "logo_url": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&auto=format&fit=crop",
+        "description": "Chilenas, música costeña y noticias desde Pinotepa Nacional, Oaxaca.",
+        "bitrate": "128 kbps",
+        "frequency": 98.1,
+        "band": "FM"
+    },
+    {
+        "id": "mx-oax-lamejor-1053",
+        "name": "La Mejor 105.3 FM Huajuapan",
+        "continent": "América",
+        "country": "México",
+        "country_code": "MX",
+        "state": "Oaxaca",
+        "city": "Huajuapan de León",
+        "locality": "En vivo",
+        "genre": "Regional Mexicano",
+        "stream_url": "https://17853.live.streamtheworld.com/XEOU.mp3",
+        "logo_url": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&auto=format&fit=crop",
+        "description": "La estación grupera de la Mixteca Oaxaqueña en 105.3 FM (XEOU-FM).",
+        "bitrate": "128 kbps",
+        "frequency": 105.3,
+        "band": "FM"
+    },
+    {
+        "id": "mx-oax-lamejor-1017",
+        "name": "La Mejor 101.7 FM Oaxaca",
+        "continent": "América",
+        "country": "México",
+        "country_code": "MX",
+        "state": "Oaxaca",
+        "city": "Oaxaca de Juárez",
+        "locality": "En vivo",
+        "genre": "Grupera & Banda",
+        "stream_url": "http://ororadio.serverroom.us:9142/stream",
+        "logo_url": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300&auto=format&fit=crop",
+        "description": "¡Aquí nomás! La estación grupera número uno de los Valles Centrales de Oaxaca.",
+        "bitrate": "128 kbps",
+        "frequency": 101.7,
+        "band": "FM"
+    },
+    {
+        "id": "mx-oax-los40-897",
+        "name": "Los 40 Oaxaca 89.7 FM",
+        "continent": "América",
+        "country": "México",
+        "country_code": "MX",
+        "state": "Oaxaca",
+        "city": "Oaxaca de Juárez",
+        "locality": "En vivo",
+        "genre": "Pop & Éxitos",
+        "stream_url": "https://streaming.servicioswebmx.com/8270/stream",
+        "logo_url": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&auto=format&fit=crop",
+        "description": "Toda la música juvenil y del momento en la bella Verde Antequera.",
+        "bitrate": "128 kbps",
+        "frequency": 89.7,
+        "band": "FM"
+    },
+    {
+        "id": "mx-oax-puerto-angel-650",
+        "name": "La Voz del Ángel 650 AM Oaxaca",
+        "continent": "América",
+        "country": "México",
+        "country_code": "MX",
+        "state": "Oaxaca",
+        "city": "Puerto Ángel",
+        "locality": "En vivo",
+        "genre": "Cultural & Regional",
+        "stream_url": "https://stream.zeno.fm/9liwkbahprctv",
+        "logo_url": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&auto=format&fit=crop",
+        "description": "Voz e identidad desde la Costa Oaxaqueña en Puerto Ángel, San Pedro Pochutla.",
+        "bitrate": "128 kbps",
+        "frequency": 650.0,
+        "band": "AM"
+    }
+]
 
 def clean_station(raw: dict, continent: str, country_name: str, country_code: str, default_state: str, default_city: str) -> dict | None:
     stream_url = raw.get("url_resolved") or raw.get("url")
@@ -277,7 +588,7 @@ def clean_station(raw: dict, continent: str, country_name: str, country_code: st
     first_tag = tags.split(",")[0].strip().capitalize() if tags else "Variada"
     genre = first_tag if len(first_tag) > 2 else "Música"
 
-    is_am = " AM" in name.upper() or name.upper().endswith("AM")
+    is_am = " AM" in name.upper() or name.upper().endswith("AM") or " AM " in name.upper()
     band = "AM" if is_am else "FM"
     
     freq_match = re.search(r"(\d{2,4}(?:\.\d)?)", name)
@@ -337,7 +648,7 @@ def fetch_country_stations(item: tuple[str, tuple]) -> list[dict]:
         try:
             url = f"{m}/json/stations/search?{params}"
             req = urllib.request.Request(url, headers=HEADERS)
-            with urllib.request.urlopen(req, timeout=4.0, context=SSL_CTX) as r:
+            with urllib.request.urlopen(req, timeout=5.0, context=SSL_CTX) as r:
                 raw_list = json.loads(r.read().decode("utf-8"))
                 for raw in raw_list:
                     st = clean_station(raw, continent, c_name, code, def_state, def_city)
@@ -353,13 +664,20 @@ def fetch_country_stations(item: tuple[str, tuple]) -> list[dict]:
     return stations
 
 def main():
-    print(f"=== Iniciando Cosecha Global de Radio Mundial 5.0 ===")
+    print(f"=== Iniciando Cosecha Global de Radio Mundial 6.0 ===")
     print(f"Total países en registro global: {len(GLOBAL_COUNTRIES)}")
 
-    # 1. Cargar estaciones verificadas existentes para conservarlas al 100%
+    # 1. Cargar estaciones verificadas protegidas y existentes
     existing_by_continent = {"América": [], "Europa": [], "Asia": [], "África": [], "Oceanía": []}
     seen_stream_urls = set()
 
+    # Inyectar protegidas primero
+    for prot in PROTECTED_REGIONAL_STATIONS:
+        u = prot["stream_url"]
+        seen_stream_urls.add(u)
+        existing_by_continent["América"].append(prot)
+
+    # Cargar particiones existentes
     for c_name, fname in [
         ("América", "america.json"), ("Europa", "europa.json"),
         ("Asia", "asia.json"), ("África", "africa.json"), ("Oceanía", "oceania.json")
@@ -381,7 +699,7 @@ def main():
     t0 = time.time()
     harvested_by_continent = {"América": [], "Europa": [], "Asia": [], "África": [], "Oceanía": []}
     
-    with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=25) as executor:
         futures = {executor.submit(fetch_country_stations, item): item[0] for item in GLOBAL_COUNTRIES.items()}
         for fut in concurrent.futures.as_completed(futures):
             code = futures[fut]
@@ -394,7 +712,7 @@ def main():
                         if u not in seen_stream_urls:
                             seen_stream_urls.add(u)
                             harvested_by_continent[continent].append(st)
-            except Exception as e:
+            except Exception:
                 pass
 
     print(f"Cosecha completada en {time.time()-t0:.2f}s.")
@@ -430,7 +748,7 @@ def main():
     print(f"¡Catálogo Mundial Totalmente Poblado!")
     print(f"  - Total Emisoras Registradas: {len(master_stations)}")
     print(f"  - Total Países Cubiertos:     {len(all_countries)}")
-    print(f"  - Cobertura Mundial:          100% de los 5 Continentes")
+    print(f"  - Cobertura Mundial:          100% de los 5 Continentes ({len(GLOBAL_COUNTRIES)} Territorios)")
     print(f"=======================================================")
 
 if __name__ == "__main__":

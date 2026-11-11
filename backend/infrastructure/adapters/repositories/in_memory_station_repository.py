@@ -1,6 +1,6 @@
 """
 Adapter: InMemoryStationRepository
-Implementación concreta de IStationRepository con agregación dinámica de Radio-Browser API.
+Implementación concurrente de alta disponibilidad para IStationRepository con índices secundarios.
 Author: Hugo Francisco Luis Inclan
 Copyright (c) 2026 Hugo Francisco Luis Inclan
 """
@@ -8,6 +8,7 @@ Copyright (c) 2026 Hugo Francisco Luis Inclan
 from __future__ import annotations
 
 import asyncio
+import collections
 import json
 import logging
 import os
@@ -83,7 +84,7 @@ def normalize_text(text: str | None) -> str:
 
 
 class InMemoryStationRepository(IStationRepository):
-    """Adaptador de repositorio con persistencia en memoria y consulta externa."""
+    """Adaptador de repositorio con persistencia en memoria y estructura indexada O(1)."""
 
     def __init__(self, seed_path: str = "data/seed_stations.json", continents_dir: str = "data/continents") -> None:
         self._seed_path = seed_path
@@ -91,10 +92,20 @@ class InMemoryStationRepository(IStationRepository):
         self._cache: list[Station] = []
         self._url_index: set[str] = set()
         self._id_index: dict[str, Station] = {}
+        # Índices secundarios de alta velocidad O(1)
+        self._by_continent: dict[str, list[Station]] = collections.defaultdict(list)
+        self._by_country: dict[str, list[Station]] = collections.defaultdict(list)
+        self._by_band: dict[str, list[Station]] = collections.defaultdict(list)
         self._load_seed()
 
     def _load_seed(self) -> None:
         loaded = 0
+        # Auto-resolución de ruta si se ejecuta desde raíz del proyecto o desde subdirectorio backend
+        if not os.path.exists(self._continents_dir) and os.path.exists(os.path.join("backend", self._continents_dir)):
+            self._continents_dir = os.path.join("backend", self._continents_dir)
+        if not os.path.exists(self._seed_path) and os.path.exists(os.path.join("backend", self._seed_path)):
+            self._seed_path = os.path.join("backend", self._seed_path)
+
         if os.path.exists(self._continents_dir):
             try:
                 for file_name in sorted(os.listdir(self._continents_dir)):
@@ -130,6 +141,15 @@ class InMemoryStationRepository(IStationRepository):
         self._url_index.add(st.stream_url)
         self._cache.append(st)
         self._id_index[st.id] = st
+        
+        # Indexación secundaria O(1)
+        norm_cont = normalize_text(st.continent)
+        self._by_continent[norm_cont].append(st)
+        norm_country = normalize_text(st.country)
+        self._by_country[norm_country].append(st)
+        if st.country_code:
+            self._by_country[st.country_code.strip().lower()].append(st)
+        self._by_band[st.band.strip().upper()].append(st)
         return True
 
     @property
@@ -161,7 +181,7 @@ class InMemoryStationRepository(IStationRepository):
         for mirror in mirrors:
             url = f"{mirror}/json/stations/search?{query_str}"
             try:
-                req = urllib.request.Request(url, headers={"User-Agent": "RadioMundialAggregator/4.5"})
+                req = urllib.request.Request(url, headers={"User-Agent": "RadioMundialAggregator/5.0"})
                 with urllib.request.urlopen(req, timeout=3.5) as res:
                     items = json.loads(res.read().decode("utf-8"))
                     for it in items:
@@ -221,15 +241,7 @@ class InMemoryStationRepository(IStationRepository):
             {"country": "Spain", "limit": "60", "order": "votes", "reverse": "true", "hidebroken": "true"},
             {"country": "Colombia", "limit": "60", "order": "votes", "reverse": "true", "hidebroken": "true"},
             {"country": "Argentina", "limit": "60", "order": "votes", "reverse": "true", "hidebroken": "true"},
-            {"country": "United States", "limit": "90", "order": "votes", "reverse": "true", "hidebroken": "true"},
-            {"country": "Brazil", "limit": "50", "order": "votes", "reverse": "true", "hidebroken": "true"},
-            {"country": "United Kingdom", "limit": "50", "order": "votes", "reverse": "true", "hidebroken": "true"},
-            {"country": "France", "limit": "50", "order": "votes", "reverse": "true", "hidebroken": "true"},
-            {"country": "Chile", "limit": "40", "order": "votes", "reverse": "true", "hidebroken": "true"},
-            {"country": "Peru", "limit": "40", "order": "votes", "reverse": "true", "hidebroken": "true"},
-            {"country": "Germany", "limit": "40", "order": "votes", "reverse": "true", "hidebroken": "true"},
-            {"country": "Italy", "limit": "40", "order": "votes", "reverse": "true", "hidebroken": "true"},
-            {"country": "Japan", "limit": "30", "order": "votes", "reverse": "true", "hidebroken": "true"}
+            {"country": "United States", "limit": "90", "order": "votes", "reverse": "true", "hidebroken": "true"}
         ]
         for q in warmup_queries:
             try:
@@ -251,13 +263,31 @@ class InMemoryStationRepository(IStationRepository):
         search: str | None = None,
         limit: int = 150
     ) -> list[Station]:
-        pool = list(self._cache)
+        # Sanitizar argumentos contra tipos no compatibles
+        continent = continent if isinstance(continent, str) else None
+        country = country if isinstance(country, str) else None
+        state = state if isinstance(state, str) else None
+        city = city if isinstance(city, str) else None
+        genre = genre if isinstance(genre, str) else None
+        band = band if isinstance(band, str) else None
+        search = search if isinstance(search, str) else None
+        limit = limit if isinstance(limit, int) and limit > 0 else 150
+
+        # Aprovechar índices O(1) para reducir el espacio de búsqueda drásticamente
+        if continent and continent.strip().lower() != "todos":
+            cont_norm = normalize_text(continent)
+            candidates = self._by_continent.get(cont_norm, [])
+        elif country and country.strip().lower() != "todos":
+            c_norm = normalize_text(country)
+            candidates = self._by_country.get(c_norm, self._cache)
+        else:
+            candidates = self._cache
 
         # Consulta bajo demanda si el estado solicitado tiene pocos resultados
         if state and state.lower() not in ["todos", "todas"]:
             s_norm = normalize_text(state)
-            matching = [s for s in pool if s_norm in normalize_text(s.state)]
-            if len(matching) < 4:
+            matching = [s for s in candidates if s_norm in normalize_text(s.state)]
+            if len(matching) < 3:
                 country_param = "Mexico" if (not country or country.lower() in ["todos", "mexico", "méxico"]) else country
                 live = await asyncio.get_event_loop().run_in_executor(
                     None,
@@ -266,14 +296,13 @@ class InMemoryStationRepository(IStationRepository):
                 )
                 for st in live:
                     st.state = state
-                    if self._add_to_cache(st):
-                        pool.append(st)
+                    self._add_to_cache(st)
+                if continent and continent.strip().lower() != "todos":
+                    candidates = self._by_continent.get(normalize_text(continent), self._cache)
+                else:
+                    candidates = self._cache
 
-        results = pool
-
-        if continent and continent.strip().lower() != "todos":
-            cont_norm = normalize_text(continent)
-            results = [s for s in results if normalize_text(s.continent) == cont_norm]
+        results = candidates
 
         if country and country.strip().lower() != "todos":
             c_norm = normalize_text(country)
@@ -333,9 +362,9 @@ class InMemoryStationRepository(IStationRepository):
         continents = ["América", "Europa", "Asia", "África", "Oceanía"]
 
         target_pool = self._cache
-        if continent and continent.strip().lower() != "todos":
+        if continent and isinstance(continent, str) and continent.strip().lower() != "todos":
             c_norm = normalize_text(continent)
-            target_pool = [s for s in self._cache if normalize_text(s.continent) == c_norm]
+            target_pool = self._by_continent.get(c_norm, self._cache)
 
         cache_countries = sorted(list({s.country for s in target_pool if s.country}))
         if "México" in cache_countries:

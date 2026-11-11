@@ -50,6 +50,8 @@ public class DictionaryTranslationAdapter : ITranslationPort
             "EMPTY_TITLE" => isEn ? "No frequencies found in this spot" : "Sin frecuencias en este punto del dial",
             "EMPTY_DESC" => isEn ? "Try changing your filters or searching another state." : "Prueba seleccionando otro Estado o restablece los filtros.",
             "EMPTY_BTN" => isEn ? "↺ Tune All Stations" : "↺ Sintonizar Todas las Emisoras",
+            "LOAD_MORE" => isEn ? "Load More Stations" : "Cargar Más Emisoras",
+            "REMAINING" => isEn ? "remaining" : "restantes",
             _ => key
         };
     }

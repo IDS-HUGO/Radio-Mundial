@@ -1,0 +1,37 @@
+@inherits LayoutComponentBase
+
+<div class="app-layout">
+    <!-- Barra Superior Principal -->
+    <header class="app-topbar">
+        <div class="topbar-container">
+            <div class="brand-group">
+                <a href="" class="brand-link">
+                    <span class="brand-icon">📻</span>
+                    <span class="brand-text">Radio<span class="brand-accent">Mundial</span></span>
+                </a>
+                <span class="brand-tagline">TRANSISTOR STREAMING</span>
+            </div>
+
+            <div class="topbar-status-group">
+                <div class="status-pill status-live">
+                    <span class="pulse-dot"></span>
+                    <span>GLOBAL LIVE</span>
+                </div>
+                <div class="status-pill status-audio">
+                    <span>⚡ CDN HD DIRECT</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido Principal Full-Width -->
+    <main class="app-main-content">
+        @Body
+    </main>
+
+    <!-- Banner de Cookies y Privacidad -->
+    <CookieConsent />
+
+    <!-- Barra Inferior de Audio Persistente -->
+    <RadioPlayer />
+</div>

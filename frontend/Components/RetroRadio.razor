@@ -1,0 +1,326 @@
+@using frontend.Models
+@using frontend.Services
+@inject RadioStateService RadioState
+@implements IDisposable
+
+<div class="retro-radio-stage">
+    <!-- Antena Telescópica Vintage -->
+    <div class="retro-antenna-wrapper @(RadioState.IsPlaying ? "antenna-extended" : "")">
+        <div class="antenna-base"></div>
+        <div class="antenna-rod">
+            <div class="antenna-tip"></div>
+        </div>
+    </div>
+
+    <!-- Asa de Transporte Arqueada -->
+    <div class="retro-handle-arc">
+        <div class="handle-inner-space"></div>
+    </div>
+
+    <!-- Chasis Principal de la Radio Retro -->
+    <div class="retro-radio-body @(RadioState.IsPlaying ? "radio-power-on" : "radio-power-off")">
+        <!-- Remaches cromados del asa -->
+        <div class="handle-rivet rivet-left"></div>
+        <div class="handle-rivet rivet-right"></div>
+
+        <!-- Bisel Cromado Frontal -->
+        <div class="retro-chrome-bezel">
+            <div class="retro-front-face">
+                
+                <!-- 1. Panel Superior: Cuadrante de Frecuencias y Perillas Analógicas -->
+                <div class="tuner-control-panel">
+                    
+                    <!-- Perilla Izquierda: Encendido / Volumen Interactivo (Rueda y Arrastre) -->
+                    <div class="knob-container knob-left" 
+                         @onwheel="HandleVolumeWheel" 
+                         @onwheel:preventDefault
+                         title="Gira la perilla o usa la rueda del mouse para cambiar el volumen. Haz clic para Encender/Apagar.">
+                        
+                        <div class="knob-volume-badge">
+                            🔊 @((int)(RadioState.Volume * 100))%
+                        </div>
+
+                        <button class="retro-knob knob-volume @(RadioState.IsPlaying ? "knob-active" : "")" 
+                                @onclick="RadioState.TogglePlayAsync"
+                                aria-label="Encender o Apagar Radio">
+                            <div class="knob-metallic-rim">
+                                <div class="knob-cap">
+                                    <div class="knob-indicator-dot" style="transform: rotate(@GetVolumeRotationDegree()deg)"></div>
+                                </div>
+                            </div>
+                        </button>
+
+                        <div class="volume-slider-box">
+                            <input type="range" 
+                                   min="0" 
+                                   max="1" 
+                                   step="0.02" 
+                                   class="retro-slider" 
+                                   value="@RadioState.Volume" 
+                                   @oninput="HandleVolumeSliderInput" 
+                                   title="Control de volumen" />
+                        </div>
+                        <span class="knob-label">VOL / POWER</span>
+                    </div>
+
+                    <!-- Cuadrante Analógico de Sintonización Interactivo -->
+                    <div class="tuner-scale-window" @onclick="HandleDialClick" title="Haz clic en el cuadrante para sintonizar estaciones">
+                        <!-- Indicador LED rojo EN VIVO / SINTONIZADO -->
+                        <div class="tuner-indicators-row">
+                            <div class="stereo-indicator @(RadioState.IsPlaying ? "indicator-glow" : "")">
+                                <span class="indicator-led"></span>
+                                <span class="indicator-text">@(RadioState.CurrentLanguage == "en" ? "ON AIR" : "EN VIVO")</span>
+                            </div>
+                            <div class="dial-band-switcher" title="Conmutador de Banda FM / AM">
+                                <button class="btn-band-switch @(!IsActiveStationAm() ? "band-switch-active" : "")" 
+                                        @onclick='() => RadioState.SetBandFilter("FM")' 
+                                        @onclick:stopPropagation="true">FM</button>
+                                <button class="btn-band-switch @(IsActiveStationAm() ? "band-switch-active" : "")" 
+                                        @onclick='() => RadioState.SetBandFilter("AM")' 
+                                        @onclick:stopPropagation="true">AM</button>
+                            </div>
+                            <div class="station-meta-display text-truncate">
+                                @if (RadioState.ActiveStation is not null)
+                                {
+                                    <span class="dial-station-name">@RadioState.ActiveStation.Name</span>
+                                    <span class="dial-station-freq">(@GetActiveFrequency().ToString(IsActiveStationAm() ? "F0" : "F1") @(IsActiveStationAm() ? "kHz AM" : "MHz FM"))</span>
+                                }
+                                else
+                                {
+                                    <span class="dial-station-name">RADIO MUNDIAL</span>
+                                }
+                            </div>
+                            <div class="listeners-indicator">
+                                <span>👥 @RadioState.ListenersCount</span>
+                            </div>
+                        </div>
+
+                        <!-- Escala FM (88 - 108 MHz) -->
+                        <div class="dial-band-scale scale-fm @(!IsActiveStationAm() ? "scale-active-glow" : "scale-dimmed")">
+                            <span class="band-tag">FM</span>
+                            <div class="ticks-container">
+                                <span class="tick tick-major"><i>88</i></span>
+                                <span class="tick"></span>
+                                <span class="tick tick-major"><i>92</i></span>
+                                <span class="tick"></span>
+                                <span class="tick tick-major"><i>96</i></span>
+                                <span class="tick"></span>
+                                <span class="tick tick-major"><i>100</i></span>
+                                <span class="tick"></span>
+                                <span class="tick tick-major"><i>104</i></span>
+                                <span class="tick"></span>
+                                <span class="tick tick-major"><i>108</i></span>
+                            </div>
+                        </div>
+
+                        <!-- Escala AM (550 - 1600 kHz) -->
+                        <div class="dial-band-scale scale-am @(IsActiveStationAm() ? "scale-active-glow" : "scale-dimmed")">
+                            <span class="band-tag">AM</span>
+                            <div class="ticks-container">
+                                <span class="tick tick-major"><i>550</i></span>
+                                <span class="tick"></span>
+                                <span class="tick tick-major"><i>700</i></span>
+                                <span class="tick"></span>
+                                <span class="tick tick-major"><i>800</i></span>
+                                <span class="tick"></span>
+                                <span class="tick tick-major"><i>1000</i></span>
+                                <span class="tick"></span>
+                                <span class="tick tick-major"><i>1300</i></span>
+                                <span class="tick"></span>
+                                <span class="tick tick-major"><i>1600</i></span>
+                            </div>
+                        </div>
+
+                        <!-- Aguja Indicadora Roja Móvil (The Red Needle) -->
+                        <div class="tuning-needle" style="left: @GetNeedlePercentage()%;">
+                            <div class="needle-core"></div>
+                            <div class="needle-shadow"></div>
+                        </div>
+
+                        <!-- Reflejo de cristal vintage sobre el dial -->
+                        <div class="glass-reflection-overlay"></div>
+                    </div>
+
+                    <!-- Perilla Derecha: Sintonizador Interactivo (Rueda y Clic) -->
+                    <div class="knob-container knob-right" 
+                         @onwheel="HandleTuningWheel"
+                         @onwheel:preventDefault
+                         title="Gira o usa la rueda del mouse para sintonizar estaciones hacia adelante o atrás.">
+                        
+                        <div class="knob-tuning-badge">
+                            TUNER
+                        </div>
+
+                        <button class="retro-knob knob-tuning" 
+                                @onclick="RadioState.TuneNextStationAsync"
+                                aria-label="Sintonizar Siguiente Emisora">
+                            <div class="knob-metallic-rim">
+                                <div class="knob-cap">
+                                    <div class="knob-indicator-dot" style="transform: rotate(@GetTuningRotationDegree()deg)"></div>
+                                </div>
+                            </div>
+                        </button>
+
+                        <div class="knob-arrows-row">
+                            <button class="btn-knob-step" @onclick="RadioState.TunePreviousStationAsync" title="Anterior">◀</button>
+                            <button class="btn-knob-step" @onclick="RadioState.TuneNextStationAsync" title="Siguiente">▶</button>
+                        </div>
+                        <span class="knob-label">SINTONIZAR</span>
+                    </div>
+
+                </div>
+
+                <!-- 2. Panel Inferior: Rejilla Clásica de Altavoz -->
+                <div class="retro-speaker-grille">
+                    <div class="grille-acoustic-cloth">
+                        @for (int i = 0; i < 9; i++)
+                        {
+                            <div class="grille-slot @(RadioState.IsPlaying ? "grille-vibrating" : "")"></div>
+                        }
+                    </div>
+
+                    <!-- Insignia vintage Radio Mundial en la rejilla -->
+                    <div class="speaker-vintage-badge">
+                        <span class="badge-script">Radio Mundial</span>
+                        <span class="badge-sub">HI-FI ALL-TRANSISTOR</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Botones Selectores Rápidos Frontales tipo Push-Button con Banderas -->
+        <div class="retro-push-buttons">
+            <button class="btn-retro-push @(RadioState.SelectedCountry == "Todos" ? "push-active" : "")" 
+                    @onclick='() => RadioState.SetCountryFilter("Todos")'>
+                🌐 MUNDO
+            </button>
+            <button class="btn-retro-push @(RadioState.SelectedCountry == "México" ? "push-active" : "")" 
+                    @onclick='() => RadioState.SetCountryFilter("México")'>
+                🇲🇽 MÉXICO
+            </button>
+            <button class="btn-retro-push @(RadioState.SelectedCountry == "Colombia" ? "push-active" : "")" 
+                    @onclick='() => RadioState.SetCountryFilter("Colombia")'>
+                🇨🇴 COLOMBIA
+            </button>
+            <button class="btn-retro-push @(RadioState.SelectedCountry == "España" ? "push-active" : "")" 
+                    @onclick='() => RadioState.SetCountryFilter("España")'>
+                🇪🇸 ESPAÑA
+            </button>
+            <button class="btn-retro-push @(RadioState.SelectedCountry == "Argentina" ? "push-active" : "")" 
+                    @onclick='() => RadioState.SetCountryFilter("Argentina")'>
+                🇦🇷 ARGENTINA
+            </button>
+            <button class="btn-retro-push @(RadioState.SelectedCountry == "Estados Unidos" ? "push-active" : "")" 
+                    @onclick='() => RadioState.SetCountryFilter("Estados Unidos")'>
+                🇺🇸 USA
+            </button>
+            <button class="btn-retro-push @(RadioState.SelectedCountry == "Reino Unido" ? "push-active" : "")" 
+                    @onclick='() => RadioState.SetCountryFilter("Reino Unido")'>
+                🇬🇧 UK
+            </button>
+            <button class="btn-retro-push @(RadioState.SelectedCountry == "Francia" ? "push-active" : "")" 
+                    @onclick='() => RadioState.SetCountryFilter("Francia")'>
+                🇫🇷 FRANCIA
+            </button>
+        </div>
+    </div>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        RadioState.OnStateChanged += HandleStateChanged;
+    }
+
+    private void HandleStateChanged()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    private bool IsActiveStationAm()
+    {
+        if (RadioState.ActiveStation is not null)
+        {
+            return RadioState.ActiveStation.Band.Equals("AM", StringComparison.OrdinalIgnoreCase) || RadioState.ActiveStation.Frequency > 150.0;
+        }
+        return RadioState.SelectedBand == "AM";
+    }
+
+    private double GetActiveFrequency()
+    {
+        if (RadioState.ActiveStation is not null && RadioState.ActiveStation.Frequency > 0)
+        {
+            return RadioState.ActiveStation.Frequency;
+        }
+        return IsActiveStationAm() ? 1060.0 : 98.5;
+    }
+
+    private double GetNeedlePercentage()
+    {
+        var freq = GetActiveFrequency();
+        if (IsActiveStationAm())
+        {
+            const double minAm = 540.0;
+            const double maxAm = 1600.0;
+            var clamped = Math.Clamp(freq, minAm, maxAm);
+            var pct = ((clamped - minAm) / (maxAm - minAm)) * 88.0 + 6.0;
+            return Math.Round(pct, 2);
+        }
+        else
+        {
+            const double minFm = 87.5;
+            const double maxFm = 108.5;
+            var clamped = Math.Clamp(freq, minFm, maxFm);
+            var pct = ((clamped - minFm) / (maxFm - minFm)) * 88.0 + 6.0;
+            return Math.Round(pct, 2);
+        }
+    }
+
+    private int GetVolumeRotationDegree()
+    {
+        return (int)(-135 + (RadioState.Volume * 270));
+    }
+
+    private int GetTuningRotationDegree()
+    {
+        var freq = GetActiveFrequency();
+        return (int)((freq - 88.0) * 18) % 360;
+    }
+
+    private async Task HandleVolumeWheel(WheelEventArgs e)
+    {
+        var delta = e.DeltaY < 0 ? 0.05 : -0.05;
+        await RadioState.AdjustVolumeRelativeAsync(delta);
+    }
+
+    private async Task HandleTuningWheel(WheelEventArgs e)
+    {
+        if (e.DeltaY < 0)
+        {
+            await RadioState.TuneNextStationAsync();
+        }
+        else
+        {
+            await RadioState.TunePreviousStationAsync();
+        }
+    }
+
+    private async Task HandleVolumeSliderInput(ChangeEventArgs e)
+    {
+        if (double.TryParse(e.Value?.ToString(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out var v))
+        {
+            await RadioState.SetVolumeAsync(v);
+        }
+    }
+
+    private async Task HandleDialClick()
+    {
+        await RadioState.TuneNextStationAsync();
+    }
+
+    public void Dispose()
+    {
+        RadioState.OnStateChanged -= HandleStateChanged;
+    }
+}

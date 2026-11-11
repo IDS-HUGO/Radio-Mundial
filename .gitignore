@@ -1,0 +1,25 @@
+# .NET / Blazor
+bin/
+obj/
+*.user
+*.suo
+.vs/
+.vscode/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+.env
+
+# OS
+.DS_Store
+Thumbs.db

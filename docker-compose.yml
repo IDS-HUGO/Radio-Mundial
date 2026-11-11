@@ -1,0 +1,39 @@
+# ==============================================================================
+# Radio Mundial - Orquestación Docker Compose de Producción
+# Autor: Hugo Francisco Luis Inclan (c) 2026
+# ==============================================================================
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: radio-mundial-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_NAME=Radio-Mundial API
+      - ENVIRONMENT=production
+      - HOST=0.0.0.0
+      - PORT=8000
+      - ALLOWED_ORIGINS=["http://localhost:5296","http://localhost:5000","http://localhost:80","https://radio-mundial.pages.dev","*"]
+      - ENABLE_WARMUP=true
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: radio-mundial-frontend
+    ports:
+      - "5000:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped

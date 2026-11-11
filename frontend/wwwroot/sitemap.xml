@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- Página Principal / Sintonizador Global -->
+  <url>
+    <loc>https://radio-mundial.pages.dev/</loc>
+    <lastmod>2026-11-10T22:30:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="es-MX" href="https://radio-mundial.pages.dev/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://radio-mundial.pages.dev/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://radio-mundial.pages.dev/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://radio-mundial.pages.dev/" />
+  </url>
+
+  <!-- Ciudades Principales de México para Posicionamiento Local -->
+  <url>
+    <loc>https://radio-mundial.pages.dev/?state=Oaxaca&amp;city=Matias+Romero</loc>
+    <lastmod>2026-11-10T22:30:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://radio-mundial.pages.dev/?state=Oaxaca</loc>
+    <lastmod>2026-11-10T22:30:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://radio-mundial.pages.dev/?state=Ciudad+de+Mexico</loc>
+    <lastmod>2026-11-10T22:30:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://radio-mundial.pages.dev/?state=Jalisco</loc>
+    <lastmod>2026-11-10T22:30:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://radio-mundial.pages.dev/?state=Nuevo+Leon</loc>
+    <lastmod>2026-11-10T22:30:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://radio-mundial.pages.dev/?state=Puebla</loc>
+    <lastmod>2026-11-10T22:30:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://radio-mundial.pages.dev/?state=Veracruz</loc>
+    <lastmod>2026-11-10T22:30:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://radio-mundial.pages.dev/?state=Chiapas</loc>
+    <lastmod>2026-11-10T22:30:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://radio-mundial.pages.dev/?state=Sonora</loc>
+    <lastmod>2026-11-10T22:30:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://radio-mundial.pages.dev/?state=Chihuahua</loc>
+    <lastmod>2026-11-10T22:30:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://radio-mundial.pages.dev/?state=Quintana+Roo</loc>
+    <lastmod>2026-11-10T22:30:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://radio-mundial.pages.dev/?state=Yucatan</loc>
+    <lastmod>2026-11-10T22:30:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- Filtros de Bandas FM y AM -->
+  <url>
+    <loc>https://radio-mundial.pages.dev/?band=FM</loc>
+    <lastmod>2026-11-10T22:30:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://radio-mundial.pages.dev/?band=AM</loc>
+    <lastmod>2026-11-10T22:30:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Países Internacionales -->
+  <url>
+    <loc>https://radio-mundial.pages.dev/?country=Colombia</loc>
+    <lastmod>2026-11-10T22:30:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://radio-mundial.pages.dev/?country=Espana</loc>
+    <lastmod>2026-11-10T22:30:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://radio-mundial.pages.dev/?country=Argentina</loc>
+    <lastmod>2026-11-10T22:30:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://radio-mundial.pages.dev/?country=Estados+Unidos</loc>
+    <lastmod>2026-11-10T22:30:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+</urlset>

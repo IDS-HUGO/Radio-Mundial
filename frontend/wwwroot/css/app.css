@@ -1,0 +1,169 @@
+/* ==========================================================================
+   Radio Mundial - Vintage Transistor Global Theme (css/app.css)
+   Paleta "Café Viejo": Nogal #261d16 / #14100c, Pergamino #f4efe4, Latón #c5a059, Ámbar #d49a3d
+   ========================================================================== */
+
+:root, [data-theme="dark"] {
+    --bg-main: #14100c;
+    --bg-surface: #1e1712;
+    --bg-card: #261d16;
+    --bg-input: #1a130d;
+    --text-main: #f5eedc;
+    --text-muted: #b8a592;
+    --text-highlight: #f5b041;
+    --accent-amber: #d49a3d;
+    --accent-warm: #a65b26;
+    --brass: #c5a059;
+    --border-color: rgba(197, 160, 89, 0.25);
+    --border-highlight: rgba(212, 154, 61, 0.5);
+    --card-shadow: 0 10px 28px rgba(0, 0, 0, 0.65);
+}
+
+[data-theme="light"] {
+    --bg-main: #f4efe4;
+    --bg-surface: #eae0cf;
+    --bg-card: #ffffff;
+    --bg-input: #ffffff;
+    --text-main: #2b1f17;
+    --text-muted: #6b5c51;
+    --text-highlight: #a85d1c;
+    --accent-amber: #b87a26;
+    --accent-warm: #8c4315;
+    --brass: #9b7428;
+    --border-color: rgba(155, 116, 40, 0.25);
+    --border-highlight: rgba(184, 122, 38, 0.55);
+    --card-shadow: 0 8px 24px rgba(60, 40, 20, 0.12);
+}
+
+html, body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1:focus {
+    outline: none;
+}
+
+a, .btn-link {
+    color: #e67e22;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+a:hover, .btn-link:hover {
+    color: #f5b041;
+}
+
+/* Enfoque en accesibilidad con aura ámbar analógica */
+:focus-visible {
+    outline: 2px solid #e67e22;
+    outline-offset: 2px;
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.15rem rgba(230, 126, 34, 0.4);
+    border-color: #e67e22;
+}
+
+/* Blazor Error UI Vintage */
+#blazor-error-ui {
+    background: #25120c;
+    color: #ffd8cc;
+    border-top: 2px solid #e67e22;
+    bottom: 0;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    display: none;
+    left: 0;
+    padding: 0.75rem 1.5rem;
+    position: fixed;
+    width: 100%;
+    z-index: 10000;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+#blazor-error-ui a {
+    color: #ffb142;
+    text-decoration: underline;
+    margin-left: 0.5rem;
+}
+
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    position: absolute;
+    right: 1rem;
+    top: 0.75rem;
+    font-size: 1.1rem;
+    color: #ff793f;
+}
+
+/* Indicador de Carga Inicial Transistor Retro (Zero White Screen Flash) */
+.loading-progress {
+    position: absolute;
+    display: block;
+    width: 7.5rem;
+    height: 7.5rem;
+    inset: 22vh 0 auto 0;
+    margin: 0 auto;
+    filter: drop-shadow(0 0 15px rgba(230, 126, 34, 0.35));
+}
+
+.loading-progress circle {
+    fill: none;
+    stroke: #22252c;
+    stroke-width: 0.55rem;
+    transform-origin: 50% 50%;
+    transform: rotate(-90deg);
+}
+
+.loading-progress circle:last-child {
+    stroke: #e67e22;
+    stroke-linecap: round;
+    stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%) * 0.75), 500%;
+    transition: stroke-dasharray 0.05s ease-in-out;
+}
+
+.loading-progress-text {
+    position: absolute;
+    text-align: center;
+    font-weight: 700;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
+    font-size: 0.92rem;
+    color: #f5b041;
+    letter-spacing: 0.06em;
+    inset: calc(22vh + 3.1rem) 0 auto 0;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+}
+
+.loading-progress-text:after {
+    content: " " var(--blazor-load-percentage-text, "0%");
+}
+
+/* Scrollbar Vintage de Estudio */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #121316;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #2c2f38;
+    border-radius: 4px;
+    border: 1px solid rgba(230, 126, 34, 0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #e67e22;
+}

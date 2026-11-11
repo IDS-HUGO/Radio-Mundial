@@ -1,0 +1,23 @@
+@using frontend.Services
+@inject RadioStateService RadioState
+
+@if (!RadioState.CookiesAccepted)
+{
+    <aside class="cookie-banner-overlay" role="region" aria-label="Aviso de Cookies y Privacidad">
+        <div class="cookie-banner-content">
+            <div class="cookie-text-col">
+                <div class="cookie-title">
+                    <span class="cookie-icon">🍪</span> Privacidad y Experiencia de Usuario
+                </div>
+                <p class="cookie-desc">
+                    Utilizamos almacenamiento local y cookies técnicas para recordar tu estación sintonizada, volumen y filtros preferidos. Sin rastreo publicitario.
+                </p>
+            </div>
+            <div class="cookie-actions">
+                <button class="btn-cookie-accept" @onclick="RadioState.AcceptCookiesAsync">
+                    Aceptar y Continuar
+                </button>
+            </div>
+        </div>
+    </aside>
+}

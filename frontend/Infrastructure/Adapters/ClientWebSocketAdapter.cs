@@ -1,6 +1,8 @@
 using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
+using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Configuration;
 using frontend.Application.Ports;
 using frontend.Domain.Entities;
 
@@ -13,7 +15,24 @@ namespace frontend.Infrastructure.Adapters;
 public class ClientWebSocketAdapter : IBroadcastPort
 {
     private ClientWebSocket? _webSocket;
-    private readonly string _wsUrl = "ws://localhost:8000/ws";
+    private readonly string _wsUrl;
+
+    public ClientWebSocketAdapter(IConfiguration configuration, NavigationManager nav)
+    {
+        var configured = configuration["BackendWsUrl"];
+        if (!string.IsNullOrWhiteSpace(configured))
+        {
+            _wsUrl = configured;
+        }
+        else if (nav.BaseUri.Contains("localhost") || nav.BaseUri.Contains("127.0.0.1"))
+        {
+            _wsUrl = "ws://localhost:8000/ws";
+        }
+        else
+        {
+            _wsUrl = "wss://radio-mundial-api.onrender.com/ws";
+        }
+    }
 
     public bool IsConnected { get; private set; }
     public string ConnectionStatusText { get; private set; } = "Conectando...";

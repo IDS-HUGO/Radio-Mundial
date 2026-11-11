@@ -1,4 +1,6 @@
 using System.Net.Http.Json;
+using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Configuration;
 using frontend.Application.Ports;
 using frontend.Domain.Entities;
 
@@ -11,11 +13,25 @@ namespace frontend.Infrastructure.Adapters;
 public class HttpRadioCatalogAdapter : IRadioCatalogPort
 {
     private readonly HttpClient _httpClient;
-    private readonly string _backendBaseUrl = "http://localhost:8000";
+    private readonly string _backendBaseUrl;
 
-    public HttpRadioCatalogAdapter(HttpClient httpClient)
+    public HttpRadioCatalogAdapter(HttpClient httpClient, IConfiguration configuration, NavigationManager nav)
     {
         _httpClient = httpClient;
+        
+        var configured = configuration["BackendHttpUrl"];
+        if (!string.IsNullOrWhiteSpace(configured))
+        {
+            _backendBaseUrl = configured.TrimEnd('/');
+        }
+        else if (nav.BaseUri.Contains("localhost") || nav.BaseUri.Contains("127.0.0.1"))
+        {
+            _backendBaseUrl = "http://localhost:8000";
+        }
+        else
+        {
+            _backendBaseUrl = "https://radio-mundial-api.onrender.com";
+        }
     }
 
     public async Task<List<Station>> GetStationsAsync(string? country = null, string? state = null, string? band = null, string? search = null, int limit = 150)

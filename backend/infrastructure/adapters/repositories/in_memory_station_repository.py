@@ -29,6 +29,10 @@ COUNTRY_NORMALIZER: dict[str, str] = {
     "italy": "Italia", "japan": "Japón", "canada": "Canadá", "ecuador": "Ecuador",
     "uruguay": "Uruguay", "venezuela": "Venezuela", "costa rica": "Costa Rica",
     "panama": "Panamá", "guatemala": "Guatemala", "puerto rico": "Puerto Rico",
+    "el salvador": "El Salvador", "honduras": "Honduras", "nicaragua": "Nicaragua",
+    "belice": "Belice", "belize": "Belice", "republica dominicana": "República Dominicana",
+    "dominican republic": "República Dominicana", "cuba": "Cuba", "jamaica": "Jamaica",
+    "bolivia": "Bolivia", "paraguay": "Paraguay",
     "netherlands": "Países Bajos", "australia": "Australia", "portugal": "Portugal"
 }
 

@@ -15,6 +15,7 @@ class IStationRepository(ABC):
     @abstractmethod
     async def get_stations(
         self,
+        continent: str | None = None,
         country: str | None = None,
         state: str | None = None,
         city: str | None = None,
@@ -32,7 +33,7 @@ class IStationRepository(ABC):
         pass
 
     @abstractmethod
-    def get_filter_options(self) -> FilterOptions:
+    def get_filter_options(self, continent: str | None = None) -> FilterOptions:
         """Retorna las opciones disponibles para el filtrado en el cliente."""
         pass
 

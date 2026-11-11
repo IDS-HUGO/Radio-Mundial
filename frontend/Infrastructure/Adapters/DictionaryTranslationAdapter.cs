@@ -22,6 +22,8 @@ public class DictionaryTranslationAdapter : ITranslationPort
             "LISTENERS" => isEn ? "Listeners" : "Oyentes",
             "CONNECTED" => isEn ? "Connected" : "Conectado",
             "RECONNECTING" => isEn ? "Reconnecting..." : "Reconectando...",
+            "CONTINENT" => isEn ? "CONTINENT" : "CONTINENTE",
+            "CONTINENT_ALL" => isEn ? "🌐 All Continents" : "🌐 Todos los Continentes",
             "COUNTRY" => isEn ? "COUNTRY / WORLD REGION" : "PAÍS / REGIÓN INTERNACIONAL",
             "COUNTRY_ALL" => isEn ? "🌐 All World" : "🌐 Todo el Mundo",
             "SELECT_COUNTRY" => isEn ? "Choose Country" : "Seleccionar País",

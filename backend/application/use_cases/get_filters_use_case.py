@@ -15,5 +15,5 @@ class GetFiltersUseCase:
     def __init__(self, repository: IStationRepository) -> None:
         self._repository = repository
 
-    def execute(self) -> FilterOptions:
-        return self._repository.get_filter_options()
+    def execute(self, continent: str | None = None) -> FilterOptions:
+        return self._repository.get_filter_options(continent=continent)

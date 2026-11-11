@@ -17,6 +17,7 @@ class GetStationsUseCase:
 
     async def execute(
         self,
+        continent: str | None = None,
         country: str | None = None,
         state: str | None = None,
         city: str | None = None,
@@ -26,6 +27,7 @@ class GetStationsUseCase:
         limit: int = 150
     ) -> list[Station]:
         return await self._repository.get_stations(
+            continent=continent,
             country=country,
             state=state,
             city=city,

@@ -149,49 +149,64 @@
             <!-- Fila 2: Barra de Filtros Desplegables en Cuadrícula Compacta y Ordenada -->
             <div class="dropdowns-filter-grid mb-2">
                 
-                <!-- Desplegable 1: País -->
+                <!-- Desplegable 1: Continente -->
                 <div class="filter-col">
-                    <label class="filter-field-label">🌍 @RadioState.T("COUNTRY")</label>
+                    <label class="filter-field-label">🌐 @RadioState.T("CONTINENT")</label>
+                    <select class="form-select studio-dropdown-select" 
+                            value="@RadioState.SelectedContinent" 
+                            @onchange="OnContinentChanged">
+                        <option value="Todos">🌐 @RadioState.T("CONTINENT_ALL")</option>
+                        <option value="América">🌎 América</option>
+                        <option value="Europa">🌍 Europa</option>
+                        <option value="Asia">🌏 Asia</option>
+                        <option value="África">🌍 África</option>
+                        <option value="Oceanía">🌏 Oceanía</option>
+                    </select>
+                </div>
+
+                <!-- Desplegable 2: País -->
+                <div class="filter-col">
+                    <label class="filter-field-label">🏳️ @RadioState.T("COUNTRY")</label>
                     <select class="form-select studio-dropdown-select" 
                             value="@RadioState.SelectedCountry" 
                             @onchange="OnCountryChanged">
                         <option value="Todos">🌐 @RadioState.T("COUNTRY_ALL")</option>
-                        @foreach (var c in TopCountries.Where(x => x.Name != "Todos"))
+                        @foreach (var c in RadioState.GetAvailableCountries())
                         {
-                            <option value="@c.Name">@c.Flag @c.Name</option>
+                            <option value="@c">@GetCountryFlag(c) @c</option>
                         }
                     </select>
                 </div>
 
-                <!-- Desplegable 2: Estado / Región -->
+                <!-- Desplegable 3: Estado / Región -->
                 <div class="filter-col">
                     <label class="filter-field-label">📍 @RadioState.T("STATE")</label>
                     <select class="form-select studio-dropdown-select" 
                             value="@RadioState.SelectedState" 
                             @onchange="OnStateChanged">
                         <option value="Todos">📍 @RadioState.T("STATE_ALL")</option>
-                        @foreach (var stateName in GetAvailableStates())
+                        @foreach (var stateName in RadioState.GetAvailableStates())
                         {
                             <option value="@stateName">@stateName</option>
                         }
                     </select>
                 </div>
 
-                <!-- Desplegable 3: Ciudad -->
+                <!-- Desplegable 4: Ciudad -->
                 <div class="filter-col">
                     <label class="filter-field-label">🏙️ @RadioState.T("CITY")</label>
                     <select class="form-select studio-dropdown-select" 
                             value="@RadioState.SelectedCity" 
                             @onchange="OnCityChanged">
                         <option value="Todas">🏙️ @RadioState.T("CITY_ALL")</option>
-                        @foreach (var city in GetAvailableCities())
+                        @foreach (var city in RadioState.GetAvailableCities())
                         {
                             <option value="@city">@city</option>
                         }
                     </select>
                 </div>
 
-                <!-- Desplegable 4: Género Musical -->
+                <!-- Desplegable 5: Género Musical -->
                 <div class="filter-col">
                     <label class="filter-field-label">🎵 @RadioState.T("GENRE")</label>
                     <select class="form-select studio-dropdown-select" 
@@ -226,6 +241,13 @@
                 <div class="active-chips-toolbar d-flex flex-wrap align-items-center gap-2 pt-2 border-top-console">
                     <span class="active-chips-label">Filtros activos:</span>
                     
+                    @if (RadioState.SelectedContinent != "Todos")
+                    {
+                        <button class="active-filter-badge" @onclick='() => RadioState.SetContinentFilter("Todos")' title="Quitar filtro de continente">
+                            <span>@RadioState.SelectedContinent</span>
+                            <span class="badge-close">✕</span>
+                        </button>
+                    }
                     @if (RadioState.SelectedCountry != "Todos")
                     {
                         <button class="active-filter-badge" @onclick='() => RadioState.SetCountryFilter("Todos")' title="Quitar filtro">
@@ -422,48 +444,31 @@
     private bool IsSideBySide { get; set; } = true;
     private bool ShowFmAmGuide { get; set; } = false;
 
-    private record CountryItem(string Name, string Flag);
+    private static readonly Dictionary<string, string> CountryFlags = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["México"] = "🇲🇽", ["Estados Unidos"] = "🇺🇸", ["Canadá"] = "🇨🇦",
+        ["Guatemala"] = "🇬🇹", ["Costa Rica"] = "🇨🇷", ["El Salvador"] = "🇸🇻",
+        ["Honduras"] = "🇭🇳", ["Nicaragua"] = "🇳🇮", ["Panamá"] = "🇵🇦", ["Belice"] = "🇧🇿",
+        ["República Dominicana"] = "🇩🇴", ["Puerto Rico"] = "🇵🇷", ["Cuba"] = "🇨🇺", ["Jamaica"] = "🇯🇲",
+        ["Colombia"] = "🇨🇴", ["Argentina"] = "🇦🇷", ["Brasil"] = "🇧🇷", ["Chile"] = "🇨🇱",
+        ["Perú"] = "🇵🇪", ["Venezuela"] = "🇻🇪", ["Ecuador"] = "🇪🇨", ["Bolivia"] = "🇧🇴",
+        ["Uruguay"] = "🇺🇾", ["Paraguay"] = "🇵🇾",
+        ["España"] = "🇪🇸", ["Reino Unido"] = "🇬🇧", ["Francia"] = "🇫🇷", ["Alemania"] = "🇩🇪",
+        ["Italia"] = "🇮🇹", ["Suiza"] = "🇨🇭", ["Portugal"] = "🇵🇹", ["Países Bajos"] = "🇳🇱",
+        ["Bélgica"] = "🇧🇪", ["Austria"] = "🇦🇹", ["Suecia"] = "🇸🇪", ["Noruega"] = "🇳🇴",
+        ["Dinamarca"] = "🇩🇰", ["Finlandia"] = "🇫🇮", ["Irlanda"] = "🇮🇪", ["Grecia"] = "🇬🇷",
+        ["Polonia"] = "🇵🇱", ["República Checa"] = "🇨🇿",
+        ["Japón"] = "🇯🇵", ["Corea del Sur"] = "🇰🇷", ["China"] = "🇨🇳", ["Hong Kong"] = "🇭🇰",
+        ["Taiwán"] = "🇹🇼", ["India"] = "🇮🇳", ["Indonesia"] = "🇮🇩", ["Filipinas"] = "🇵🇭",
+        ["Tailandia"] = "🇹🇭", ["Vietnam"] = "🇻🇳", ["Singapur"] = "🇸🇬", ["Malasia"] = "🇲🇾",
+        ["Turquía"] = "🇹🇷", ["Emiratos Árabes Unidos"] = "🇦🇪", ["Israel"] = "🇮🇱", ["Arabia Saudita"] = "🇸🇦",
+        ["Sudáfrica"] = "🇿🇦", ["Nigeria"] = "🇳🇬", ["Egipto"] = "🇪🇬", ["Kenia"] = "🇰🇪",
+        ["Marruecos"] = "🇲🇦", ["Ghana"] = "🇬🇭", ["Senegal"] = "🇸🇳", ["Costa de Marfil"] = "🇨🇮",
+        ["Argelia"] = "🇩🇿", ["Túnez"] = "🇹🇳",
+        ["Australia"] = "🇦🇺", ["Nueva Zelanda"] = "🇳🇿", ["Fiyi"] = "🇫🇯", ["Papúa Nueva Guinea"] = "🇵🇬"
+    };
 
-    private readonly List<CountryItem> TopCountries =
-    [
-        new("Todos", "🌐"),
-        // Norteamérica
-        new("México", "🇲🇽"),
-        new("Estados Unidos", "🇺🇸"),
-        new("Canadá", "🇨🇦"),
-        // Centroamérica
-        new("Guatemala", "🇬🇹"),
-        new("Costa Rica", "🇨🇷"),
-        new("El Salvador", "🇸🇻"),
-        new("Honduras", "🇭🇳"),
-        new("Nicaragua", "🇳🇮"),
-        new("Panamá", "🇵🇦"),
-        new("Belice", "🇧🇿"),
-        // El Caribe
-        new("República Dominicana", "🇩🇴"),
-        new("Puerto Rico", "🇵🇷"),
-        new("Cuba", "🇨🇺"),
-        new("Jamaica", "🇯🇲"),
-        // Sudamérica
-        new("Colombia", "🇨🇴"),
-        new("Argentina", "🇦🇷"),
-        new("Brasil", "🇧🇷"),
-        new("Chile", "🇨🇱"),
-        new("Perú", "🇵🇪"),
-        new("Venezuela", "🇻🇪"),
-        new("Ecuador", "🇪🇨"),
-        new("Bolivia", "🇧🇴"),
-        new("Uruguay", "🇺🇾"),
-        new("Paraguay", "🇵🇾"),
-        // Europa & Asia
-        new("España", "🇪🇸"),
-        new("Alemania", "🇩🇪"),
-        new("Reino Unido", "🇬🇧"),
-        new("Francia", "🇫🇷"),
-        new("Italia", "🇮🇹"),
-        new("Suiza", "🇨🇭"),
-        new("Japón", "🇯🇵")
-    ];
+    private string GetCountryFlag(string country) => CountryFlags.TryGetValue(country, out var flag) ? flag : "🏳️";
 
     protected override void OnInitialized()
     {
@@ -487,7 +492,8 @@
 
     private bool HasActiveFilters()
     {
-        return RadioState.SelectedCountry != "Todos" ||
+        return RadioState.SelectedContinent != "Todos" ||
+               RadioState.SelectedCountry != "Todos" ||
                RadioState.SelectedState != "Todos" ||
                RadioState.SelectedCity != "Todas" ||
                RadioState.SelectedGenre != "Todos" ||
@@ -495,42 +501,9 @@
                !string.IsNullOrWhiteSpace(RadioState.SearchQuery);
     }
 
-    private IEnumerable<string> GetAvailableStates()
+    private void OnContinentChanged(ChangeEventArgs e)
     {
-        if (RadioState.SelectedCountry == "México" || RadioState.SelectedCountry == "Todos")
-        {
-            if (RadioState.FilterOptions.States is not null && RadioState.FilterOptions.States.Count > 0)
-            {
-                return RadioState.FilterOptions.States;
-            }
-        }
-
-        var states = RadioState.AllStations
-            .Where(s => RadioState.SelectedCountry == "Todos" || string.Equals(RadioStateService.NormalizeText(s.Country), RadioStateService.NormalizeText(RadioState.SelectedCountry), StringComparison.OrdinalIgnoreCase))
-            .Select(s => s.State)
-            .Where(st => !string.IsNullOrEmpty(st) && st != "Nacional")
-            .Distinct()
-            .OrderBy(st => st)
-            .ToList();
-
-        return states.Count > 0 ? states : ["Chiapas", "Ciudad de México", "Jalisco", "Nuevo León", "Oaxaca", "Puebla", "Veracruz"];
-    }
-
-    private IEnumerable<string> GetAvailableCities()
-    {
-        var normCountry = RadioStateService.NormalizeText(RadioState.SelectedCountry);
-        var normState = RadioStateService.NormalizeText(RadioState.SelectedState);
-
-        var q = RadioState.AllStations.AsEnumerable();
-        if (normCountry != "todos" && !string.IsNullOrEmpty(normCountry))
-        {
-            q = q.Where(s => RadioStateService.NormalizeText(s.Country) == normCountry || RadioStateService.NormalizeText(s.Country).Contains(normCountry));
-        }
-        if (normState != "todos" && !string.IsNullOrEmpty(normState))
-        {
-            q = q.Where(s => RadioStateService.NormalizeText(s.State) == normState || RadioStateService.NormalizeText(s.State).Contains(normState));
-        }
-        return q.Select(s => s.City).Where(c => !string.IsNullOrEmpty(c) && c != "Nacional").Distinct().OrderBy(c => c);
+        RadioState.SetContinentFilter(e.Value?.ToString() ?? "Todos");
     }
 
     private void OnCountryChanged(ChangeEventArgs e)

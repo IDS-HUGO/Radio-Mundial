@@ -8,6 +8,9 @@ namespace frontend.Domain.Entities;
 /// </summary>
 public class FilterOptionsResponse
 {
+    [JsonPropertyName("continents")]
+    public List<string> Continents { get; set; } = ["América", "Europa", "Asia", "África", "Oceanía"];
+
     [JsonPropertyName("countries")]
     public List<string> Countries { get; set; } = [];
 

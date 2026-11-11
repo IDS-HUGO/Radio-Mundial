@@ -34,16 +34,17 @@ public class HttpRadioCatalogAdapter : IRadioCatalogPort
         }
     }
 
-    public async Task<List<Station>> GetStationsAsync(string? country = null, string? state = null, string? band = null, string? search = null, int limit = 150)
+    public async Task<List<Station>> GetStationsAsync(string? continent = null, string? country = null, string? state = null, string? band = null, string? search = null, int limit = 150)
     {
         try
         {
+            var continentParam = !string.IsNullOrWhiteSpace(continent) && continent != "Todos" ? Uri.EscapeDataString(continent) : "";
             var countryParam = !string.IsNullOrWhiteSpace(country) && country != "Todos" ? Uri.EscapeDataString(country) : "";
             var stateParam = !string.IsNullOrWhiteSpace(state) && state != "Todos" ? Uri.EscapeDataString(state) : "";
             var bandParam = !string.IsNullOrWhiteSpace(band) && band != "TODAS" ? Uri.EscapeDataString(band) : "";
             var searchParam = !string.IsNullOrWhiteSpace(search) ? Uri.EscapeDataString(search) : "";
 
-            var url = $"{_backendBaseUrl}/api/stations?limit={limit}&country={countryParam}&state={stateParam}&band={bandParam}&search={searchParam}";
+            var url = $"{_backendBaseUrl}/api/stations?limit={limit}&continent={continentParam}&country={countryParam}&state={stateParam}&band={bandParam}&search={searchParam}";
             var result = await _httpClient.GetFromJsonAsync<List<Station>>(url);
             return result ?? [];
         }
@@ -54,11 +55,12 @@ public class HttpRadioCatalogAdapter : IRadioCatalogPort
         }
     }
 
-    public async Task<FilterOptionsResponse?> GetFilterOptionsAsync()
+    public async Task<FilterOptionsResponse?> GetFilterOptionsAsync(string? continent = null)
     {
         try
         {
-            return await _httpClient.GetFromJsonAsync<FilterOptionsResponse>($"{_backendBaseUrl}/api/filters");
+            var continentParam = !string.IsNullOrWhiteSpace(continent) && continent != "Todos" ? $"?continent={Uri.EscapeDataString(continent)}" : "";
+            return await _httpClient.GetFromJsonAsync<FilterOptionsResponse>($"{_backendBaseUrl}/api/filters{continentParam}");
         }
         catch (Exception ex)
         {

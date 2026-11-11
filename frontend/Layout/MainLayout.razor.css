@@ -60,6 +60,19 @@
     font-size: 1.35rem;
 }
 
+.brand-logo-img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    border-radius: 50%;
+    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.25));
+    transition: transform 0.2s ease;
+}
+
+.brand-link:hover .brand-logo-img {
+    transform: rotate(10deg) scale(1.05);
+}
+
 .brand-accent {
     color: var(--accent-amber);
 }

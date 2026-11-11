@@ -14,6 +14,9 @@ public class Station
     [JsonPropertyName("name")]
     public string Name { get; set; } = string.Empty;
 
+    [JsonPropertyName("continent")]
+    public string Continent { get; set; } = "América";
+
     [JsonPropertyName("country")]
     public string Country { get; set; } = string.Empty;
 

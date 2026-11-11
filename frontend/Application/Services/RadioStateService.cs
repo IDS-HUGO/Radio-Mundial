@@ -26,6 +26,7 @@ public class RadioStateService : IAsyncDisposable
     public List<Station> FilteredStations { get; private set; } = [];
     public FilterOptionsResponse FilterOptions { get; private set; } = new();
 
+    public string SelectedContinent { get; private set; } = "Todos";
     public string SelectedCountry { get; private set; } = "Todos";
     public string SelectedState { get; private set; } = "Todos";
     public string SelectedCity { get; private set; } = "Todas";
@@ -224,6 +225,17 @@ public class RadioStateService : IAsyncDisposable
 
     #region Filtros Reactivos
 
+    public void SetContinentFilter(string continent)
+    {
+        SelectedContinent = continent;
+        SelectedCountry = "Todos";
+        SelectedState = "Todos";
+        SelectedCity = "Todas";
+        SelectedLocality = "Todas";
+        ApplyFilters();
+        _ = FetchDynamicStationsAsync();
+    }
+
     public void SetCountryFilter(string country)
     {
         SelectedCountry = country;
@@ -280,6 +292,7 @@ public class RadioStateService : IAsyncDisposable
 
     public void ResetFilters()
     {
+        SelectedContinent = "Todos";
         SelectedCountry = "Todos";
         SelectedState = "Todos";
         SelectedCity = "Todas";
@@ -293,6 +306,7 @@ public class RadioStateService : IAsyncDisposable
     public async Task FetchDynamicStationsAsync()
     {
         var fetched = await _catalogPort.GetStationsAsync(
+            continent: SelectedContinent,
             country: SelectedCountry,
             state: SelectedState,
             band: SelectedBand,
@@ -319,8 +333,78 @@ public class RadioStateService : IAsyncDisposable
         }
     }
 
+    public List<string> GetAvailableContinents()
+    {
+        var list = AllStations.Select(s => s.Continent).Where(c => !string.IsNullOrWhiteSpace(c)).Distinct().OrderBy(c => c).ToList();
+        if (list.Count == 0) return ["América", "Europa", "Asia", "África", "Oceanía"];
+        return list;
+    }
+
+    public List<string> GetAvailableCountries()
+    {
+        var query = AllStations.AsEnumerable();
+        if (SelectedContinent != "Todos" && !string.IsNullOrWhiteSpace(SelectedContinent))
+        {
+            var normCont = NormalizeText(SelectedContinent);
+            query = query.Where(s => NormalizeText(s.Continent) == normCont);
+        }
+        var countries = query.Select(s => s.Country).Where(c => !string.IsNullOrWhiteSpace(c)).Distinct().OrderBy(c => c).ToList();
+        if (countries.Contains("México"))
+        {
+            countries.Remove("México");
+            countries.Insert(0, "México");
+        }
+        return countries;
+    }
+
+    public List<string> GetAvailableStates()
+    {
+        var query = AllStations.AsEnumerable();
+        if (SelectedContinent != "Todos" && !string.IsNullOrWhiteSpace(SelectedContinent))
+        {
+            var normCont = NormalizeText(SelectedContinent);
+            query = query.Where(s => NormalizeText(s.Continent) == normCont);
+        }
+        if (SelectedCountry != "Todos" && !string.IsNullOrWhiteSpace(SelectedCountry))
+        {
+            var normCountry = NormalizeText(SelectedCountry);
+            query = query.Where(s => NormalizeText(s.Country) == normCountry);
+        }
+        return query.Select(s => s.State)
+                    .Where(st => !string.IsNullOrWhiteSpace(st) && st != "Nacional")
+                    .Distinct()
+                    .OrderBy(st => st)
+                    .ToList();
+    }
+
+    public List<string> GetAvailableCities()
+    {
+        var query = AllStations.AsEnumerable();
+        if (SelectedContinent != "Todos" && !string.IsNullOrWhiteSpace(SelectedContinent))
+        {
+            var normCont = NormalizeText(SelectedContinent);
+            query = query.Where(s => NormalizeText(s.Continent) == normCont);
+        }
+        if (SelectedCountry != "Todos" && !string.IsNullOrWhiteSpace(SelectedCountry))
+        {
+            var normCountry = NormalizeText(SelectedCountry);
+            query = query.Where(s => NormalizeText(s.Country) == normCountry);
+        }
+        if (SelectedState != "Todos" && !string.IsNullOrWhiteSpace(SelectedState))
+        {
+            var normState = NormalizeText(SelectedState);
+            query = query.Where(s => NormalizeText(s.State) == normState);
+        }
+        return query.Select(s => s.City)
+                    .Where(c => !string.IsNullOrWhiteSpace(c) && c != "Nacional")
+                    .Distinct()
+                    .OrderBy(c => c)
+                    .ToList();
+    }
+
     private void ApplyFilters()
     {
+        var normContinent = NormalizeText(SelectedContinent);
         var normCountry = NormalizeText(SelectedCountry);
         var normState = NormalizeText(SelectedState);
         var normCity = NormalizeText(SelectedCity);
@@ -329,6 +413,11 @@ public class RadioStateService : IAsyncDisposable
         var normSearch = NormalizeText(SearchQuery);
 
         var q = AllStations.AsEnumerable();
+
+        if (normContinent != "todos" && !string.IsNullOrEmpty(normContinent))
+        {
+            q = q.Where(s => NormalizeText(s.Continent) == normContinent);
+        }
 
         if (normCountry != "todos" && !string.IsNullOrEmpty(normCountry))
         {

@@ -14,6 +14,7 @@ class Station(BaseModel):
     """Representa una estación de radio sintonizable en el catálogo mundial."""
     id: str = Field(..., description="Identificador único slug")
     name: str = Field(..., description="Nombre comercial de la emisora")
+    continent: str = Field("América", description="Continente de origen (América, Europa, Asia, África, Oceanía)")
     country: str = Field(..., description="País de origen")
     country_code: str = Field(..., description="Código ISO 2 letras del país (ej. MX, US)")
     state: str = Field("Nacional", description="Estado, provincia o región")
@@ -49,6 +50,7 @@ class RadioBroadcastMessage(BaseModel):
 
 class FilterOptions(BaseModel):
     """Opciones dinámicas de filtros disponibles en el catálogo de radio."""
+    continents: list[str] = Field(default_factory=lambda: ["América", "Europa", "Asia", "África", "Oceanía"])
     countries: list[str]
     states: list[str]
     cities: list[str]

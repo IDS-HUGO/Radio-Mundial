@@ -44,6 +44,7 @@ async def health_check() -> dict[str, str]:
 
 @router.get("/api/stations", response_model=list[Station])
 async def get_stations(
+    continent: str | None = Query(None, description="Filtrar por continente (América, Europa, Asia, África, Oceanía)"),
     country: str | None = Query(None, description="Filtrar por país"),
     state: str | None = Query(None, description="Filtrar por estado o provincia"),
     city: str | None = Query(None, description="Filtrar por ciudad"),
@@ -56,6 +57,7 @@ async def get_stations(
     if _get_stations_uc is None:
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="API inicializando...")
     return await _get_stations_uc.execute(
+        continent=continent,
         country=country,
         state=state,
         city=city,
@@ -67,11 +69,13 @@ async def get_stations(
 
 
 @router.get("/api/filters", response_model=FilterOptions)
-async def get_filters() -> FilterOptions:
-    """Retorna la lista de países, estados, ciudades y géneros indexados."""
+async def get_filters(
+    continent: str | None = Query(None, description="Filtrar opciones por continente")
+) -> FilterOptions:
+    """Retorna la lista de continentes, países, estados, ciudades y géneros indexados."""
     if _get_filters_uc is None:
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="API inicializando...")
-    return _get_filters_uc.execute()
+    return _get_filters_uc.execute(continent=continent)
 
 
 @router.get("/api/stations/{station_id}", response_model=Station)

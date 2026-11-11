@@ -36,6 +36,34 @@ COUNTRY_NORMALIZER: dict[str, str] = {
     "netherlands": "Países Bajos", "australia": "Australia", "portugal": "Portugal"
 }
 
+COUNTRY_CONTINENT_MAP: dict[str, str] = {
+    # América
+    "mexico": "América", "estados unidos": "América", "usa": "América", "canada": "América",
+    "colombia": "América", "argentina": "América", "brasil": "América", "chile": "América",
+    "peru": "América", "ecuador": "América", "venezuela": "América", "bolivia": "América",
+    "uruguay": "América", "paraguay": "América", "guatemala": "América", "el salvador": "América",
+    "honduras": "América", "nicaragua": "América", "costa rica": "América", "panama": "América",
+    "belice": "América", "republica dominicana": "América", "puerto rico": "América",
+    "cuba": "América", "jamaica": "América",
+    # Europa
+    "espana": "Europa", "reino unido": "Europa", "francia": "Europa", "alemania": "Europa",
+    "italia": "Europa", "suiza": "Europa", "portugal": "Europa", "paises bajos": "Europa",
+    "belgica": "Europa", "austria": "Europa", "suecia": "Europa", "noruega": "Europa",
+    "dinamarca": "Europa", "finlandia": "Europa", "irlanda": "Europa", "grecia": "Europa",
+    "polonia": "Europa", "republica checa": "Europa",
+    # Asia
+    "japon": "Asia", "corea del sur": "Asia", "china": "Asia", "hong kong": "Asia",
+    "taiwan": "Asia", "india": "Asia", "indonesia": "Asia", "filipinas": "Asia",
+    "tailandia": "Asia", "vietnam": "Asia", "singapur": "Asia", "malasia": "Asia",
+    "turquia": "Asia", "emiratos arabes unidos": "Asia", "israel": "Asia", "arabia saudita": "Asia",
+    # África
+    "sudafrica": "África", "nigeria": "África", "egipto": "África", "kenia": "África",
+    "marruecos": "África", "ghana": "África", "senegal": "África", "costa de marfil": "África",
+    "argelia": "África", "tunez": "África",
+    # Oceanía
+    "australia": "Oceanía", "nueva zelanda": "Oceanía", "fiyi": "Oceanía", "papua nueva guinea": "Oceanía"
+}
+
 MEXICO_STATES: list[str] = [
     "Aguascalientes", "Baja California", "Baja California Sur", "Campeche", "Chiapas",
     "Chihuahua", "Ciudad de México", "Coahuila", "Colima", "Durango", "Estado de México",
@@ -57,15 +85,32 @@ def normalize_text(text: str | None) -> str:
 class InMemoryStationRepository(IStationRepository):
     """Adaptador de repositorio con persistencia en memoria y consulta externa."""
 
-    def __init__(self, seed_path: str = "data/seed_stations.json") -> None:
+    def __init__(self, seed_path: str = "data/seed_stations.json", continents_dir: str = "data/continents") -> None:
         self._seed_path = seed_path
+        self._continents_dir = continents_dir
         self._cache: list[Station] = []
         self._url_index: set[str] = set()
         self._id_index: dict[str, Station] = {}
         self._load_seed()
 
     def _load_seed(self) -> None:
-        if os.path.exists(self._seed_path):
+        loaded = 0
+        if os.path.exists(self._continents_dir):
+            try:
+                for file_name in sorted(os.listdir(self._continents_dir)):
+                    if file_name.endswith(".json"):
+                        file_path = os.path.join(self._continents_dir, file_name)
+                        with open(file_path, "r", encoding="utf-8") as f:
+                            data = json.load(f)
+                            for item in data:
+                                st = Station(**item)
+                                if self._add_to_cache(st):
+                                    loaded += 1
+                logger.info(f"Catálogo por continentes cargado con éxito: {loaded} emisoras desde {self._continents_dir}.")
+            except Exception as e:
+                logger.warning(f"Error cargando directorio de continentes {self._continents_dir}: {e}")
+
+        if not self._cache and os.path.exists(self._seed_path):
             try:
                 with open(self._seed_path, "r", encoding="utf-8") as f:
                     data = json.load(f)
@@ -79,6 +124,9 @@ class InMemoryStationRepository(IStationRepository):
     def _add_to_cache(self, st: Station) -> bool:
         if st.stream_url in self._url_index:
             return False
+        if not st.continent or st.continent == "América":
+            norm_c = normalize_text(st.country)
+            st.continent = COUNTRY_CONTINENT_MAP.get(norm_c, st.continent or "América")
         self._url_index.add(st.stream_url)
         self._cache.append(st)
         self._id_index[st.id] = st
@@ -194,6 +242,7 @@ class InMemoryStationRepository(IStationRepository):
 
     async def get_stations(
         self,
+        continent: str | None = None,
         country: str | None = None,
         state: str | None = None,
         city: str | None = None,
@@ -221,6 +270,10 @@ class InMemoryStationRepository(IStationRepository):
                         pool.append(st)
 
         results = pool
+
+        if continent and continent.strip().lower() != "todos":
+            cont_norm = normalize_text(continent)
+            results = [s for s in results if normalize_text(s.continent) == cont_norm]
 
         if country and country.strip().lower() != "todos":
             c_norm = normalize_text(country)
@@ -276,28 +329,44 @@ class InMemoryStationRepository(IStationRepository):
 
         return results[:limit]
 
-    def get_filter_options(self) -> FilterOptions:
-        cache_countries = sorted(list({s.country for s in self._cache if s.country}))
+    def get_filter_options(self, continent: str | None = None) -> FilterOptions:
+        continents = ["América", "Europa", "Asia", "África", "Oceanía"]
+
+        target_pool = self._cache
+        if continent and continent.strip().lower() != "todos":
+            c_norm = normalize_text(continent)
+            target_pool = [s for s in self._cache if normalize_text(s.continent) == c_norm]
+
+        cache_countries = sorted(list({s.country for s in target_pool if s.country}))
         if "México" in cache_countries:
             cache_countries.remove("México")
             countries = ["México"] + cache_countries
         else:
             countries = cache_countries
 
-        cache_genres = sorted(list({s.genre for s in self._cache if s.genre}))
+        cache_genres = sorted(list({s.genre for s in target_pool if s.genre}))
         genres = cache_genres if cache_genres else [
             "Pop & Éxitos", "Rock Alternativo", "Rock & Metal", "Regional Mexicano & Banda",
             "Noticias & Opinión", "Jazz & Fusión", "Salsa & Cumbia", "Romántica & Baladas",
             "Música Clásica", "Hip-Hop & Urbano", "Electrónica & Dance"
         ]
-        cities = sorted(list({s.city for s in self._cache if s.city and s.city != "Nacional"}))
-        localities = sorted(list({s.locality for s in self._cache if s.locality and s.locality != "En vivo"}))
+
+        states = sorted(list({s.state for s in target_pool if s.state and s.state != "Nacional"}))
+        if not continent or normalize_text(continent) == "america" or normalize_text(continent) == "todos":
+            for ms in MEXICO_STATES:
+                if ms not in states:
+                    states.append(ms)
+            states = sorted(states)
+
+        cities = sorted(list({s.city for s in target_pool if s.city and s.city != "Nacional"}))
+        localities = sorted(list({s.locality for s in target_pool if s.locality and s.locality != "En vivo"}))
 
         return FilterOptions(
+            continents=continents,
             countries=countries,
-            states=MEXICO_STATES,
-            cities=cities[:100],
-            localities=localities[:60],
+            states=states[:150],
+            cities=cities[:150],
+            localities=localities[:80],
             genres=genres,
-            total_stations=self.total_count
+            total_stations=len(target_pool)
         )

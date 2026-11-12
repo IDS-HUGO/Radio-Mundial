@@ -1,11 +1,11 @@
 {
-  "name": "Radio Mundial - Streaming Global",
+  "name": "Radio Mundial — Streaming Global Hi-Fi",
   "short_name": "RadioMundial",
-  "description": "Sintoniza miles de emisoras de radio en vivo del mundo organizadas por país, ciudad y localidad.",
+  "description": "Sintoniza más de 3,500 emisoras de radio en vivo del mundo organizadas por país, estado, ciudad y género en FM y AM.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#121218",
-  "theme_color": "#2563eb",
+  "background_color": "#1f1612",
+  "theme_color": "#442413",
   "orientation": "portrait-primary",
   "categories": ["music", "entertainment", "news"],
   "icons": [
@@ -16,8 +16,14 @@
       "purpose": "any maskable"
     },
     {
-      "src": "favicon.png",
+      "src": "icon-512.png",
       "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "img/radio-mundial-icono.svg",
+      "type": "image/svg+xml",
       "sizes": "512x512"
     }
   ]

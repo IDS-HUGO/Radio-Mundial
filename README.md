@@ -17,7 +17,12 @@
 
 **Radio Mundial** es una plataforma moderna de sintonización y transmisión de audio en vivo de alta fidelidad (Hi-Fi) que combina la elegancia analógica de una radio de transistores clásica de los años 70 (**estilo "Café Viejo"**) con la potencia del desarrollo web contemporáneo.
 
-Diseñada bajo los estándares más exigentes de la industria con **Arquitectura Limpia (Clean Architecture)** y **Arquitectura Hexagonal (Ports & Adapters)**, tanto en el backend como en el frontend, ofrece una experiencia reactiva, modular, resiliente y optimizada para el posicionamiento orgánico número 1 en motores de búsqueda (SEO).
+Diseñada bajo los estándares más exigentes de la industria con **Arquitectura Limpia (Clean Architecture)** y **Arquitectura Hexagonal (Ports & Adapters)**, tanto en el backend como en el frontend, ofrece una experiencia reactiva, modular, resiliente, preparada para alta concurrencia masiva y optimizada para el posicionamiento orgánico número 1 en motores de búsqueda (SEO) al buscar *"radio"*, *"radio mundial"*, *"radio en vivo"* o emisoras por ciudad.
+
+### 📚 Documentación Técnica Detallada:
+* 🚀 **[Guía de Despliegue 100% Gratuito (Cloudflare Pages + Render)](GUIA_DESPLIEGUE_FREE.md)**
+* ⚙️ **[Documentación Técnica del Backend (FastAPI Hexagonal)](backend/README.md)**
+* 🖥️ **[Documentación Técnica del Frontend (Blazor WebAssembly .NET 10)](frontend/README.md)**
 
 ---
 
@@ -49,9 +54,9 @@ graph TD
     end
 
     subgraph Infraestructura ["3. Infraestructura (Adaptadores)"]
-        AD1["Adaptador: InMemoryStationRepository (RadioBrowser + Seed)"]
-        AD2["Adaptador: WebSocketBroadcaster (FastAPI WS)"]
-        AD3["Adaptador: RestApiController (FastAPI Router)"]
+        AD1["Adaptador: InMemoryStationRepository (Índices O1)"]
+        AD2["Adaptador: WebSocketBroadcaster (asyncio.gather)"]
+        AD3["Adaptador: RestApiController (Caché RFC 9111)"]
         AD4["Adaptador: HttpRadioCatalogAdapter (HttpClient)"]
         AD5["Adaptador: JsAudioPlayerAdapter (HTML5 Audio Bridge)"]
         AD6["Adaptador: JsPreferencesAdapter (Cookies & LocalStorage)"]
@@ -60,7 +65,7 @@ graph TD
     end
 
     subgraph Presentacion ["4. Presentación (Blazor UI)"]
-        UI1["Páginas: Home.razor (Cockpit / Filtros sin scroll)"]
+        UI1["Páginas: Home.razor (Cockpit Paginado 60 FPS)"]
         UI2["Componentes: RetroRadio.razor ('Café Viejo' / Aguja Móvil)"]
         UI3["Componentes: RadioPlayer.razor"]
         UI4["Componentes: CookieConsent.razor"]
@@ -71,30 +76,31 @@ graph TD
     Infraestructura --> Presentacion
 ```
 
-### Principios Arquitectónicos Aplicados:
-1. **Independencia de Frameworks:** Las entidades de dominio no conocen a FastAPI ni a Blazor.
-2. **Inversión de Dependencias (DIP):** Los casos de uso dependen exclusivamente de interfaces/puertos abstractos (`IStationRepository`, `IBroadcaster`, `IAudioPlayerPort`, etc.).
-3. **Mantenibilidad Extrema:** Sin archivos monstruosos ni código espagueti. Módulos compactos y cohesivos.
-4. **Alta Testabilidad:** Facilidad absoluta para sustituir adaptadores reales por Mocks en pruebas unitarias.
-
 ---
 
 ## ✨ Características Principales
 
 ### 📻 1. Estética Vintage "Café Viejo"
 * **Chasis Caoba/Nogal:** Degradado multicapa con vetas satinadas (`#442413` a `#170904`).
-* **Bisel de Latón Envejecido:** Acabado dorado metálico cepillado (`#c5a059`).
+* **Bisel de Latón Envejecido:** Acabado metálico cepillado (`#c5a059`).
 * **Rejilla Acústica:** Textura de lino y arpillera entrelazada (`#dfd2be` a `#cebd9f`) con lamas de resonancia.
 * **Dial con Aguja Móvil Real:** Indicador carmesí con cálculo trigonométrico que viaja con suavidad sobre la frecuencia exacta al sintonizar.
+* **Nuevos Logotipos Oficiales:**
+  * `frontend/wwwroot/img/radio-mundial-icono.svg`: Ícono vectorial SVG con dial y aguja en madera y latón.
+  * `frontend/wwwroot/img/radio-mundial-logo-horizontal.png`: Banner de alta definición 2100x660 para OpenGraph y redes sociales.
 
 ### ⚡ 2. Soporte Físico FM y AM
-* **FM (88.0 – 108.0 MHz):** Alta fidelidad estéreo cristalina (15 kHz), inmune a ruidos de tormentas. La aguja se alinea en la escala superior.
-* **AM (540 – 1600 kHz):** Señal de largo alcance con rebote ionosférico nocturno (onda celeste), ideal para noticias y áreas rurales. La aguja se alinea en la escala inferior.
+* **FM (88.0 – 108.0 MHz):** Alta fidelidad estéreo cristalina (15 kHz), inmune a ruidos de tormentas.
+* **AM (540 – 1600 kHz):** Señal de largo alcance con rebote ionosférico nocturno, ideal para noticias y áreas rurales.
 * **Interruptor Frontal:** Conmutador físico de palanca en la radio para alternar entre FM y AM.
-* **Guía Educativa Interactiva:** Tarjeta desplegable que explica al usuario la física de propagación de ondas.
+* **Guía Educativa Interactiva:** Tarjeta desplegable que explica la física de propagación de ondas.
 
 ### 🌾 3. Matías Romero, Chiapas, Oaxaca y Cobertura Mundial 100% (223 Países)
-* **Tapachula, Chiapas (100% Verificado):** Extremo 96.3 FM, W Radio 1000 AM, Bella Música 106.7 FM y Los 40 Tapachula 99.5 FM.
+* **Tapachula, Chiapas (100% Verificado):**
+  * **Extremo 96.3 FM Tapachula** (*XHHTS / SonicPanel Icecast HD* en `https://stream.freepi.io/8310/live`).
+  * **W Radio 1000 AM Tapachula** (`https://streaming.servicioswebmx.com/8248/stream`).
+  * **Bella Música 106.7 FM Tapachula** (`https://stream.zeno.fm/scdv0t33gd0uv`).
+  * **Los 40 Tapachula 99.5 FM** (`https://stream.freepi.io/8300/live`).
 * **Tuxtla Gutiérrez y Costa de Chiapas:** Radio Chiapas 93.9 FM, Joya 101.7 FM, La Poderosa 91.1 FM, Bella Música 93.1 FM y Digital 89.5 FM Tonalá.
 * **La Ke Buena 90.5 FM Matías Romero (XHYG-FM):** Emisora destacada con 25,000 W de potencia transmitiendo en vivo para el Istmo de Tehuantepec.
 * **Catálogo Oaxaqueño Completo:** La Voz del Ángel 650 AM (Puerto Ángel), Hits 100.1 FM y La Mejor 105.3 FM (Huajuapan), Encuentro 90.1 FM (Juchitán), Encuentro 98.1 FM (Pinotepa Nacional), La Poderosa 100.1 FM, La Mexicana 94.9 FM, Los 40 89.7 FM, W Radio 95.7 FM y La Mejor 101.7 FM (Oaxaca de Juárez).
@@ -108,20 +114,10 @@ graph TD
 * **Difusión WebSocket Concurrente:** Difusión masiva paralela no bloqueante con `asyncio.gather` y timeouts individuales, evitando retrasos en el bucle de eventos.
 * **Paginación Virtual Progresiva en Blazor:** El cliente renderiza lotes iniciales de 48 estaciones manteniendo un DOM ligero (< 600 nodos), garantizando 60 FPS estables al desplazarse en dispositivos móviles y de escritorio.
 
-### 🎯 4. UI/UX Senior: Cero Deslizamientos Tediosos
-* Se eliminó el molesto scroll horizontal. Ahora cuentas con:
-  * **Selector Desplegable Inmediato:** Acceso directo a los 32 estados de la República Mexicana en un clic.
-  * **Matriz de Pastillas Adaptables (`flex-wrap`):** Botones organizados limpiamente sin desbordamiento.
-  * **Pastilla Rápida de Oaxaca:** Acceso con un solo clic: `🌾 Oaxaca (Matías Romero 90.5 FM)`.
-
-### 🌙 5. Adaptabilidad de Tema y Soporte Bilingüe
-* **Conmutador de Tema:** `🌙 Oscuro` (Estudio Caoba), `☀️ Claro` (Pergamino Cálido) y `💻 Sistema` (Detección automática mediante `prefers-color-scheme`).
-* **Internacionalización:** Conmutador `ES` / `EN` con diccionario reactivo para visitantes de cualquier parte del mundo.
-
-### 🔍 6. Estrategia de SEO para Primera Plana en Google y Bing
-* **JSON-LD Schema.org Completo:** Marcas ricas de `WebSite`, `SearchAction` (cuadro de búsqueda de Google integrado), `Organization` y servicios de transmisión localizados para Matías Romero, Oaxaca y CDMX.
-* **Sitemap XML Dinámico (`sitemap.xml`):** Indexación de rutas por ciudad, estado, país y banda.
-* **Directivas de Rastreo (`robots.txt`):** Configurado para Googlebot y Bingbot.
+### 🔍 5. Estrategia de SEO para Primera Plana en Google y Bing
+* **JSON-LD Schema.org Completo:** Marcas ricas de `WebSite`, `SearchAction` (cuadro de búsqueda de Google integrado), `WebApplication`, `Organization` y servicios de transmisión localizados.
+* **Sitemap XML Dinámico (`sitemap.xml`):** Indexación de rutas por continente, país, estado, ciudad y banda.
+* **Directivas de Rastreo (`robots.txt`):** Optimizado para Googlebot, Bingbot, Applebot, DuckDuckBot y YandexBot.
 * **HTML5 MediaSession API:** Control nativo de reproducción y metadatos en la pantalla de bloqueo y notificaciones de Android, iOS, Windows y macOS.
 
 ---
@@ -131,96 +127,47 @@ graph TD
 ```
 Radio-Mundial/
 ├── LICENSE                          # Licencia MIT de Hugo Francisco Luis Inclan
-├── README.md                        # Documentación técnica completa
+├── README.md                        # Documentación general del proyecto
+├── GUIA_DESPLIEGUE_FREE.md          # 🚀 Guía paso a paso para despliegue 100% gratis
 ├── docker-compose.yml               # Orquestación de producción Docker
 │
 ├── backend/                         # Backend FastAPI (Arquitectura Hexagonal)
+│   ├── README.md                    # Documentación técnica completa del backend
 │   ├── domain/                      # Capa 1: Entidades y reglas de negocio puras
-│   │   ├── entities.py              # Station, TrackMetadata, FilterOptions, etc.
-│   │   └── exceptions.py            # Excepciones de dominio
 │   ├── application/                 # Capa 2: Casos de uso y puertos abstractos
-│   │   ├── ports/                   # IStationRepository, IBroadcaster
-│   │   └── use_cases/               # GetStationsUseCase, BroadcastStateUseCase, etc.
-│   ├── infrastructure/              # Capa 3: Adaptadores externos y configuración
-│   │   ├── config/settings.py       # Pydantic BaseSettings
-│   │   └── adapters/
-│   │       ├── repositories/        # InMemoryStationRepository (RadioBrowser + Seed)
-│   │       ├── broadcasters/        # WebSocketBroadcaster (Async Locks)
-│   │       └── controllers/         # REST API y WebSocket Endpoints
-│   ├── data/seed_stations.json      # Semilla curada de emisoras verificadas
+│   ├── infrastructure/              # Capa 3: Adaptadores (repositorio O(1), WS, REST)
+│   ├── data/                        # Particiones modulares por continente y semillas
 │   ├── main.py                      # Composition Root (Inyección de Dependencias)
-│   ├── Dockerfile                   # Imagen multi-stage Python 3.11 Slim
+│   ├── Dockerfile                   # Imagen Docker Python Slim
 │   └── requirements.txt
 │
 └── frontend/                        # Frontend Blazor WebAssembly .NET 10
-    ├── Domain/Entities/             # Entidades de dominio (Station, UserPreferences)
-    ├── Application/
-    │   ├── Ports/                   # IRadioCatalogPort, IAudioPlayerPort, etc.
-    │   └── Services/RadioStateService.cs  # Coordinador de estado de la aplicación
-    ├── Infrastructure/Adapters/     # Adaptadores concretos (JSInterop, HTTP, WS)
+    ├── README.md                    # Documentación técnica completa del frontend
+    ├── Domain/                      # Entidades de dominio (Station, TrackMetadata)
+    ├── Application/                 # Puertos y RadioStateService
+    ├── Infrastructure/              # Adaptadores (Audio JSInterop, WebSocket, HTTP)
     ├── Components/                  # Componentes Razor (RetroRadio, RadioPlayer)
     ├── Pages/Home.razor             # Vista Principal Cockpit con filtros dinámicos
-    ├── wwwroot/
-    │   ├── css/app.css              # Variables de tema Café Viejo
-    │   ├── js/radioAudio.js         # Audio Bridge y HTML5 MediaSession
-    │   ├── sitemap.xml              # Mapa de sitio para indexación en Google
-    │   ├── robots.txt               # Directivas SEO para motores de búsqueda
-    │   └── sample-data/stations.json
-    ├── Dockerfile                   # Compilación SDK 10 + Nginx Alpine
-    ├── nginx.conf                   # Servidor de alta velocidad con Gzip y Cache
-    └── Program.cs                   # Registro de Contenedor IoC / DI
+    └── wwwroot/                     # Activos estáticos, nuevos logos, sitemap y robots
 ```
 
 ---
 
-## 🚀 Guía de Ejecución Local
+## 🚀 Guía Rápida de Ejecución Local
 
-### 1. Requisitos Previos
-* **Python:** 3.11 o superior.
-* **.NET SDK:** 10.0 instalado.
-* **Docker & Docker Compose:** (Opcional para despliegue en contenedores).
-
----
-
-### 2. Ejecución con Terminal `fish` (O cualquier shell)
-
-#### Terminal 1 — Backend (FastAPI):
-```fish
-cd /home/productdeath/Documentos/UNIVERSAL/PERSONAL/Radio-Mundial/backend
+### Backend (FastAPI):
+```bash
+cd backend
 ./venv/bin/python -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 *API y Documentación interactiva disponibles en:* `http://localhost:8000/docs`
 
-#### Terminal 2 — Frontend (Blazor WASM):
-```fish
-cd /home/productdeath/Documentos/UNIVERSAL/PERSONAL/Radio-Mundial/frontend
-dotnet run --no-build
-```
-*Aplicación web en vivo disponible en:* `http://localhost:5296`
-
----
-
-## 🐳 Despliegue con Docker Compose (Producción)
-
-Para desplegar la solución completa en un servidor en la nube (AWS, DigitalOcean, VPS o local):
-
-```bash
-docker compose up -d --build
-```
-
-* **Frontend (Nginx Producción):** `http://localhost:5000`
-* **Backend (FastAPI Uvicorn):** `http://localhost:8000`
-
----
-
-## ☁️ Despliegue en Cloudflare Pages / Vercel
-
-El frontend está optimizado para publicarse de forma estática en **Cloudflare Pages**:
+### Frontend (Blazor WASM):
 ```bash
 cd frontend
-dotnet publish -c Release -o output
-# Los archivos listos para CDN se encuentran en output/wwwroot
+dotnet run
 ```
+*Aplicación web en vivo disponible en:* `http://localhost:5296`
 
 ---
 

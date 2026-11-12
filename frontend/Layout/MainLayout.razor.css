@@ -108,6 +108,28 @@
     color: var(--text-muted);
 }
 
+.topbar-feedback-btn {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    color: var(--text-highlight);
+    cursor: pointer;
+    text-transform: none;
+    letter-spacing: normal;
+    font-size: 0.72rem;
+    transition: all 0.18s ease;
+}
+
+.topbar-feedback-btn:hover {
+    background: rgba(197, 159, 84, 0.15);
+    border-color: var(--brass);
+    color: var(--accent-amber);
+    transform: translateY(-1px);
+}
+
+.feedback-pen-icon {
+    font-size: 0.8rem;
+}
+
 .status-live {
     color: var(--text-main);
 }
@@ -137,6 +159,9 @@
         display: none;
     }
     .status-audio {
+        display: none;
+    }
+    .topbar-feedback-btn .feedback-label {
         display: none;
     }
 }

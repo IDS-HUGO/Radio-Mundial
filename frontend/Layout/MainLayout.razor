@@ -1,4 +1,5 @@
 @inherits LayoutComponentBase
+@inject RadioStateService RadioState
 
 <div class="app-layout">
     <!-- Barra Superior Principal -->
@@ -13,6 +14,11 @@
             </div>
 
             <div class="topbar-status-group">
+                <button type="button" class="status-pill topbar-feedback-btn" @onclick="() => RadioState.OpenFeedbackModal()" title="Buzón de sugerencias: propón estaciones de tu ciudad o mejoras">
+                    <span class="feedback-pen-icon">✍️</span>
+                    <span class="feedback-label">Sugerir Emisora / Falla</span>
+                </button>
+
                 <div class="status-pill status-live">
                     <span class="pulse-dot"></span>
                     <span>GLOBAL LIVE</span>
@@ -34,4 +40,7 @@
 
     <!-- Barra Inferior de Audio Persistente -->
     <RadioPlayer />
+
+    <!-- Modal Global de Sugerencias y Comentarios -->
+    <FeedbackModal />
 </div>

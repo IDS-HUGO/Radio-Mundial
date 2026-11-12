@@ -11,4 +11,5 @@ public interface IRadioCatalogPort
     Task<List<Station>> GetStationsAsync(string? continent = null, string? country = null, string? state = null, string? band = null, string? search = null, int limit = 150);
     Task<FilterOptionsResponse?> GetFilterOptionsAsync(string? continent = null);
     Task<List<Station>> GetFallbackSeedAsync();
+    Task<bool> SubmitFeedbackAsync(FeedbackModel feedback);
 }

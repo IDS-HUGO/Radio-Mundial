@@ -52,6 +52,9 @@ public class DictionaryTranslationAdapter : ITranslationPort
             "EMPTY_BTN" => isEn ? "↺ Tune All Stations" : "↺ Sintonizar Todas las Emisoras",
             "LOAD_MORE" => isEn ? "Load More Stations" : "Cargar Más Emisoras",
             "REMAINING" => isEn ? "remaining" : "restantes",
+            "FEEDBACK_BTN" => isEn ? "✍️ Feedback & Stations" : "✍️ Buzón de Sugerencias",
+            "FEEDBACK_TITLE" => isEn ? "Community Dispatch & Suggestions" : "Buzón de la Comunidad | Radio Mundial",
+            "FEEDBACK_SUB" => isEn ? "Suggest local stations, propose improvements, or report issues." : "Sugiere estaciones de tu localidad, propón mejoras o reporta fallas.",
             _ => key
         };
     }

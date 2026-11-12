@@ -130,6 +130,26 @@
     border-color: var(--brass);
 }
 
+/* Botón de Buzón de Sugerencias en Header */
+.btn-studio-feedback {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    color: var(--text-highlight);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+}
+
+.btn-studio-feedback:hover {
+    background: rgba(197, 159, 84, 0.15);
+    border-color: var(--brass);
+    color: var(--accent-amber);
+    transform: translateY(-1px);
+}
+
 /* Métricas de Estudio */
 .studio-metrics-group {
     background: var(--bg-surface);
@@ -422,6 +442,46 @@
     border-color: var(--needle-red);
 }
 
+.btn-suggest-link {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.74rem;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.15s ease;
+    text-align: left;
+}
+
+.btn-suggest-link u {
+    color: var(--text-highlight);
+    text-underline-offset: 3px;
+}
+
+.btn-suggest-link:hover {
+    color: var(--text-main);
+}
+
+.btn-suggest-link:hover u {
+    color: var(--accent-amber);
+}
+
+.btn-suggest-empty-btn {
+    background: rgba(197, 159, 84, 0.12);
+    border: 1px solid var(--brass);
+    color: var(--text-highlight);
+    font-size: 0.82rem;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+}
+
+.btn-suggest-empty-btn:hover {
+    background: var(--brass);
+    color: #ffffff;
+}
+
 .btn-guide-toggle-small {
     background: transparent;
     border: none;
@@ -557,6 +617,22 @@
     background: rgba(197, 159, 84, 0.15);
     color: var(--text-highlight);
     border: 1px solid var(--border-color);
+}
+
+.btn-report-card {
+    background: transparent;
+    border: none;
+    font-size: 0.75rem;
+    opacity: 0.45;
+    cursor: pointer;
+    padding: 0 2px;
+    line-height: 1;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.btn-report-card:hover {
+    opacity: 1;
+    transform: scale(1.15);
 }
 
 .btn-favorite {

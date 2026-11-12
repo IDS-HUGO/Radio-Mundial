@@ -7,8 +7,12 @@ Copyright (c) 2026 Hugo Francisco Luis Inclan
 
 from __future__ import annotations
 
+import asyncio
+import json
+import logging
+import os
 from fastapi import APIRouter, Query, HTTPException, Response, status
-from domain.entities import Station, FilterOptions
+from domain.entities import Station, FilterOptions, FeedbackSubmission
 from domain.exceptions import StationNotFoundException
 from application.use_cases import (
     GetStationsUseCase,
@@ -16,7 +20,18 @@ from application.use_cases import (
     GetStationByIdUseCase,
 )
 
+logger = logging.getLogger("radio-mundial.rest")
 router = APIRouter(tags=["Radio API"])
+_feedback_lock = asyncio.Lock()
+
+
+def _get_feedback_path() -> str:
+    candidates = ["backend/data/feedback_submissions.json", "data/feedback_submissions.json"]
+    for c in candidates:
+        parent = os.path.dirname(c)
+        if os.path.exists(parent):
+            return c
+    return "backend/data/feedback_submissions.json"
 
 # Las instancias de los casos de uso serán inyectadas por el contenedor principal
 _get_stations_uc: GetStationsUseCase | None = None
@@ -110,3 +125,60 @@ async def get_station_by_id(station_id: str, response: Response) -> Station:
         return _get_station_by_id_uc.execute(station_id)
     except StationNotFoundException as ex:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(ex))
+
+
+@router.post("/api/feedback", status_code=status.HTTP_201_CREATED)
+async def submit_feedback(submission: FeedbackSubmission) -> dict[str, str]:
+    """Registra un comentario, reporte de estación caída o solicitud de nueva emisora."""
+    fpath = _get_feedback_path()
+    async with _feedback_lock:
+        try:
+            records: list[dict] = []
+            if os.path.exists(fpath):
+                try:
+                    with open(fpath, "r", encoding="utf-8") as f:
+                        records = json.load(f)
+                except Exception:
+                    records = []
+            
+            # Serializar submission con formato ISO para fechas
+            data = submission.model_dump(mode="json")
+            records.append(data)
+            
+            os.makedirs(os.path.dirname(fpath), exist_ok=True)
+            with open(fpath, "w", encoding="utf-8") as f:
+                json.dump(records, f, indent=2, ensure_ascii=False)
+                
+            logger.info(f"Feedback recibido: [{submission.category}] id={submission.id} estación={submission.station_name}")
+            return {
+                "status": "success",
+                "id": submission.id,
+                "message": "¡Gracias por tu mensaje! Tu sugerencia nos ayuda a que Radio Mundial sea cada día mejor."
+            }
+        except Exception as e:
+            logger.error(f"Error guardando feedback: {e}")
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="No se pudo registrar el comentario en el servidor."
+            )
+
+
+@router.get("/api/feedback", response_model=dict)
+async def get_all_feedback(limit: int = Query(default=50, ge=1, le=200)) -> dict:
+    """Consulta las sugerencias y comentarios registrados para el equipo de administración."""
+    max_items = limit if isinstance(limit, int) else getattr(limit, "default", 50)
+    if not isinstance(max_items, int):
+        max_items = 50
+    fpath = _get_feedback_path()
+    async with _feedback_lock:
+        if not os.path.exists(fpath):
+            return {"total": 0, "submissions": []}
+        try:
+            with open(fpath, "r", encoding="utf-8") as f:
+                records = json.load(f)
+            # Retornar los más recientes primero
+            reversed_records = list(reversed(records))[:max_items]
+            return {"total": len(records), "submissions": reversed_records}
+        except Exception as e:
+            logger.warning(f"Error leyendo feedback: {e}")
+            return {"total": 0, "submissions": []}

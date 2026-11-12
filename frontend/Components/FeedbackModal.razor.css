@@ -1,0 +1,404 @@
+/* =========================================================================
+   FeedbackModal.razor.css — Radio Mundial
+   Estética "Café Viejo": Madera de nogal, latón envejecido, cuero y tonos cálidos.
+   Autor: Hugo Francisco Luis Inclan (c) 2026.
+   ========================================================================= */
+
+.feedback-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1050;
+    background-color: rgba(18, 12, 8, 0.78);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    animation: fadeInModal 0.22s ease-out forwards;
+}
+
+@keyframes fadeInModal {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.feedback-modal-dialog {
+    background: #241811;
+    color: #faedcd;
+    width: 100%;
+    max-width: 640px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(212, 163, 115, 0.35);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(141, 110, 99, 0.25);
+    display: flex;
+    flex-direction: column;
+    animation: slideUpModal 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideUpModal {
+    from { transform: translateY(18px) scale(0.98); opacity: 0; }
+    to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* Modo Claro */
+:global([data-theme="light"]) .feedback-modal-dialog {
+    background: #faf6f0;
+    color: #2c1d11;
+    border: 1px solid rgba(176, 137, 104, 0.4);
+    box-shadow: 0 16px 36px rgba(44, 29, 17, 0.25);
+}
+
+/* Encabezado */
+.feedback-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 1.4rem;
+    background: rgba(30, 20, 14, 0.65);
+    border-bottom: 1px solid rgba(212, 163, 115, 0.2);
+}
+
+:global([data-theme="light"]) .feedback-header {
+    background: #f2ebe1;
+    border-bottom: 1px solid rgba(176, 137, 104, 0.25);
+}
+
+.feedback-icon-badge {
+    font-size: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: rgba(212, 163, 115, 0.15);
+    border: 1px solid rgba(212, 163, 115, 0.3);
+}
+
+.feedback-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: #fce1b6;
+}
+
+:global([data-theme="light"]) .feedback-title {
+    color: #4a2810;
+}
+
+.feedback-subtitle {
+    font-size: 0.8rem;
+    color: #c4a482;
+    line-height: 1.25;
+}
+
+:global([data-theme="light"]) .feedback-subtitle {
+    color: #7d5a3c;
+}
+
+.btn-close-modal {
+    background: transparent;
+    border: none;
+    color: #c4a482;
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+}
+
+.btn-close-modal:hover {
+    background: rgba(212, 163, 115, 0.2);
+    color: #faedcd;
+}
+
+/* Cuerpo del Formulario */
+.feedback-form-body {
+    padding: 1.2rem 1.4rem;
+}
+
+.form-section-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #e6ccb2;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+:global([data-theme="light"]) .form-section-label {
+    color: #5c3c24;
+}
+
+/* Selector de Categorías (Chips) */
+.category-chips-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+}
+
+@media (min-width: 520px) {
+    .category-chips-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.category-chip {
+    background: rgba(46, 32, 23, 0.6);
+    border: 1px solid rgba(176, 137, 104, 0.3);
+    color: #e6ccb2;
+    padding: 0.6rem 0.5rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.16s ease;
+}
+
+.category-chip:hover {
+    background: rgba(212, 163, 115, 0.15);
+    border-color: rgba(212, 163, 115, 0.5);
+    color: #faedcd;
+}
+
+.category-chip.active {
+    background: #8d6e63;
+    border-color: #d4a373;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+:global([data-theme="light"]) .category-chip {
+    background: #ede3d4;
+    border: 1px solid rgba(141, 110, 99, 0.3);
+    color: #4a2810;
+}
+
+:global([data-theme="light"]) .category-chip.active {
+    background: #6d4c41;
+    color: #faf6f0;
+    border-color: #5d4037;
+}
+
+/* Tarjeta de detalles de estación */
+.station-details-card {
+    background: rgba(30, 20, 14, 0.7);
+    border: 1px solid rgba(212, 163, 115, 0.25);
+    border-radius: 8px;
+}
+
+:global([data-theme="light"]) .station-details-card {
+    background: #f7f1e8;
+    border-color: rgba(176, 137, 104, 0.3);
+}
+
+.card-hint-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #d4a373;
+}
+
+:global([data-theme="light"]) .card-hint-badge {
+    color: #8d5b2c;
+}
+
+.btn-quick-fill {
+    background: transparent;
+    border: 1px dashed rgba(212, 163, 115, 0.4);
+    color: #e6ccb2;
+    font-size: 0.72rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-quick-fill:hover {
+    background: rgba(212, 163, 115, 0.15);
+    color: #faedcd;
+}
+
+/* Labels e Inputs */
+.input-field-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #c4a482;
+    margin-bottom: 0.25rem;
+    display: block;
+}
+
+:global([data-theme="light"]) .input-field-label {
+    color: #6a492f;
+}
+
+.required-star {
+    color: #e07a5f;
+}
+
+.studio-input, .studio-textarea {
+    background: #1c130d;
+    border: 1px solid rgba(176, 137, 104, 0.35);
+    color: #faedcd;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    transition: all 0.15s ease;
+}
+
+.studio-input:focus, .studio-textarea:focus {
+    background: #241811;
+    border-color: #d4a373;
+    color: #faedcd;
+    box-shadow: 0 0 0 2px rgba(212, 163, 115, 0.25);
+    outline: none;
+}
+
+:global([data-theme="light"]) .studio-input,
+:global([data-theme="light"]) .studio-textarea {
+    background: #fff;
+    border: 1px solid rgba(176, 137, 104, 0.4);
+    color: #2c1d11;
+}
+
+:global([data-theme="light"]) .studio-input:focus,
+:global([data-theme="light"]) .studio-textarea:focus {
+    background: #fff;
+    border-color: #a06d3b;
+    box-shadow: 0 0 0 2px rgba(160, 109, 59, 0.2);
+}
+
+.border-top-console {
+    border-top: 1px solid rgba(212, 163, 115, 0.2);
+}
+
+:global([data-theme="light"]) .border-top-console {
+    border-top-color: rgba(176, 137, 104, 0.25);
+}
+
+/* Selector de Estrellas */
+.rating-label {
+    font-size: 0.8rem;
+    color: #c4a482;
+}
+
+:global([data-theme="light"]) .rating-label {
+    color: #6a492f;
+}
+
+.star-rating-selector {
+    display: inline-flex;
+    gap: 0.15rem;
+}
+
+.btn-star {
+    background: transparent;
+    border: none;
+    font-size: 1.15rem;
+    color: rgba(176, 137, 104, 0.35);
+    cursor: pointer;
+    padding: 0 0.1rem;
+    transition: all 0.12s ease;
+}
+
+.btn-star.star-active {
+    color: #d4a373;
+    text-shadow: 0 0 6px rgba(212, 163, 115, 0.4);
+}
+
+.btn-star:hover {
+    transform: scale(1.15);
+}
+
+/* Botones Vintage */
+.btn-vintage-primary {
+    background: #8d6e63;
+    color: #fff;
+    border: 1px solid #d4a373;
+    padding: 0.45rem 1rem;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-vintage-primary:hover:not(:disabled) {
+    background: #6d4c41;
+    border-color: #fce1b6;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-vintage-secondary {
+    background: rgba(46, 32, 23, 0.5);
+    color: #c4a482;
+    border: 1px solid rgba(176, 137, 104, 0.3);
+    padding: 0.45rem 0.9rem;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-vintage-secondary:hover {
+    background: rgba(212, 163, 115, 0.15);
+    color: #faedcd;
+}
+
+:global([data-theme="light"]) .btn-vintage-secondary {
+    background: #f0e6d8;
+    color: #5c3c24;
+    border-color: rgba(141, 110, 99, 0.35);
+}
+
+/* Pantalla de Éxito */
+.feedback-success-card {
+    padding: 2.5rem 1.5rem;
+}
+
+.success-icon-seal {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    border-radius: 50%;
+    background: rgba(212, 163, 115, 0.18);
+    border: 2px solid #d4a373;
+    color: #d4a373;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+}
+
+.success-title {
+    color: #fce1b6;
+    font-weight: 700;
+}
+
+:global([data-theme="light"]) .success-title {
+    color: #4a2810;
+}
+
+.success-desc {
+    color: #c4a482;
+    font-size: 0.85rem;
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.45;
+}
+
+:global([data-theme="light"]) .success-desc {
+    color: #6a492f;
+}
+
+.error-message-box {
+    font-size: 0.78rem;
+    background: rgba(186, 73, 73, 0.2);
+    border-color: rgba(186, 73, 73, 0.4);
+    color: #f28b82;
+}

@@ -59,6 +59,14 @@
                 <span>@(IsSideBySide ? RadioState.T("LAYOUT_SIDE") : RadioState.T("LAYOUT_TOP"))</span>
             </button>
 
+            <!-- Botón Buzón de Sugerencias / Agregar Emisora -->
+            <button class="btn-studio-feedback d-inline-flex align-items-center gap-1"
+                    @onclick="() => RadioState.OpenFeedbackModal()" 
+                    title="Sugerir emisoras, mejoras o reportar fallas">
+                <span>✍️</span>
+                <span>@RadioState.T("FEEDBACK_BTN")</span>
+            </button>
+
             <!-- Métricas de Estudio Analógico -->
             <div class="d-flex align-items-center gap-2 studio-metrics-group">
                 <div class="studio-metric-card" title="Estaciones mostradas en pantalla">
@@ -297,9 +305,12 @@
                 </div>
             }
 
-            <!-- Botón Opcional para Guía Explicativa FM vs AM -->
-            <div class="d-flex justify-content-end mt-2">
-                <button class="btn-guide-toggle-small" @onclick="ToggleFmAmGuide">
+            <!-- Enlaces de Asistencia: Sugerencias de Emisoras y Guía FM/AM -->
+            <div class="d-flex flex-wrap justify-content-between align-items-center mt-2 gap-2">
+                <button type="button" class="btn-suggest-link" @onclick="() => RadioState.OpenFeedbackModal()" title="Buzón de sugerencias: sugiere una emisora que no esté en la lista o propón mejoras">
+                    <span>✍️ ¿Falta tu emisora favorita o quieres sugerir una mejora? <u>Haz clic aquí</u></span>
+                </button>
+                <button type="button" class="btn-guide-toggle-small ms-auto" @onclick="ToggleFmAmGuide">
                     <span>@(ShowFmAmGuide ? "Ocultar Guía FM/AM" : "¿Cuál es la diferencia entre FM y AM?")</span>
                 </button>
             </div>
@@ -360,9 +371,14 @@
                 <p class="text-muted small mb-3">
                     @RadioState.T("EMPTY_DESC")
                 </p>
-                <button class="btn-tune-retro px-4 py-2" @onclick="RadioState.ResetFilters">
-                    @RadioState.T("EMPTY_BTN")
-                </button>
+                <div class="d-flex flex-wrap justify-content-center gap-2">
+                    <button class="btn-tune-retro px-4 py-2" @onclick="RadioState.ResetFilters">
+                        @RadioState.T("EMPTY_BTN")
+                    </button>
+                    <button class="btn-suggest-empty-btn px-4 py-2" @onclick="() => RadioState.OpenFeedbackModal()">
+                        ✍️ Sugerir Emisora para esta Zona
+                    </button>
+                </div>
             </div>
         }
         else
@@ -395,11 +411,18 @@
                                         <span class="frequency-badge @(isAm ? "badge-am" : "badge-fm")">
                                             @station.Frequency.ToString(isAm ? "F0" : "F1") @station.Band
                                         </span>
-                                        <button class="btn-favorite @(isFavorite ? "favorite-active" : "")" 
-                                                @onclick="() => RadioState.ToggleFavoriteAsync(station.Id)"
-                                                title="@(isFavorite ? "Quitar de favoritas" : "Guardar en favoritas")">
-                                            ★
-                                        </button>
+                                        <div class="d-flex align-items-center gap-1">
+                                            <button type="button" class="btn-report-card" 
+                                                    @onclick="() => RadioState.OpenFeedbackModal(station.Name)"
+                                                    title="Reportar falla o sugerir corrección de @station.Name">
+                                                ⚠️
+                                            </button>
+                                            <button class="btn-favorite @(isFavorite ? "favorite-active" : "")" 
+                                                    @onclick="() => RadioState.ToggleFavoriteAsync(station.Id)"
+                                                    title="@(isFavorite ? "Quitar de favoritas" : "Guardar en favoritas")">
+                                                ★
+                                            </button>
+                                        </div>
                                     </div>
                                     <h3 class="station-name text-truncate" title="@station.Name">
                                         @station.Name

@@ -82,4 +82,32 @@ public class HttpRadioCatalogAdapter : IRadioCatalogPort
             return [];
         }
     }
+
+    public async Task<bool> SubmitFeedbackAsync(FeedbackModel feedback)
+    {
+        try
+        {
+            var url = $"{_backendBaseUrl}/api/feedback";
+            var payload = new
+            {
+                category = feedback.Category,
+                name = string.IsNullOrWhiteSpace(feedback.Name) ? null : feedback.Name.Trim(),
+                email = string.IsNullOrWhiteSpace(feedback.Email) ? null : feedback.Email.Trim(),
+                message = feedback.Message.Trim(),
+                station_name = string.IsNullOrWhiteSpace(feedback.StationName) ? null : feedback.StationName.Trim(),
+                station_location = string.IsNullOrWhiteSpace(feedback.StationLocation) ? null : feedback.StationLocation.Trim(),
+                station_frequency = string.IsNullOrWhiteSpace(feedback.StationFrequency) ? null : feedback.StationFrequency.Trim(),
+                station_stream_url = string.IsNullOrWhiteSpace(feedback.StationStreamUrl) ? null : feedback.StationStreamUrl.Trim(),
+                rating = feedback.Rating
+            };
+
+            var response = await _httpClient.PostAsJsonAsync(url, payload);
+            return response.IsSuccessStatusCode;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[CatalogAdapter] Error enviando feedback a backend: {ex.Message}");
+            return false;
+        }
+    }
 }

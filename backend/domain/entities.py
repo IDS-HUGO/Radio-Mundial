@@ -57,3 +57,18 @@ class FilterOptions(BaseModel):
     localities: list[str]
     genres: list[str]
     total_stations: int
+
+
+class FeedbackSubmission(BaseModel):
+    """Comentario, reporte de problema o solicitud de nueva estación enviada por los oyentes."""
+    id: str = Field(default_factory=lambda: f"fb-{int(datetime.now(timezone.utc).timestamp()*1000)}")
+    category: str = Field(..., description="Categoría: AGREGAR_ESTACION, MEJORA, ESTACION_CAIDA, COMENTARIO_GENERAL")
+    name: str | None = Field(default=None, description="Nombre o alias del oyente")
+    email: str | None = Field(default=None, description="Correo electrónico opcional")
+    message: str = Field(..., min_length=2, max_length=3000, description="Contenido de la sugerencia o reporte")
+    station_name: str | None = Field(default=None, description="Nombre de la estación sugerida o reportada")
+    station_location: str | None = Field(default=None, description="País, estado y municipio/ciudad de la estación")
+    station_frequency: str | None = Field(default=None, description="Frecuencia o dial (ej. 98.1 FM)")
+    station_stream_url: str | None = Field(default=None, description="Enlace web o URL de transmisión")
+    rating: int | None = Field(default=5, ge=1, le=5, description="Calificación de la experiencia (1 a 5)")
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))

@@ -56,6 +56,29 @@ public class RadioStateService : IAsyncDisposable
         private set => _translationPort.CurrentLanguage = value;
     }
 
+    // Buzón de Sugerencias y Comentarios
+    public bool IsFeedbackModalOpen { get; private set; }
+    public string PreselectedFeedbackStation { get; private set; } = string.Empty;
+
+    public void OpenFeedbackModal(string? stationName = null)
+    {
+        PreselectedFeedbackStation = stationName ?? ActiveStation?.Name ?? string.Empty;
+        IsFeedbackModalOpen = true;
+        NotifyStateChanged();
+    }
+
+    public void CloseFeedbackModal()
+    {
+        IsFeedbackModalOpen = false;
+        NotifyStateChanged();
+    }
+
+    public async Task<bool> SubmitFeedbackAsync(FeedbackModel feedback)
+    {
+        var success = await _catalogPort.SubmitFeedbackAsync(feedback);
+        return success;
+    }
+
     public event Action? OnStateChanged;
 
     public RadioStateService(

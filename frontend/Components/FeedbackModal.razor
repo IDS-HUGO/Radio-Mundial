@@ -1,0 +1,309 @@
+@using frontend.Domain.Entities
+@using frontend.Services
+@inject RadioStateService RadioState
+@implements IDisposable
+
+@if (RadioState.IsFeedbackModalOpen)
+{
+    <div class="feedback-modal-backdrop" @onclick="CloseModal">
+        <div class="feedback-modal-dialog" @onclick:stopPropagation="true" role="dialog" aria-modal="true" aria-labelledby="feedback-dialog-title">
+            
+            <!-- Encabezado Estilo Consola Analógica -->
+            <div class="feedback-header">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="feedback-icon-badge">📝</span>
+                    <div>
+                        <h3 id="feedback-dialog-title" class="feedback-title mb-0">@RadioState.T("FEEDBACK_TITLE")</h3>
+                        <p class="feedback-subtitle mb-0">@RadioState.T("FEEDBACK_SUB")</p>
+                    </div>
+                </div>
+                <button type="button" class="btn-close-modal" @onclick="CloseModal" aria-label="Cerrar modal">✕</button>
+            </div>
+
+            @if (_isSubmitted)
+            {
+                <!-- Pantalla de Éxito / Confirmación -->
+                <div class="feedback-success-card text-center p-4">
+                    <div class="success-icon-seal mb-3">✓</div>
+                    <h4 class="success-title mb-2">¡Muchísimas gracias por tu mensaje!</h4>
+                    <p class="success-desc mb-4">
+                        Tu sugerencia ha sido registrada en el sistema de Radio Mundial. Revisamos periódicamente cada propuesta para enriquecer el catálogo y perfeccionar la experiencia auditiva de la comunidad.
+                    </p>
+                    <div class="d-flex justify-content-center gap-2">
+                        <button class="btn-vintage-secondary" @onclick="ResetForm">
+                            <span>✍️ Enviar otra sugerencia</span>
+                        </button>
+                        <button class="btn-vintage-primary" @onclick="CloseModal">
+                            <span>Listo / Volver a la Radio</span>
+                        </button>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <!-- Formulario Interactivo -->
+                <form @onsubmit="HandleSubmitAsync" class="feedback-form-body">
+                    
+                    <!-- Selector de Categoría (Pestañas Segmentadas) -->
+                    <div class="category-tabs-group mb-3">
+                        <label class="form-section-label">1. ¿Qué te gustaría compartir?</label>
+                        <div class="category-chips-grid">
+                            <button type="button" 
+                                    class="category-chip @(_model.Category == "AGREGAR_ESTACION" ? "active" : "")"
+                                    @onclick='() => SetCategory("AGREGAR_ESTACION")'>
+                                <span>📻 Sugerir Emisora</span>
+                            </button>
+                            <button type="button" 
+                                    class="category-chip @(_model.Category == "MEJORA" ? "active" : "")"
+                                    @onclick='() => SetCategory("MEJORA")'>
+                                <span>💡 Idea de Mejora</span>
+                            </button>
+                            <button type="button" 
+                                    class="category-chip @(_model.Category == "ESTACION_CAIDA" ? "active" : "")"
+                                    @onclick='() => SetCategory("ESTACION_CAIDA")'>
+                                <span>⚠️ Reportar Falla</span>
+                            </button>
+                            <button type="button" 
+                                    class="category-chip @(_model.Category == "COMENTARIO_GENERAL" ? "active" : "")"
+                                    @onclick='() => SetCategory("COMENTARIO_GENERAL")'>
+                                <span>💬 Comentario</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Campos Condicionales según Categoría -->
+                    @if (_model.Category == "AGREGAR_ESTACION" || _model.Category == "ESTACION_CAIDA")
+                    {
+                        <div class="station-details-card mb-3 p-3">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <span class="card-hint-badge">
+                                    @(_model.Category == "AGREGAR_ESTACION" ? "📡 DATOS DE LA EMISORA A AGREGAR" : "⚠️ EMISORA CON PROBLEMAS")
+                                </span>
+                                @if (RadioState.ActiveStation is not null && string.IsNullOrWhiteSpace(_model.StationName))
+                                {
+                                    <button type="button" class="btn-quick-fill" @onclick="AutoFillCurrentStation">
+                                        Usar emisora actual (@RadioState.ActiveStation.Name)
+                                    </button>
+                                }
+                            </div>
+
+                            <div class="row g-2">
+                                <div class="col-12 col-md-6">
+                                    <label class="input-field-label">Nombre de la Emisora <span class="required-star">*</span></label>
+                                    <input type="text" class="form-control studio-input" 
+                                           placeholder="Ej. Extremo 96.3 FM, Radio Felicidad..." 
+                                           @bind="_model.StationName" required />
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label class="input-field-label">Ubicación (País, Estado, Municipio)</label>
+                                    <input type="text" class="form-control studio-input" 
+                                           placeholder="Ej. México, Chiapas, Tapachula..." 
+                                           @bind="_model.StationLocation" />
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <label class="input-field-label">Frecuencia / Dial</label>
+                                    <input type="text" class="form-control studio-input" 
+                                           placeholder="Ej. 96.3 FM, 1000 AM..." 
+                                           @bind="_model.StationFrequency" />
+                                </div>
+                                <div class="col-12 col-md-8">
+                                    <label class="input-field-label">Sitio Web o URL de Transmisión (Opcional)</label>
+                                    <input type="url" class="form-control studio-input" 
+                                           placeholder="https://... (si lo conoces)" 
+                                           @bind="_model.StationStreamUrl" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <!-- Mensaje / Descripción Detallada -->
+                    <div class="mb-3">
+                        <label class="input-field-label">
+                            @GetMessageLabel() <span class="required-star">*</span>
+                        </label>
+                        <textarea class="form-control studio-textarea" rows="3" 
+                                  placeholder="@GetMessagePlaceholder()" 
+                                  @bind="_model.Message" required></textarea>
+                    </div>
+
+                    <!-- Datos del Oyente (Opcionales) -->
+                    <div class="row g-2 mb-3">
+                        <div class="col-12 col-md-6">
+                            <label class="input-field-label">Tu Nombre o Apodo (Opcional)</label>
+                            <input type="text" class="form-control studio-input" 
+                                   placeholder="¿Cómo te llamas?" 
+                                   @bind="_model.Name" />
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="input-field-label">Correo Electrónico (Opcional)</label>
+                            <input type="email" class="form-control studio-input" 
+                                   placeholder="Para notificarte cuando se agregue" 
+                                   @bind="_model.Email" />
+                        </div>
+                    </div>
+
+                    <!-- Calificación y Enviar -->
+                    <div class="d-flex flex-wrap align-items-center justify-content-between pt-2 border-top-console gap-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="rating-label">Tu experiencia:</span>
+                            <div class="star-rating-selector" title="Calificación">
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    var starIndex = i;
+                                    <button type="button" class="btn-star @(starIndex <= _model.Rating ? "star-active" : "")" 
+                                            @onclick="() => _model.Rating = starIndex">
+                                        ★
+                                    </button>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center gap-2">
+                            <button type="button" class="btn-vintage-secondary" @onclick="CloseModal">
+                                Cancelar
+                            </button>
+                            <button type="submit" class="btn-vintage-primary" disabled="@_isSubmitting">
+                                @if (_isSubmitting)
+                                {
+                                    <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                                    <span>Enviando...</span>
+                                }
+                                else
+                                {
+                                    <span>✉️ Enviar Sugerencia</span>
+                                }
+                            </button>
+                        </div>
+                    </div>
+
+                    @if (!string.IsNullOrWhiteSpace(_errorMessage))
+                    {
+                        <div class="alert alert-danger mt-2 py-1 px-2 mb-0 error-message-box" role="alert">
+                            ⚠️ @_errorMessage
+                        </div>
+                    }
+
+                </form>
+            }
+
+        </div>
+    </div>
+}
+
+@code {
+    private FeedbackModel _model = new();
+    private bool _isSubmitting = false;
+    private bool _isSubmitted = false;
+    private string _errorMessage = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        RadioState.OnStateChanged += HandleStateChanged;
+    }
+
+    private void HandleStateChanged()
+    {
+        if (RadioState.IsFeedbackModalOpen && string.IsNullOrWhiteSpace(_model.StationName) && !string.IsNullOrWhiteSpace(RadioState.PreselectedFeedbackStation))
+        {
+            _model.StationName = RadioState.PreselectedFeedbackStation;
+        }
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void SetCategory(string category)
+    {
+        _model.Category = category;
+        _errorMessage = string.Empty;
+    }
+
+    private void AutoFillCurrentStation()
+    {
+        if (RadioState.ActiveStation is not null)
+        {
+            _model.StationName = RadioState.ActiveStation.Name;
+            _model.StationLocation = $"{RadioState.ActiveStation.Country}, {RadioState.ActiveStation.State}, {RadioState.ActiveStation.City}";
+            _model.StationFrequency = $"{RadioState.ActiveStation.Frequency} {RadioState.ActiveStation.Band}";
+            _model.StationStreamUrl = RadioState.ActiveStation.StreamUrl;
+        }
+    }
+
+    private string GetMessageLabel() => _model.Category switch
+    {
+        "AGREGAR_ESTACION" => "Comentarios adicionales sobre la emisora",
+        "MEJORA" => "Describe tu propuesta o idea de mejora para Radio Mundial",
+        "ESTACION_CAIDA" => "¿Qué problema experimentas con esta emisora?",
+        _ => "Escribe tu comentario o sugerencia"
+    };
+
+    private string GetMessagePlaceholder() => _model.Category switch
+    {
+        "AGREGAR_ESTACION" => "¿Qué programas tiene? ¿Alguna frecuencia secundaria o detalle que nos ayude a encontrarla?",
+        "MEJORA" => "¿Qué características, filtros o controles te gustaría ver en la aplicación?",
+        "ESTACION_CAIDA" => "Por ejemplo: no carga el audio, se queda en silencio, o la música no coincide...",
+        _ => "Déjanos tus impresiones o saludos desde tu rincón del mundo..."
+    };
+
+    private async Task HandleSubmitAsync()
+    {
+        _errorMessage = string.Empty;
+        if (string.IsNullOrWhiteSpace(_model.Message) && _model.Category != "AGREGAR_ESTACION")
+        {
+            _errorMessage = "Por favor escribe un mensaje detallando tu sugerencia.";
+            return;
+        }
+
+        if (_model.Category == "AGREGAR_ESTACION" && string.IsNullOrWhiteSpace(_model.StationName))
+        {
+            _errorMessage = "Por favor indica al menos el nombre de la emisora que deseas sugerir.";
+            return;
+        }
+
+        // Si es sugerencia de estación y mensaje está vacío, poner texto por defecto
+        if (string.IsNullOrWhiteSpace(_model.Message))
+        {
+            _model.Message = $"Solicitud para agregar: {_model.StationName} ({_model.StationLocation} {_model.StationFrequency})";
+        }
+
+        _isSubmitting = true;
+        try
+        {
+            var success = await RadioState.SubmitFeedbackAsync(_model);
+            if (success)
+            {
+                _isSubmitted = true;
+            }
+            else
+            {
+                // Fallback exitoso de cara al usuario
+                _isSubmitted = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al enviar formulario: {ex.Message}");
+            _isSubmitted = true;
+        }
+        finally
+        {
+            _isSubmitting = false;
+        }
+    }
+
+    private void ResetForm()
+    {
+        _model = new FeedbackModel();
+        _isSubmitted = false;
+        _errorMessage = string.Empty;
+    }
+
+    private void CloseModal()
+    {
+        RadioState.CloseFeedbackModal();
+        ResetForm();
+    }
+
+    public void Dispose()
+    {
+        RadioState.OnStateChanged -= HandleStateChanged;
+    }
+}

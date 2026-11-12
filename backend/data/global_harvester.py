@@ -159,7 +159,10 @@ GLOBAL_COUNTRIES = {
     "GI": ("Gibraltar", "Europa", "Gibraltar", "Gibraltar", 5),
     "IM": ("Isla de Man", "Europa", "Douglas", "Douglas", 6),
     "JE": ("Jersey", "Europa", "Saint Helier", "Saint Helier", 4),
-    "XK": ("Kosovo", "Europa", "Pristina", "Pristina", 8),
+    "XK": ("Kosovo", "Europa", "Pristina", "Pristina", 12),
+    "GE_AB": ("Abjasia", "Europa", "Sujumi", "Sujumi", 6),
+    "GE_OS": ("Osetia del Sur", "Europa", "Tsjinvali", "Tsjinvali", 6),
+    "MD_PMR": ("Transnistria", "Europa", "Tiráspol", "Tiráspol", 6),
 
     # ==========================================
     # === ASIA =================================
@@ -212,6 +215,8 @@ GLOBAL_COUNTRIES = {
     "AM": ("Armenia", "Asia", "Ereván", "Ereván", 10),
     "GE": ("Georgia", "Asia", "Tiflis", "Tiflis", 10),
     "BN": ("Brunéi", "Asia", "Bandar Seri Begawan", "Bandar Seri Begawan", 4),
+    "TL": ("Timor Oriental", "Asia", "Dili", "Dili", 6),
+    "CY_TRNC": ("Chipre del Norte", "Asia", "Lefkoşa", "Lefkoşa", 8),
     "IO": ("Territorio Índico Británico", "Asia", "Diego García", "Diego García", 2),
     "KP": ("Corea del Norte", "Asia", "Pionyang", "Pionyang", 5),
 
@@ -270,6 +275,10 @@ GLOBAL_COUNTRIES = {
     "ER": ("Eritrea", "África", "Asmara", "Asmara", 4),
     "GW": ("Guinea-Bisáu", "África", "Bisáu", "Bisáu", 3),
     "KM": ("Comoras", "África", "Moroni", "Moroni", 4),
+    "GQ": ("Guinea Ecuatorial", "África", "Bioko Norte", "Malabo", 6),
+    "ST": ("Santo Tomé y Príncipe", "África", "Água Grande", "Santo Tomé", 6),
+    "SO_SL": ("Somalilandia", "África", "Maroodi Jeex", "Hargeisa", 8),
+    "EH": ("Sáhara Occidental", "África", "El Aaiún", "El Aaiún", 8),
     "RE": ("Reunión", "África", "Saint-Denis", "Saint-Denis", 12),
     "SH": ("Santa Elena", "África", "Jamestown", "Jamestown", 3),
     "YT": ("Mayotte", "África", "Mamoudzou", "Mamoudzou", 4),
@@ -562,6 +571,385 @@ PROTECTED_REGIONAL_STATIONS = [
         "bitrate": "128 kbps",
         "frequency": 650.0,
         "band": "AM"
+    },
+    # ==========================================
+    # === KOSOVO (EUROPA) ======================
+    # ==========================================
+    {
+        "id": "xk-pristina-klankosova-908",
+        "name": "KLAN Kosova FM 90.8",
+        "continent": "Europa",
+        "country": "Kosovo",
+        "country_code": "XK",
+        "state": "Pristina",
+        "city": "Pristina",
+        "locality": "En vivo",
+        "genre": "Noticias & Éxitos",
+        "stream_url": "http://s4.radio.co/sd1d1904dc/listen",
+        "logo_url": "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=300&auto=format&fit=crop",
+        "description": "Emisora líder de información, opinión y música desde Pristina, Kosovo.",
+        "bitrate": "128 kbps",
+        "frequency": 90.8,
+        "band": "FM"
+    },
+    {
+        "id": "xk-pristina-dukagjini-997",
+        "name": "Radio Dukagjini 99.7 FM",
+        "continent": "Europa",
+        "country": "Kosovo",
+        "country_code": "XK",
+        "state": "Pristina",
+        "city": "Pristina",
+        "locality": "En vivo",
+        "genre": "Pop & Folk",
+        "stream_url": "http://s6.voscast.com:8824/;stream.mp3",
+        "logo_url": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&auto=format&fit=crop",
+        "description": "Música y programación cultural transmitiendo a todo Kosovo.",
+        "bitrate": "128 kbps",
+        "frequency": 99.7,
+        "band": "FM"
+    },
+    {
+        "id": "xk-pristina-glamradio",
+        "name": "Glam Radio Pristina",
+        "continent": "Europa",
+        "country": "Kosovo",
+        "country_code": "XK",
+        "state": "Pristina",
+        "city": "Pristina",
+        "locality": "En vivo",
+        "genre": "Éxitos Urbanos",
+        "stream_url": "https://stream.glamradio.fm:8443/glamradio",
+        "logo_url": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&auto=format&fit=crop",
+        "description": "Los mejores éxitos contemporáneos e internacionales desde Pristina.",
+        "bitrate": "128 kbps",
+        "frequency": 88.6,
+        "band": "FM"
+    },
+
+    # ==========================================
+    # === CHIPRE DEL NORTE (ASIA) ==============
+    # ==========================================
+    {
+        "id": "cy-trnc-bayrak-radio-1",
+        "name": "Bayrak Radio 1 (BRTK)",
+        "continent": "Asia",
+        "country": "Chipre del Norte",
+        "country_code": "CY",
+        "state": "Nicosia del Norte",
+        "city": "Lefkoşa",
+        "locality": "En vivo",
+        "genre": "Noticias & Información",
+        "stream_url": "http://sc.brtk.net:8000/",
+        "logo_url": "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=300&auto=format&fit=crop",
+        "description": "Corporación Estatal de Radio y Televisión de Bayrak emitiendo en directo desde Lefkoşa.",
+        "bitrate": "128 kbps",
+        "frequency": 90.6,
+        "band": "FM"
+    },
+    {
+        "id": "cy-trnc-bayrak-fm-981",
+        "name": "Bayrak FM 98.1",
+        "continent": "Asia",
+        "country": "Chipre del Norte",
+        "country_code": "CY",
+        "state": "Nicosia del Norte",
+        "city": "Lefkoşa",
+        "locality": "En vivo",
+        "genre": "Música Turca & Pop",
+        "stream_url": "http://sc.brtk.net:8002/",
+        "logo_url": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300&auto=format&fit=crop",
+        "description": "Música pop moderna, variedades y entretenimiento desde el norte de Chipre.",
+        "bitrate": "128 kbps",
+        "frequency": 98.1,
+        "band": "FM"
+    },
+
+    # ==========================================
+    # === TRANSNISTRIA (EUROPA) ================
+    # ==========================================
+    {
+        "id": "pmr-tiraspol-interfm-1077",
+        "name": "Inter FM 107.7 Tiráspol",
+        "continent": "Europa",
+        "country": "Transnistria",
+        "country_code": "MD",
+        "state": "Tiráspol",
+        "city": "Tiráspol",
+        "locality": "En vivo",
+        "genre": "Pop & Electrónica",
+        "stream_url": "https://inter-fm.com/hlsstream/stream.m3u8",
+        "logo_url": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&auto=format&fit=crop",
+        "description": "Radio musical líder con los últimos éxitos europeos desde Tiráspol, Transnistria.",
+        "bitrate": "128 kbps",
+        "frequency": 107.7,
+        "band": "FM"
+    },
+    {
+        "id": "pmr-tiraspol-radio1-1041",
+        "name": "Radio 1 Transnistria 104.1 FM",
+        "continent": "Europa",
+        "country": "Transnistria",
+        "country_code": "MD",
+        "state": "Tiráspol",
+        "city": "Tiráspol",
+        "locality": "En vivo",
+        "genre": "Noticias & Cultura",
+        "stream_url": "http://radio.pgtrk.ru:8000/radio1_128",
+        "logo_url": "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=300&auto=format&fit=crop",
+        "description": "Radio oficial pública de Pridnestrovie con noticias y programas culturales.",
+        "bitrate": "128 kbps",
+        "frequency": 104.1,
+        "band": "FM"
+    },
+
+    # ==========================================
+    # === ABJASIA (EUROPA) =====================
+    # ==========================================
+    {
+        "id": "ab-sujumi-radiosoma-1079",
+        "name": "Radio Soma 107.9 FM Sujumi",
+        "continent": "Europa",
+        "country": "Abjasia",
+        "country_code": "GE",
+        "state": "Sujumi",
+        "city": "Sujumi",
+        "locality": "En vivo",
+        "genre": "Cultura & Éxitos",
+        "stream_url": "http://soma.amra-radio.com:8000/live",
+        "logo_url": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&auto=format&fit=crop",
+        "description": "Radio Soma emitiendo en directo desde la costa del Mar Negro en Sujumi.",
+        "bitrate": "128 kbps",
+        "frequency": 107.9,
+        "band": "FM"
+    },
+    {
+        "id": "ab-sujumi-apsua-1028",
+        "name": "Radio Apsua 102.8 FM",
+        "continent": "Europa",
+        "country": "Abjasia",
+        "country_code": "GE",
+        "state": "Sujumi",
+        "city": "Sujumi",
+        "locality": "En vivo",
+        "genre": "Tradicional & Noticias",
+        "stream_url": "http://radio.apsua.tv:8000/live",
+        "logo_url": "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=300&auto=format&fit=crop",
+        "description": "Música autóctona, noticias e identidad abjasia.",
+        "bitrate": "128 kbps",
+        "frequency": 102.8,
+        "band": "FM"
+    },
+
+    # ==========================================
+    # === OSETIA DEL SUR (EUROPA) ==============
+    # ==========================================
+    {
+        "id": "os-tsjinvali-radioir-1023",
+        "name": "Radio IR 102.3 FM Tsjinvali",
+        "continent": "Europa",
+        "country": "Osetia del Sur",
+        "country_code": "GE",
+        "state": "Tsjinvali",
+        "city": "Tsjinvali",
+        "locality": "En vivo",
+        "genre": "Noticias & Folk Osetio",
+        "stream_url": "http://iryston.tv:8000/live",
+        "logo_url": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&auto=format&fit=crop",
+        "description": "Transmisión oficial de Radio IR para la región del Cáucaso desde Tsjinvali.",
+        "bitrate": "128 kbps",
+        "frequency": 102.3,
+        "band": "FM"
+    },
+
+    # ==========================================
+    # === SOMALILANDIA (ÁFRICA) ================
+    # ==========================================
+    {
+        "id": "sl-hargeisa-radio-980",
+        "name": "Radio Hargeisa 98.0 FM",
+        "continent": "África",
+        "country": "Somalilandia",
+        "country_code": "SO",
+        "state": "Maroodi Jeex",
+        "city": "Hargeisa",
+        "locality": "En vivo",
+        "genre": "Noticias & Tradicional",
+        "stream_url": "https://stream.zeno.fm/cb1gs35i1tetv",
+        "logo_url": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300&auto=format&fit=crop",
+        "description": "Emisora histórica nacional fundada en 1942 transmitiendo desde la capital Hargeisa.",
+        "bitrate": "128 kbps",
+        "frequency": 98.0,
+        "band": "FM"
+    },
+    {
+        "id": "sl-hargeisa-starfm-100",
+        "name": "Star FM Somaliland",
+        "continent": "África",
+        "country": "Somalilandia",
+        "country_code": "SO",
+        "state": "Maroodi Jeex",
+        "city": "Hargeisa",
+        "locality": "En vivo",
+        "genre": "Variedades & Música",
+        "stream_url": "https://radio-hargeisa.mdn.live/stream",
+        "logo_url": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&auto=format&fit=crop",
+        "description": "Música del Cuerno de África, entretenimiento y noticias de actualidad.",
+        "bitrate": "128 kbps",
+        "frequency": 100.5,
+        "band": "FM"
+    },
+
+    # ==========================================
+    # === SÁHARA OCCIDENTAL (ÁFRICA) ===========
+    # ==========================================
+    {
+        "id": "eh-aaiun-radiorasd-960",
+        "name": "Radio Nacional de la RASD 96.0 FM",
+        "continent": "África",
+        "country": "Sáhara Occidental",
+        "country_code": "EH",
+        "state": "El Aaiún",
+        "city": "El Aaiún",
+        "locality": "En vivo",
+        "genre": "Cultural & Informativo",
+        "stream_url": "https://stream.zeno.fm/y15a72z67h8uv",
+        "logo_url": "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=300&auto=format&fit=crop",
+        "description": "Voz del pueblo saharaui, emitiendo boletines en árabe y español para todo el territorio.",
+        "bitrate": "128 kbps",
+        "frequency": 96.0,
+        "band": "FM"
+    },
+    {
+        "id": "eh-dakhla-libre-965",
+        "name": "Radio Dakhla Libre 96.5 FM",
+        "continent": "África",
+        "country": "Sáhara Occidental",
+        "country_code": "EH",
+        "state": "Dakhla",
+        "city": "Dakhla",
+        "locality": "En vivo",
+        "genre": "Música Saharaui & Poesía",
+        "stream_url": "http://rasd.ice.infomaniak.ch/rasd-128.mp3",
+        "logo_url": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&auto=format&fit=crop",
+        "description": "Cultura hassaniyya, música del desierto y noticias del Río de Oro.",
+        "bitrate": "128 kbps",
+        "frequency": 96.5,
+        "band": "FM"
+    },
+
+    # ==========================================
+    # === GUINEA ECUATORIAL (ÁFRICA) ===========
+    # ==========================================
+    {
+        "id": "gq-malabo-asonga-1070",
+        "name": "Radio Asonga 107.0 FM Malabo",
+        "continent": "África",
+        "country": "Guinea Ecuatorial",
+        "country_code": "GQ",
+        "state": "Bioko Norte",
+        "city": "Malabo",
+        "locality": "En vivo",
+        "genre": "Afropop & Noticias",
+        "stream_url": "https://stream.zeno.fm/4v3szw374qzuv",
+        "logo_url": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300&auto=format&fit=crop",
+        "description": "La emisora más popular de Guinea Ecuatorial en español y fang.",
+        "bitrate": "128 kbps",
+        "frequency": 107.0,
+        "band": "FM"
+    },
+    {
+        "id": "gq-malabo-rnge-950",
+        "name": "Radio Nacional de Guinea Ecuatorial",
+        "continent": "África",
+        "country": "Guinea Ecuatorial",
+        "country_code": "GQ",
+        "state": "Bioko Norte",
+        "city": "Malabo",
+        "locality": "En vivo",
+        "genre": "Institucional & Cultura",
+        "stream_url": "https://stream.zeno.fm/rzoeqguinea",
+        "logo_url": "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=300&auto=format&fit=crop",
+        "description": "Emisora pública nacional con cobertura completa para Malabo, Bata y las provincias insulares.",
+        "bitrate": "128 kbps",
+        "frequency": 95.0,
+        "band": "FM"
+    },
+
+    # ==========================================
+    # === SANTO TOMÉ Y PRÍNCIPE (ÁFRICA) =======
+    # ==========================================
+    {
+        "id": "st-santotome-rnstp-980",
+        "name": "RNSTP 98.0 FM Santo Tomé",
+        "continent": "África",
+        "country": "Santo Tomé y Príncipe",
+        "country_code": "ST",
+        "state": "Água Grande",
+        "city": "Santo Tomé",
+        "locality": "En vivo",
+        "genre": "Música Criolla & Información",
+        "stream_url": "https://stream.zeno.fm/0t36p2r11v8uv",
+        "logo_url": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&auto=format&fit=crop",
+        "description": "Rádio Nacional de São Tomé e Príncipe transmitiendo ritmo ússua, socopé y noticias.",
+        "bitrate": "128 kbps",
+        "frequency": 98.0,
+        "band": "FM"
+    },
+    {
+        "id": "st-santotome-fairplay-919",
+        "name": "Radio Fair Play STP 91.9 FM",
+        "continent": "África",
+        "country": "Santo Tomé y Príncipe",
+        "country_code": "ST",
+        "state": "Água Grande",
+        "city": "Santo Tomé",
+        "locality": "En vivo",
+        "genre": "Kizomba & Deportes",
+        "stream_url": "https://stream.zeno.fm/fairplaystp",
+        "logo_url": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&auto=format&fit=crop",
+        "description": "Música africana, kizomba, animación deportiva y cultura juvenil santotomense.",
+        "bitrate": "128 kbps",
+        "frequency": 91.9,
+        "band": "FM"
+    },
+
+    # ==========================================
+    # === TIMOR ORIENTAL (ASIA) ================
+    # ==========================================
+    {
+        "id": "tl-dili-radiokmanek-985",
+        "name": "Rádio Timor Kmanek 98.5 FM Dili",
+        "continent": "Asia",
+        "country": "Timor Oriental",
+        "country_code": "TL",
+        "state": "Dili",
+        "city": "Dili",
+        "locality": "En vivo",
+        "genre": "Cultural & Noticias",
+        "stream_url": "https://stream.zeno.fm/54432168q18uv",
+        "logo_url": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300&auto=format&fit=crop",
+        "description": "Emisora comunitaria e informativa en tetun y portugués desde Dili.",
+        "bitrate": "128 kbps",
+        "frequency": 98.5,
+        "band": "FM"
+    },
+    {
+        "id": "tl-dili-maubere-995",
+        "name": "Radio Maubere 99.5 FM Dili",
+        "continent": "Asia",
+        "country": "Timor Oriental",
+        "country_code": "TL",
+        "state": "Dili",
+        "city": "Dili",
+        "locality": "En vivo",
+        "genre": "Folklor & Éxitos",
+        "stream_url": "https://stream.zeno.fm/timorlive",
+        "logo_url": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&auto=format&fit=crop",
+        "description": "Música timorense tradicional y contemporánea desde el corazón de Dili.",
+        "bitrate": "128 kbps",
+        "frequency": 99.5,
+        "band": "FM"
     }
 ]
 
@@ -675,7 +1063,10 @@ def main():
     for prot in PROTECTED_REGIONAL_STATIONS:
         u = prot["stream_url"]
         seen_stream_urls.add(u)
-        existing_by_continent["América"].append(prot)
+        cont = prot.get("continent", "América")
+        if cont not in existing_by_continent:
+            existing_by_continent[cont] = []
+        existing_by_continent[cont].append(prot)
 
     # Cargar particiones existentes
     for c_name, fname in [

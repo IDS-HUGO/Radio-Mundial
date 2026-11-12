@@ -34,7 +34,17 @@ COUNTRY_NORMALIZER: dict[str, str] = {
     "belice": "Belice", "belize": "Belice", "republica dominicana": "República Dominicana",
     "dominican republic": "República Dominicana", "cuba": "Cuba", "jamaica": "Jamaica",
     "bolivia": "Bolivia", "paraguay": "Paraguay",
-    "netherlands": "Países Bajos", "australia": "Australia", "portugal": "Portugal"
+    "netherlands": "Países Bajos", "australia": "Australia", "portugal": "Portugal",
+    "somalilandia": "Somalilandia", "somaliland": "Somalilandia",
+    "sahara occidental": "Sáhara Occidental", "western sahara": "Sáhara Occidental",
+    "chipre del norte": "Chipre del Norte", "northern cyprus": "Chipre del Norte", "kktc": "Chipre del Norte",
+    "taiwan": "Taiwán", "taiwan, republic of china": "Taiwán",
+    "kosovo": "Kosovo", "abjasia": "Abjasia", "abkhazia": "Abjasia",
+    "osetia del sur": "Osetia del Sur", "south ossetia": "Osetia del Sur",
+    "transnistria": "Transnistria", "pridnestrovie": "Transnistria",
+    "guinea ecuatorial": "Guinea Ecuatorial", "equatorial guinea": "Guinea Ecuatorial",
+    "santo tome y principe": "Santo Tomé y Príncipe", "sao tome and principe": "Santo Tomé y Príncipe",
+    "timor oriental": "Timor Oriental", "timor-leste": "Timor Oriental"
 }
 
 COUNTRY_CONTINENT_MAP: dict[str, str] = {
@@ -51,16 +61,22 @@ COUNTRY_CONTINENT_MAP: dict[str, str] = {
     "italia": "Europa", "suiza": "Europa", "portugal": "Europa", "paises bajos": "Europa",
     "belgica": "Europa", "austria": "Europa", "suecia": "Europa", "noruega": "Europa",
     "dinamarca": "Europa", "finlandia": "Europa", "irlanda": "Europa", "grecia": "Europa",
-    "polonia": "Europa", "republica checa": "Europa",
+    "polonia": "Europa", "republica checa": "Europa", "kosovo": "Europa",
+    "abjasia": "Europa", "abkhazia": "Europa", "osetia del sur": "Europa", "south ossetia": "Europa",
+    "transnistria": "Europa", "pridnestrovie": "Europa",
     # Asia
     "japon": "Asia", "corea del sur": "Asia", "china": "Asia", "hong kong": "Asia",
     "taiwan": "Asia", "india": "Asia", "indonesia": "Asia", "filipinas": "Asia",
     "tailandia": "Asia", "vietnam": "Asia", "singapur": "Asia", "malasia": "Asia",
     "turquia": "Asia", "emiratos arabes unidos": "Asia", "israel": "Asia", "arabia saudita": "Asia",
+    "chipre": "Asia", "chipre del norte": "Asia", "northern cyprus": "Asia", "kktc": "Asia",
+    "timor oriental": "Asia", "timor-leste": "Asia",
     # África
     "sudafrica": "África", "nigeria": "África", "egipto": "África", "kenia": "África",
     "marruecos": "África", "ghana": "África", "senegal": "África", "costa de marfil": "África",
-    "argelia": "África", "tunez": "África",
+    "argelia": "África", "tunez": "África", "somalilandia": "África", "somaliland": "África",
+    "sahara occidental": "África", "western sahara": "África", "guinea ecuatorial": "África",
+    "equatorial guinea": "África", "santo tome y principe": "África", "sao tome and principe": "África",
     # Oceanía
     "australia": "Oceanía", "nueva zelanda": "Oceanía", "fiyi": "Oceanía", "papua nueva guinea": "Oceanía"
 }

@@ -631,6 +631,8 @@
     border-radius: 12px;
     box-shadow: var(--card-shadow);
     transition: border-color 0.2s ease;
+    margin-top: 2rem;
+    overflow: hidden;
 }
 
 .studio-sponsor-deck:hover {
@@ -671,8 +673,10 @@
     justify-content: center;
     background: rgba(0, 0, 0, 0.15);
     border-radius: 8px;
-    padding: 8px;
+    padding: 6px;
     border: 1px solid rgba(255, 255, 255, 0.04);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .adsterra-iframe-banner {

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Publicidad</title>
   <style>
+    * { box-sizing: border-box; }
     html, body {
       margin: 0;
       padding: 0;
@@ -15,10 +16,27 @@
       align-items: center;
       background: transparent;
       overflow: hidden;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    .fallback-note {
+      position: absolute;
+      z-index: 1;
+      font-size: 0.72rem;
+      color: rgba(212, 163, 115, 0.75);
+      text-align: center;
+      padding: 4px 10px;
+    }
+    .fallback-note a {
+      color: #ffd89b;
+      text-decoration: underline;
+      font-weight: 600;
     }
   </style>
 </head>
 <body>
+  <div class="fallback-note" id="fallback">
+    📻 Espacio de Patrocinio Hi-Fi • <a href="mailto:hugofranciscoluisinclan@gmail.com?subject=Patrocinio%20en%20Radio%20Mundial" target="_blank" rel="noopener noreferrer">Anuncia tu Emisora o Marca Aquí</a>
+  </div>
   <script type="text/javascript">
     atOptions = {
       'key' : '395c96f03cf0e12525fa611c4c90c295',

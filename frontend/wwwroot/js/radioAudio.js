@@ -172,6 +172,28 @@ window.radioAudio = {
         return null;
     },
 
+    savePreferences: function (prefsJson) {
+        try {
+            localStorage.setItem("radio_mundial_preferences", prefsJson);
+            this.setCookie("radio_prefs", prefsJson, 365);
+        } catch (e) {
+            console.warn('[RadioAudio] No se pudieron guardar preferencias:', e);
+        }
+    },
+
+    loadPreferences: function () {
+        try {
+            const local = localStorage.getItem("radio_mundial_preferences");
+            if (local) return local;
+
+            const cookie = this.getCookie("radio_prefs");
+            if (cookie) return cookie;
+        } catch (e) {
+            console.warn('[RadioAudio] Error al cargar preferencias:', e);
+        }
+        return null;
+    },
+
     initThemeWatcher: function () {
         try {
             const savedTheme = localStorage.getItem('rm_theme') || 'dark';

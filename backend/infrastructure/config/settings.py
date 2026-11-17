@@ -21,6 +21,7 @@ class Settings(BaseSettings):
             "http://127.0.0.1:5296",
             "http://localhost:5000",
             "http://localhost:8080",
+            "https://radio-mundial.hugofranciscoluis.workers.dev",
             "https://radio-mundial.pages.dev",
             "*"
         ]

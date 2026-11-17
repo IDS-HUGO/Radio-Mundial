@@ -13,7 +13,8 @@ fi
 echo "Version de .NET:"
 dotnet --version
 
-echo "Ejecutando dotnet publish..."
+echo "Limpiando y ejecutando dotnet publish..."
+rm -rf frontend/dist
 dotnet publish frontend/frontend.csproj -c Release -o frontend/dist
 
 echo "=== Compilacion completada con exito ==="

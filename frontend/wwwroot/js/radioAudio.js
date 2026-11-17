@@ -6,6 +6,8 @@ window.radioAudio = {
     audio: null,
     dotNetHelper: null,
     currentUrl: "",
+    originalStreamUrl: "",
+    canFallbackToHttp: false,
 
     init: function (dotNetReference) {
         if (dotNetReference) {
@@ -29,6 +31,21 @@ window.radioAudio = {
 
             this.audio.addEventListener('error', (e) => {
                 console.warn('[RadioAudio] Advertencia o desconexión en stream:', e);
+                // Si falló el intento sobre https, intentar fallback a la url original si era http
+                if (this.canFallbackToHttp && this.originalStreamUrl && this.currentUrl !== this.originalStreamUrl) {
+                    this.canFallbackToHttp = false;
+                    console.info('[RadioAudio] Reintentando con stream original:', this.originalStreamUrl);
+                    this.currentUrl = this.originalStreamUrl;
+                    this.audio.src = this.originalStreamUrl;
+                    this.audio.load();
+                    this.audio.play().catch(err => {
+                        console.warn('[RadioAudio] Fallback original también falló:', err);
+                        if (this.dotNetHelper) {
+                            this.dotNetHelper.invokeMethodAsync('OnNativeAudioError', 'Stream no disponible.');
+                        }
+                    });
+                    return;
+                }
                 if (this.dotNetHelper) {
                     this.dotNetHelper.invokeMethodAsync('OnNativeAudioError', 'Stream no disponible.');
                 }
@@ -42,10 +59,23 @@ window.radioAudio = {
         try {
             if (!streamUrl) return false;
 
-            if (this.currentUrl !== streamUrl) {
+            this.originalStreamUrl = streamUrl.trim();
+            this.canFallbackToHttp = false;
+
+            let candidateUrl = this.originalStreamUrl;
+            // Si la página se carga sobre HTTPS y el stream es http://, intentar upgrade seguro a https:// si no es IP
+            if (location.protocol === 'https:' && candidateUrl.startsWith('http://')) {
+                const isIp = /^http:\/\/\d+\.\d+\.\d+\.\d+/.test(candidateUrl);
+                if (!isIp) {
+                    candidateUrl = candidateUrl.replace('http://', 'https://');
+                    this.canFallbackToHttp = true;
+                }
+            }
+
+            if (this.currentUrl !== candidateUrl) {
                 this.audio.pause();
-                this.currentUrl = streamUrl;
-                this.audio.src = streamUrl;
+                this.currentUrl = candidateUrl;
+                this.audio.src = candidateUrl;
                 this.audio.load();
             }
 
@@ -55,7 +85,20 @@ window.radioAudio = {
             }
             return true;
         } catch (error) {
-            console.warn('[RadioAudio] Autoplay o cambio de stream gestionado:', error.message);
+            console.warn('[RadioAudio] Reproducción inicial no completada:', error.message);
+            if (this.canFallbackToHttp && this.originalStreamUrl && this.currentUrl !== this.originalStreamUrl) {
+                this.canFallbackToHttp = false;
+                try {
+                    this.currentUrl = this.originalStreamUrl;
+                    this.audio.src = this.originalStreamUrl;
+                    this.audio.load();
+                    const p = this.audio.play();
+                    if (p !== undefined) await p;
+                    return true;
+                } catch (fallbackErr) {
+                    console.warn('[RadioAudio] Fallback original también falló:', fallbackErr.message);
+                }
+            }
             if (this.dotNetHelper) {
                 this.dotNetHelper.invokeMethodAsync('OnNativeAudioError', error.message || 'Stream no disponible');
             }
@@ -129,50 +172,62 @@ window.radioAudio = {
         return null;
     },
 
-    savePreferences: function (prefsJson) {
-        try {
-            localStorage.setItem("radio_mundial_preferences", prefsJson);
-            this.setCookie("radio_prefs", prefsJson, 365);
-        } catch (e) {
-            console.warn('[RadioAudio] No se pudieron guardar preferencias:', e);
-        }
-    },
-
-    loadPreferences: function () {
-        try {
-            const local = localStorage.getItem("radio_mundial_preferences");
-            if (local) return local;
-
-            const cookie = this.getCookie("radio_prefs");
-            if (cookie) return cookie;
-        } catch (e) {
-            console.warn('[RadioAudio] Error al cargar preferencias:', e);
-        }
-        return null;
-    },
-
-    currentThemeMode: "system",
-
     initThemeWatcher: function () {
-        const mq = window.matchMedia('(prefers-color-scheme: dark)');
-        mq.addEventListener('change', (e) => {
-            if (this.currentThemeMode === 'system') {
-                this.applyTheme('system');
-            }
-        });
+        try {
+            const savedTheme = localStorage.getItem('rm_theme') || 'dark';
+            this.applyTheme(savedTheme);
+
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                const current = localStorage.getItem('rm_theme') || 'system';
+                if (current === 'system') {
+                    this.applyTheme('system');
+                }
+            });
+        } catch (e) {
+            console.debug('[RadioAudio] Theme init handled:', e);
+        }
     },
 
-    applyTheme: function (themeMode) {
-        this.currentThemeMode = themeMode || "system";
-        let resolved = "dark";
-        if (this.currentThemeMode === "system") {
-            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-            resolved = prefersDark ? "dark" : "light";
-        } else {
-            resolved = this.currentThemeMode;
+    applyTheme: function (themeName) {
+        try {
+            localStorage.setItem('rm_theme', themeName);
+            let effective = themeName;
+            if (themeName === 'system') {
+                const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                effective = prefersDark ? 'dark' : 'light';
+            }
+            document.documentElement.setAttribute('data-theme', effective);
+            const metaTheme = document.querySelector('meta[name="theme-color"]');
+            if (metaTheme) {
+                metaTheme.setAttribute('content', effective === 'dark' ? '#0f0a06' : '#fdf8f0');
+            }
+        } catch (e) {
+            console.debug('[RadioAudio] Apply theme handled:', e);
         }
-        document.documentElement.setAttribute('data-theme', resolved);
-        document.body.setAttribute('data-theme', resolved);
-        return resolved;
+    },
+
+    getCurrentThemePreference: function () {
+        try {
+            return localStorage.getItem('rm_theme') || 'dark';
+        } catch (e) {
+            return 'dark';
+        }
+    },
+
+    setStoredLanguage: function (lang) {
+        try {
+            localStorage.setItem('rm_lang', lang);
+            this.setCookie('rm_lang', lang, 365);
+        } catch (e) {
+            console.debug('[RadioAudio] Language storage handled:', e);
+        }
+    },
+
+    getStoredLanguage: function () {
+        try {
+            return localStorage.getItem('rm_lang') || this.getCookie('rm_lang') || 'es';
+        } catch (e) {
+            return 'es';
+        }
     }
 };

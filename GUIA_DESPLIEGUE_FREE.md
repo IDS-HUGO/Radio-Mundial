@@ -125,46 +125,56 @@ git push -u origin master
 
 ## PASO 2: Desplegar el Backend en Render.com (100% Gratis)
 
-Render ofrece servidores gratuitos con soporte de WebSockets, compresión GZip y certificados SSL/TLS automáticos.
+En la pantalla que tienes abierta en Render (`New Web Service`), llena cada campo exactamente de la siguiente manera:
 
-### 2.1 Crear el Web Service
+### 2.1 Campos de la Pantalla Actualizada de Render (Paso a Paso):
 
-1. Inicia sesión en [dashboard.render.com](https://dashboard.render.com/) con tu cuenta de GitHub.
-2. Haz clic en el botón superior **"New +"** y selecciona **"Web Service"**.
-3. Elige la opción **"Build and deploy from a Git repository"** y haz clic en **Connect** junto a tu repositorio `Radio-Mundial`.
+1. **Name:**  
+   Escribe: `radio-mundial-api` (o el nombre que prefieras).
 
-### 2.2 Rellenar la Configuración
+2. **Language:**  
+   Render detecta automáticamente **`Docker`** porque el proyecto incluye un Dockerfile multi-stage optimizado para producción.  
+   * **Opción A (Recomendada con Docker):** Déjalo en `Docker`. El Dockerfile ya está 100% configurado con Python 3.11 y Uvicorn.
+   * **Opción B (Python Nativo):** Si prefieres cambiar el selector a `Python 3`, Render te pedirá dos comandos:
+     * *Build Command:* `pip install -r requirements.txt`
+     * *Start Command:* `uvicorn main:app --host 0.0.0.0 --port $PORT --workers 2`
 
-Completa exactamente estos campos:
+3. **Branch:**  
+   Asegúrate de que esté seleccionada tu rama: **`master`** (o `main`).
 
-* **Name:** `radio-mundial-api`
-* **Region:** *Oregon (US West)* u *Ohio (US East)*
-* **Branch:** `master`
-* **Root Directory:** `backend` ⚠️ *(Fundamental: indica que el backend está en esa subcarpeta)*
-* **Runtime:** `Python 3`
-* **Build Command:**
-  ```bash
-  pip install -r requirements.txt
-  ```
-* **Start Command:**
-  ```bash
-  uvicorn main:app --host 0.0.0.0 --port $PORT --workers 2
-  ```
-* **Instance Type:** Selecciona **Free** (0.1 CPU, 512 MB RAM).
+4. **Region:**  
+   Déjalo en: **`Oregon (US West)`** (o la región más cercana a ti).
 
-### 2.3 Variables de Entorno (Environment Variables)
+5. **Root Directory (⚠️ CRÍTICO - NO DEJAR VACÍO):**  
+   Escribe: **`backend`**  
+   *(Esto le indica a Render que compile únicamente la subcarpeta del backend dentro de tu repositorio monorepo).*
 
-Haz clic en **"Advanced"** -> **"Add Environment Variable"** y añade:
+6. **Dockerfile Path:**  
+   Déjalo como viene por defecto: **`./Dockerfile`**  
+   *(Al haber colocado `backend` en Root Directory, Render buscará el Dockerfile directamente dentro de esa carpeta).*
 
-| Variable             | Valor     |
-| :------------------- | :-------- |
-| `PYTHONUNBUFFERED` | `1`     |
-| `ENABLE_WARMUP`    | `true`  |
-| `ALLOWED_ORIGINS`  | `["*"]` |
+7. **Compute Plan (⚠️ ¡IMPORTANTE PARA QUE SEA $0.00!):**  
+   Render preselecciona por defecto la opción de pago de `$7 / month`.  
+   * **Haz clic sobre la opción gratuita:** **`$0 / month - Free (0.1 CPU, 512 MB RAM)`**.  
+   * Debe quedar marcada la tarjeta de **$0 Free** para que no te genere ningún cobro.
 
-4. Haz clic en **"Create Web Service"**.
-5. Render compilará tu servidor en aproximadamente 90 segundos y te entregará tu URL pública:
-   👉 **`https://radio-mundial-api.onrender.com`**
+8. **Environment Variables (Variables de Entorno):**  
+   Haz clic en el botón **"Add Environment Variable"** y añade las siguientes filas (Key y Value):
+
+   | Key (Clave) | Value (Valor) | Propósito |
+   | :--- | :--- | :--- |
+   | `PYTHONUNBUFFERED` | `1` | Emite los logs de FastAPI de inmediato en la consola de Render |
+   | `ENABLE_WARMUP` | `true` | Carga las 18,331 emisoras en memoria RAM al iniciar |
+   | `ALLOWED_ORIGINS` | `["*"]` | Habilita CORS para conectar con tu frontend de Cloudflare |
+   | `NOTIFICATION_EMAIL` | `hugofranciscoluisinclan@gmail.com` | Correo donde recibirás los reportes del buzón |
+
+9. **Desplegar:**  
+   Haz clic en el botón inferior **"Deploy web service"**.
+
+10. **Resultado:**  
+    Render comenzará a construir tu contenedor Docker y en aproximadamente 2 a 3 minutos verás el indicador en verde **`Live`**.  
+    En la parte superior izquierda de la pantalla de Render aparecerá tu URL pública segura:  
+    👉 **`https://radio-mundial-api.onrender.com`**
 
 ---
 

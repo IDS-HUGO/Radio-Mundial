@@ -228,6 +228,42 @@
             </button>
         </div>
     </div>
+
+    <!-- Placa de Autor / Ingeniero de Transmisión Debajo de la Radio -->
+    <div class="retro-author-badge">
+        <div class="author-plate-screw screw-tl"></div>
+        <div class="author-plate-screw screw-tr"></div>
+        <div class="author-plate-screw screw-bl"></div>
+        <div class="author-plate-screw screw-br"></div>
+
+        <div class="author-plate-content">
+            <div class="author-plate-header">
+                <span class="plate-vintage-seal">📻 SINTONIZADOR MAESTRO</span>
+                <span class="plate-year">© 2026</span>
+            </div>
+            
+            <div class="author-name-title">
+                Hugo Francisco Luis Inclan
+            </div>
+            <div class="author-role-sub">
+                Autor & Creador de Radio Mundial
+            </div>
+
+            <div class="author-contact-card">
+                <span class="author-contact-intro">
+                    ¿Quieres que agregue una estación de tu ciudad o sugerir mejoras?
+                </span>
+                <a href="mailto:hugofranciscoluisinclan@gmail.com?subject=Radio%20Mundial%20-%20Solicitud%20para%20agregar%20estaci%C3%B3n" 
+                   class="author-email-link" 
+                   title="Escribir correo a Hugo Francisco Luis Inclan">
+                    <span class="email-icon">✉️</span> hugofranciscoluisinclan@gmail.com
+                </a>
+                <button type="button" class="btn-author-feedback" @onclick="() => RadioState.OpenFeedbackModal()" title="Abrir buzón de sugerencias en línea">
+                    <span>✍️ Buzón de Sugerencias</span>
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 
 @code {

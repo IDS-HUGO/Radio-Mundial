@@ -69,9 +69,13 @@
 
             <!-- Métricas de Estudio Analógico -->
             <div class="d-flex align-items-center gap-2 studio-metrics-group">
-                <div class="studio-metric-card" title="Estaciones mostradas en pantalla">
-                    <span class="metric-val">@Math.Min(_displayLimit, RadioState.FilteredStations.Count)</span>
-                    <span class="metric-sub">@RadioState.T("ON_SCREEN")</span>
+                <div class="studio-metric-card" title="Estaciones mostradas en esta pantalla">
+                    <span class="metric-val">@Math.Min(_pageSize, Math.Max(0, RadioState.FilteredStations.Count - (_currentPage - 1) * _pageSize))</span>
+                    <span class="metric-sub">EN PANTALLA</span>
+                </div>
+                <div class="studio-metric-card d-none d-sm-flex" title="Página actual">
+                    <span class="metric-val">@_currentPage / @Math.Max(1, (int)Math.Ceiling((double)RadioState.FilteredStations.Count / _pageSize))</span>
+                    <span class="metric-sub">PÁGINA</span>
                 </div>
                 <div class="studio-metric-card" title="Estaciones disponibles en catálogo">
                     <span class="metric-val">@RadioState.AllStations.Count</span>
@@ -383,8 +387,47 @@
         }
         else
         {
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-2 row-cols-xxl-3 g-3 mb-4">
-                @foreach (var station in RadioState.FilteredStations.Take(_displayLimit))
+            var totalCount = RadioState.FilteredStations.Count;
+            var totalPages = Math.Max(1, (int)Math.Ceiling((double)totalCount / _pageSize));
+            if (_currentPage > totalPages) _currentPage = totalPages;
+            if (_currentPage < 1) _currentPage = 1;
+
+            var startIndex = (_currentPage - 1) * _pageSize;
+            var pagedStations = RadioState.FilteredStations.Skip(startIndex).Take(_pageSize).ToList();
+            var endIndex = Math.Min(startIndex + _pageSize, totalCount);
+
+            <!-- Barra Superior de Control de Paginado y Densidad -->
+            <div class="pagination-cockpit-bar mb-3 d-flex flex-wrap align-items-center justify-content-between gap-2 p-2">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="pagination-info-badge">
+                        📻 Emisoras <b>@(startIndex + 1)</b>–<b>@endIndex</b> de <b>@totalCount</b>
+                    </span>
+                    <span class="pagination-page-badge d-none d-sm-inline-flex">
+                        Página <b>@_currentPage</b> / <b>@totalPages</b>
+                    </span>
+                </div>
+
+                <!-- Selector de Emisoras por Pantalla (Evita scroll masivo) -->
+                <div class="page-size-selector d-flex align-items-center gap-1 ms-auto">
+                    <span class="page-size-title d-none d-md-inline">Por pantalla:</span>
+                    <div class="page-size-chip-group">
+                        @foreach (var size in new[] { 6, 9, 12, 18 })
+                        {
+                            var s = size;
+                            <button type="button" 
+                                    class="page-size-chip @(_pageSize == s ? "chip-active" : "")" 
+                                    @onclick="() => SetPageSize(s)" 
+                                    title="Mostrar @s emisoras por pantalla">
+                                @s
+                            </button>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rejilla Compacta y Super Responsiva de Emisoras -->
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-2 row-cols-xxl-3 g-3 mb-3">
+                @foreach (var station in pagedStations)
                 {
                     var isCurrent = RadioState.ActiveStation?.Id == station.Id;
                     var isPlayingThis = isCurrent && RadioState.IsPlaying;
@@ -460,13 +503,59 @@
                 }
             </div>
 
-            @if (RadioState.FilteredStations.Count > _displayLimit)
+            <!-- Navegación de Páginas Inferior (Consola Analógica Vintage) -->
+            @if (totalPages > 1)
             {
-                <div class="load-more-wrapper text-center my-4">
-                    <button class="btn-load-more" @onclick="LoadMoreStations" title="@RadioState.T("LOAD_MORE")">
-                        <span>➕ @RadioState.T("LOAD_MORE") (@(RadioState.FilteredStations.Count - _displayLimit) @RadioState.T("REMAINING"))</span>
-                    </button>
-                </div>
+                <nav class="pagination-nav-footer d-flex flex-wrap align-items-center justify-content-between gap-2 p-2 mt-2" aria-label="Navegación de emisoras">
+                    <div class="nav-btn-group d-flex align-items-center gap-1">
+                        <button type="button" class="btn-retro-nav-page" 
+                                disabled="@(_currentPage <= 1)" 
+                                @onclick="() => ChangePage(1)" 
+                                title="Primera página">
+                            ⏮ Primero
+                        </button>
+                        <button type="button" class="btn-retro-nav-page" 
+                                disabled="@(_currentPage <= 1)" 
+                                @onclick="() => ChangePage(_currentPage - 1)" 
+                                title="Página anterior">
+                            ◀ Anterior
+                        </button>
+                    </div>
+
+                    <div class="nav-numbers-group d-flex align-items-center gap-1">
+                        @foreach (var pageNum in GetVisiblePageNumbers(totalPages))
+                        {
+                            if (pageNum == -1)
+                            {
+                                <span class="nav-page-ellipsis">…</span>
+                            }
+                            else
+                            {
+                                var p = pageNum;
+                                <button type="button" 
+                                        class="btn-retro-number @(_currentPage == p ? "number-active" : "")" 
+                                        @onclick="() => ChangePage(p)">
+                                    @p
+                                </button>
+                            }
+                        }
+                    </div>
+
+                    <div class="nav-btn-group d-flex align-items-center gap-1">
+                        <button type="button" class="btn-retro-nav-page" 
+                                disabled="@(_currentPage >= totalPages)" 
+                                @onclick="() => ChangePage(_currentPage + 1)" 
+                                title="Página siguiente">
+                            Siguiente ▶
+                        </button>
+                        <button type="button" class="btn-retro-nav-page" 
+                                disabled="@(_currentPage >= totalPages)" 
+                                @onclick="() => ChangePage(totalPages)" 
+                                title="Última página">
+                            Último ⏭
+                        </button>
+                    </div>
+                </nav>
             }
         }
     };
@@ -475,17 +564,55 @@
 @code {
     private bool IsSideBySide { get; set; } = true;
     private bool ShowFmAmGuide { get; set; } = false;
-    private int _displayLimit = 48;
-    private const int PageSize = 48;
+    private int _currentPage = 1;
+    private int _pageSize = 9;
 
-    private void LoadMoreStations()
+    private void SetPageSize(int size)
     {
-        _displayLimit += PageSize;
+        _pageSize = size;
+        _currentPage = 1;
     }
 
-    private void ResetDisplayLimit()
+    private void ChangePage(int page)
     {
-        _displayLimit = PageSize;
+        var totalPages = Math.Max(1, (int)Math.Ceiling((double)RadioState.FilteredStations.Count / _pageSize));
+        _currentPage = Math.Clamp(page, 1, totalPages);
+    }
+
+    private void ResetPagination()
+    {
+        _currentPage = 1;
+    }
+
+    private IEnumerable<int> GetVisiblePageNumbers(int totalPages)
+    {
+        if (totalPages <= 7)
+        {
+            for (int i = 1; i <= totalPages; i++) yield return i;
+            yield break;
+        }
+
+        yield return 1;
+
+        int start = Math.Max(2, _currentPage - 1);
+        int end = Math.Min(totalPages - 1, _currentPage + 1);
+
+        if (start > 2)
+        {
+            yield return -1;
+        }
+
+        for (int i = start; i <= end; i++)
+        {
+            yield return i;
+        }
+
+        if (end < totalPages - 1)
+        {
+            yield return -1;
+        }
+
+        yield return totalPages;
     }
 
     private static readonly Dictionary<string, string> CountryFlags = new(StringComparer.OrdinalIgnoreCase)
@@ -548,6 +675,11 @@
 
     private void HandleStateChanged()
     {
+        var totalPages = Math.Max(1, (int)Math.Ceiling((double)RadioState.FilteredStations.Count / _pageSize));
+        if (_currentPage > totalPages)
+        {
+            _currentPage = totalPages;
+        }
         InvokeAsync(StateHasChanged);
     }
 
@@ -564,37 +696,37 @@
 
     private void OnContinentChanged(ChangeEventArgs e)
     {
-        ResetDisplayLimit();
+        ResetPagination();
         RadioState.SetContinentFilter(e.Value?.ToString() ?? "Todos");
     }
 
     private void OnCountryChanged(ChangeEventArgs e)
     {
-        ResetDisplayLimit();
+        ResetPagination();
         RadioState.SetCountryFilter(e.Value?.ToString() ?? "Todos");
     }
 
     private void OnStateChanged(ChangeEventArgs e)
     {
-        ResetDisplayLimit();
+        ResetPagination();
         RadioState.SetStateFilter(e.Value?.ToString() ?? "Todos");
     }
 
     private void OnCityChanged(ChangeEventArgs e)
     {
-        ResetDisplayLimit();
+        ResetPagination();
         RadioState.SetCityFilter(e.Value?.ToString() ?? "Todas");
     }
 
     private void OnGenreChanged(ChangeEventArgs e)
     {
-        ResetDisplayLimit();
+        ResetPagination();
         RadioState.SetGenreFilter(e.Value?.ToString() ?? "Todos");
     }
 
     private void OnSearchInput(ChangeEventArgs e)
     {
-        ResetDisplayLimit();
+        ResetPagination();
         RadioState.SetSearchQuery(e.Value?.ToString() ?? string.Empty);
     }
 

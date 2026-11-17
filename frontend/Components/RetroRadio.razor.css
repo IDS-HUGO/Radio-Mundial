@@ -609,3 +609,188 @@
         padding: 4px 8px;
     }
 }
+
+/* -------------------------------------------------------------------------
+   Placa de Autor / Ingeniero de Transmisión (Debajo de la Radio)
+   Estilo Latón Envejecido "Café Viejo" y Nogal Satinado
+   ------------------------------------------------------------------------- */
+.retro-author-badge {
+    position: relative;
+    width: 96%;
+    max-width: 560px;
+    margin-top: 14px;
+    background: 
+        radial-gradient(ellipse at 50% 0%, rgba(212, 163, 115, 0.15) 0%, transparent 75%),
+        linear-gradient(160deg, #2a1910 0%, #1e110a 50%, #160c07 100%);
+    border: 1px solid rgba(212, 163, 115, 0.4);
+    border-radius: 12px;
+    padding: 1rem 1.25rem 0.9rem 1.25rem;
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.45),
+        inset 0 1px 2px rgba(230, 184, 125, 0.3),
+        inset 0 -1px 3px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.retro-author-badge:hover {
+    border-color: rgba(212, 163, 115, 0.7);
+    box-shadow: 
+        0 10px 28px rgba(0, 0, 0, 0.55),
+        0 0 15px rgba(212, 163, 115, 0.15);
+}
+
+/* Tornillos de fijación en las esquinas */
+.author-plate-screw {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #e6d3aa 0%, #a8834a 60%, #4a3418 100%);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.6);
+}
+
+.author-plate-screw::after {
+    content: '';
+    position: absolute;
+    top: 3.5px;
+    left: 1px;
+    width: 6px;
+    height: 1px;
+    background: #2a1a0c;
+    transform: rotate(45deg);
+}
+
+.screw-tl { top: 8px; left: 8px; }
+.screw-tr { top: 8px; right: 8px; }
+.screw-bl { bottom: 8px; left: 8px; }
+.screw-br { bottom: 8px; right: 8px; }
+
+.author-plate-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 4px;
+}
+
+.author-plate-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 2px;
+}
+
+.plate-vintage-seal {
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: #d4a373;
+    text-transform: uppercase;
+}
+
+.plate-year {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: rgba(212, 163, 115, 0.7);
+    background: rgba(212, 163, 115, 0.1);
+    padding: 1px 6px;
+    border-radius: 4px;
+    border: 1px solid rgba(212, 163, 115, 0.2);
+}
+
+.author-name-title {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #f7eed8;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.author-role-sub {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: rgba(230, 214, 186, 0.7);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.author-contact-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    margin-top: 2px;
+}
+
+.author-contact-intro {
+    font-size: 0.74rem;
+    color: rgba(245, 238, 219, 0.85);
+    line-height: 1.35;
+    max-width: 440px;
+}
+
+.author-email-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(212, 163, 115, 0.12);
+    border: 1px solid rgba(212, 163, 115, 0.35);
+    color: #f1c790;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.15s ease;
+    word-break: break-all;
+}
+
+.author-email-link:hover {
+    background: rgba(212, 163, 115, 0.25);
+    border-color: #d4a373;
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.author-email-link .email-icon {
+    font-size: 0.85rem;
+}
+
+.btn-author-feedback {
+    background: transparent;
+    border: 1px dashed rgba(212, 163, 115, 0.3);
+    color: rgba(245, 238, 219, 0.75);
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-author-feedback:hover {
+    border-color: #d4a373;
+    color: #f7eed8;
+    background: rgba(212, 163, 115, 0.1);
+}
+
+@media (max-width: 600px) {
+    .retro-author-badge {
+        padding: 0.85rem 0.9rem;
+        margin-top: 10px;
+    }
+    .author-name-title {
+        font-size: 0.95rem;
+    }
+    .author-email-link {
+        font-size: 0.72rem;
+        padding: 4px 8px;
+    }
+}

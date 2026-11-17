@@ -776,3 +776,189 @@
 .btn-load-more:active {
     transform: translateY(0);
 }
+
+/* --------------------------------------------------------------------------
+   Consola de Paginado Analógico / Control de Densidad Sin Scroll Masivo
+   -------------------------------------------------------------------------- */
+.pagination-cockpit-bar {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pagination-stats-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.74rem;
+    color: var(--text-muted);
+}
+
+.p-bullet {
+    color: var(--needle-red);
+    font-size: 0.65rem;
+}
+
+.p-stat-text b {
+    color: var(--text-main);
+}
+
+.p-page-badge {
+    background: rgba(197, 159, 84, 0.15);
+    color: var(--accent-amber);
+    border: 1px solid rgba(197, 159, 84, 0.3);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 0.7rem;
+}
+
+.page-size-selector {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.page-size-title {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.page-size-chip-group {
+    display: inline-flex;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 2px;
+    gap: 2px;
+}
+
+.page-size-chip {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.page-size-chip:hover {
+    color: var(--text-main);
+    background: rgba(197, 159, 84, 0.15);
+}
+
+.page-size-chip.chip-active {
+    background: var(--brass);
+    color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+/* --------------------------------------------------------------------------
+   Navegación de Páginas Inferior (Botonera Estilo Sintonizador)
+   -------------------------------------------------------------------------- */
+.pagination-nav-footer {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.nav-btn-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.btn-retro-nav-page {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 0.74rem;
+    font-weight: 700;
+    padding: 5px 11px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-retro-nav-page:hover:not(:disabled) {
+    background: rgba(197, 159, 84, 0.18);
+    border-color: var(--brass);
+    color: var(--accent-amber);
+    transform: translateY(-1px);
+}
+
+.btn-retro-nav-page:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.nav-numbers-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.btn-retro-number {
+    min-width: 32px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    font-size: 0.76rem;
+    font-weight: 800;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    padding: 0 6px;
+}
+
+.btn-retro-number:hover {
+    background: rgba(197, 159, 84, 0.2);
+    border-color: var(--brass);
+    color: var(--accent-amber);
+}
+
+.btn-retro-number.number-active {
+    background: linear-gradient(180deg, var(--accent-amber), var(--accent-warm));
+    border-color: var(--brass);
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    pointer-events: none;
+}
+
+.nav-page-ellipsis {
+    color: var(--text-muted);
+    padding: 0 4px;
+    font-weight: 800;
+}
+
+@media (max-width: 640px) {
+    .pagination-cockpit-bar,
+    .pagination-nav-footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+    .nav-btn-group {
+        justify-content: space-between;
+        width: 100%;
+    }
+    .btn-retro-nav-page {
+        flex: 1;
+        text-align: center;
+    }
+    .nav-numbers-group {
+        order: -1;
+    }
+}

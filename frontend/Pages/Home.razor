@@ -99,17 +99,17 @@
         <!-- ==============================================================
              DISPOSICIÓN LATERAL (COCKPIT): LA RADIO NUNCA SE PIERDE DE VISTA
              ============================================================== -->
-        <div class="row g-3 g-xl-4 align-items-start">
+        <div class="studio-cockpit-row mb-3">
             
             <!-- Columna Izquierda: Radio Retro Fija (Sticky Dock) -->
-            <div class="col-12 col-lg-5 col-xl-5 col-xxl-4 studio-left-dock">
+            <div class="studio-left-dock">
                 <div class="sticky-radio-anchor">
                     <RetroRadio />
                 </div>
             </div>
 
             <!-- Columna Derecha: Consola de Filtros y Rejilla de Emisoras -->
-            <div class="col-12 col-lg-7 col-xl-7 col-xxl-8 studio-right-deck">
+            <div class="studio-right-deck">
                 <!-- Consola Maestra de Filtros (Limpia, Desplegable, Sin Amontonamientos) -->
                 @RenderFilterConsole()
 
@@ -426,7 +426,7 @@
             </div>
 
             <!-- Rejilla Compacta y Super Responsiva de Emisoras -->
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-2 row-cols-xxl-3 g-3 mb-3">
+            <div class="stations-responsive-grid mb-3">
                 @foreach (var station in pagedStations)
                 {
                     var isCurrent = RadioState.ActiveStation?.Id == station.Id;
@@ -434,7 +434,7 @@
                     var isFavorite = RadioState.FavoriteStationIds.Contains(station.Id);
                     var isAm = station.Band.Equals("AM", StringComparison.OrdinalIgnoreCase) || station.Frequency > 150;
 
-                    <div class="col">
+                    <div class="station-grid-item">
                         <div class="retro-station-card h-100 @(isCurrent ? "card-station-active" : "")">
                             <div class="card-station-header">
                                 <div class="station-thumb-wrapper @(isPlayingThis ? "thumb-spinning" : "")">

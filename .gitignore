@@ -16,7 +16,9 @@ venv/
 env/
 .pytest_cache/
 *.egg-info/
-dist/
+/dist/
+frontend/dist/
+backend/dist/
 build/
 .env
 
@@ -28,5 +30,9 @@ Thumbs.db
 GUIA_DESPLIEGUE_FREE.md
 *despliegue*.md
 *DESPLIEGUE*.md
+
+# Bootstrap Maps y RTL innecesarios
+frontend/wwwroot/lib/bootstrap/dist/**/*.map
+frontend/wwwroot/lib/bootstrap/dist/**/*.rtl.*
 
 

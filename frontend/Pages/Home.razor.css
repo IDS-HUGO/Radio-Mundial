@@ -152,6 +152,8 @@
 
 /* Métricas de Estudio */
 .studio-metrics-group {
+    display: inline-flex;
+    align-items: center;
     background: var(--bg-surface);
     border: 1px solid var(--border-color);
     border-radius: 8px;
@@ -217,12 +219,56 @@
 }
 
 /* --------------------------------------------------------------------------
-   Disposición Lateral / Sticky Dock
+   Disposición Lateral / Sticky Dock & Cockpit Responsivo
    -------------------------------------------------------------------------- */
+.studio-cockpit-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+.studio-left-dock {
+    width: 100%;
+}
+
+.studio-right-deck {
+    width: 100%;
+    min-width: 0;
+}
+
+@media (min-width: 992px) {
+    .studio-cockpit-row {
+        flex-wrap: nowrap;
+    }
+    .studio-left-dock {
+        flex: 0 0 540px;
+        max-width: 540px;
+        width: 540px;
+    }
+    .studio-right-deck {
+        flex: 1 1 0;
+        min-width: 0;
+    }
+}
+
 .sticky-radio-anchor {
     position: sticky;
     top: 75px;
     z-index: 90;
+}
+
+.stations-responsive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1rem;
+    width: 100%;
+}
+
+.station-grid-item {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
 }
 
 /* --------------------------------------------------------------------------

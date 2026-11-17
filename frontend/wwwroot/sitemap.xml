@@ -6,43 +6,43 @@
   
   <!-- Página Principal / Sintonizador Global Hi-Fi -->
   <url>
-    <loc>https://radio-mundial.pages.dev/</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>hourly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="es-MX" href="https://radio-mundial.pages.dev/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://radio-mundial.pages.dev/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://radio-mundial.pages.dev/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://radio-mundial.pages.dev/" />
+    <xhtml:link rel="alternate" hreflang="es-MX" href="https://radio-mundial.hugofranciscoluis.workers.dev/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://radio-mundial.hugofranciscoluis.workers.dev/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://radio-mundial.hugofranciscoluis.workers.dev/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://radio-mundial.hugofranciscoluis.workers.dev/" />
   </url>
 
   <!-- Filtros de Continentes (Cobertura Mundial 100%) -->
   <url>
-    <loc>https://radio-mundial.pages.dev/?continent=America</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?continent=America</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://radio-mundial.pages.dev/?continent=Europa</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?continent=Europa</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://radio-mundial.pages.dev/?continent=Asia</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?continent=Asia</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://radio-mundial.pages.dev/?continent=Africa</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?continent=Africa</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://radio-mundial.pages.dev/?continent=Oceania</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?continent=Oceania</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
@@ -50,79 +50,79 @@
 
   <!-- Ciudades Clave de México para Posicionamiento Local -->
   <url>
-    <loc>https://radio-mundial.pages.dev/?state=Oaxaca&amp;city=Matias+Romero</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?state=Oaxaca&amp;city=Matias+Romero</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://radio-mundial.pages.dev/?state=Chiapas&amp;city=Tapachula</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?state=Chiapas&amp;city=Tapachula</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://radio-mundial.pages.dev/?state=Oaxaca</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?state=Oaxaca</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://radio-mundial.pages.dev/?state=Chiapas</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?state=Chiapas</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://radio-mundial.pages.dev/?state=Ciudad+de+Mexico</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?state=Ciudad+de+Mexico</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://radio-mundial.pages.dev/?state=Jalisco</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?state=Jalisco</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://radio-mundial.pages.dev/?state=Nuevo+Leon</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?state=Nuevo+Leon</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://radio-mundial.pages.dev/?state=Puebla</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?state=Puebla</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://radio-mundial.pages.dev/?state=Veracruz</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?state=Veracruz</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://radio-mundial.pages.dev/?state=Sonora</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?state=Sonora</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://radio-mundial.pages.dev/?state=Chihuahua</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?state=Chihuahua</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://radio-mundial.pages.dev/?state=Quintana+Roo</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?state=Quintana+Roo</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://radio-mundial.pages.dev/?state=Yucatan</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?state=Yucatan</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.80</priority>
@@ -130,13 +130,13 @@
 
   <!-- Filtros de Bandas FM y AM -->
   <url>
-    <loc>https://radio-mundial.pages.dev/?band=FM</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?band=FM</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://radio-mundial.pages.dev/?band=AM</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?band=AM</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.90</priority>
@@ -144,67 +144,67 @@
 
   <!-- Principales Países Internacionales -->
   <url>
-    <loc>https://radio-mundial.pages.dev/?country=Colombia</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?country=Colombia</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://radio-mundial.pages.dev/?country=Espana</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?country=Espana</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://radio-mundial.pages.dev/?country=Argentina</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?country=Argentina</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://radio-mundial.pages.dev/?country=Estados+Unidos</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?country=Estados+Unidos</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://radio-mundial.pages.dev/?country=Brasil</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?country=Brasil</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://radio-mundial.pages.dev/?country=Alemania</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?country=Alemania</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://radio-mundial.pages.dev/?country=Francia</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?country=Francia</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://radio-mundial.pages.dev/?country=Reino+Unido</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?country=Reino+Unido</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://radio-mundial.pages.dev/?country=Chile</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?country=Chile</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://radio-mundial.pages.dev/?country=Peru</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?country=Peru</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://radio-mundial.pages.dev/?country=Japon</loc>
+    <loc>https://radio-mundial.hugofranciscoluis.workers.dev/?country=Japon</loc>
     <lastmod>2026-11-11T21:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>

@@ -219,8 +219,8 @@ def _send_email_notification(submission: FeedbackSubmission) -> None:
             headers={
                 "Content-Type": "application/json",
                 "Accept": "application/json",
-                "Origin": "https://radio-mundial.pages.dev",
-                "Referer": "https://radio-mundial.pages.dev/",
+                "Origin": "https://radio-mundial.hugofranciscoluis.workers.dev",
+                "Referer": "https://radio-mundial.hugofranciscoluis.workers.dev/",
                 "User-Agent": "RadioMundial-Dispatcher/1.0"
             }
         )

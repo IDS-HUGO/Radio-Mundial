@@ -28,4 +28,4 @@ User-agent: YandexBot
 Allow: /
 
 # Sitemap Index para Indexación Instantánea de Motores de Búsqueda
-Sitemap: https://radio-mundial.pages.dev/sitemap.xml
+Sitemap: https://radio-mundial.hugofranciscoluis.workers.dev/sitemap.xml

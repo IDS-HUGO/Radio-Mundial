@@ -67,6 +67,16 @@
                 <span>@RadioState.T("FEEDBACK_BTN")</span>
             </button>
 
+            <!-- Botón Donar / PayPal -->
+            <a href="https://www.paypal.com/donate/?business=hugofranciscoluis@gmail.com&no_recurring=0&item_name=Apoyo+y+Mantenimiento+de+Radio+Mundial&currency_code=USD"
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="btn-studio-donate d-inline-flex align-items-center gap-1"
+               title="Apoyar a Radio Mundial con una donación voluntaria vía PayPal (hugofranciscoluis@gmail.com)">
+                <span>☕</span>
+                <span>Donar</span>
+            </a>
+
             <!-- Métricas de Estudio Analógico -->
             <div class="d-flex align-items-center gap-2 studio-metrics-group">
                 <div class="studio-metric-card" title="Estaciones mostradas en esta pantalla">
@@ -113,6 +123,9 @@
                 <!-- Consola Maestra de Filtros (Limpia, Desplegable, Sin Amontonamientos) -->
                 @RenderFilterConsole()
 
+                <!-- Espacio Publicitario Discreto / Patrocinador Hi-Fi -->
+                @RenderSponsorSlot()
+
                 <!-- Grid de Emisoras Filtradas -->
                 @RenderStationsGrid()
             </div>
@@ -130,6 +143,9 @@
             </div>
 
             @RenderFilterConsole()
+
+            <!-- Espacio Publicitario Discreto / Patrocinador Hi-Fi -->
+            @RenderSponsorSlot()
 
             @RenderStationsGrid()
         </div>
@@ -363,6 +379,33 @@
             }
 
         </section>
+    };
+
+    private RenderFragment RenderSponsorSlot() => __builder =>
+    {
+        <aside class="studio-sponsor-deck p-3 mb-4" aria-label="Espacio de Publicidad y Patrocinio">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="sponsor-tag">📻 PATROCINIO & PUBLICIDAD</span>
+                    <span class="sponsor-subtag">ESPACIO DISCRETO HI-FI</span>
+                </div>
+                <span class="sponsor-badge">ANUNCIOS</span>
+            </div>
+
+            <!-- Contenedor Listo para Google AdSense / Banner Programático 728x90 o Adaptativo -->
+            <div class="sponsor-ad-slot" id="radio-mundial-ad-slot">
+                <div class="sponsor-ad-placeholder text-center">
+                    <span class="sponsor-brand-title">Espacio Publicitario Disponible</span>
+                    <p class="sponsor-brand-desc mb-2">
+                        Llega a miles de oyentes en vivo en más de 232 países. Publicidad no invasiva integrada en el dial.
+                    </p>
+                    <a href="mailto:hugofranciscoluisinclan@gmail.com?subject=Publicidad%20y%20Patrocinio%20en%20Radio%20Mundial" 
+                       class="btn-sponsor-contact">
+                        ✉️ Anuncia tu Emisora o Marca Aquí
+                    </a>
+                </div>
+            </div>
+        </aside>
     };
 
     private RenderFragment RenderStationsGrid() => __builder =>

@@ -781,6 +781,30 @@
     background: rgba(212, 163, 115, 0.1);
 }
 
+.btn-author-paypal {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, rgba(212, 163, 115, 0.18), rgba(184, 115, 51, 0.25));
+    border: 1px solid rgba(212, 163, 115, 0.45);
+    color: #ffd89b;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-author-paypal:hover {
+    background: linear-gradient(135deg, rgba(212, 163, 115, 0.32), rgba(184, 115, 51, 0.4));
+    border-color: #f1c790;
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
 @media (max-width: 600px) {
     .retro-author-badge {
         padding: 0.85rem 0.9rem;

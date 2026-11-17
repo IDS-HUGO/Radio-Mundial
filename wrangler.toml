@@ -1,0 +1,6 @@
+name = "radio-mundial"
+compatibility_date = "2024-09-23"
+
+[assets]
+directory = "./frontend/dist/wwwroot"
+not_found_handling = "single-page-application"

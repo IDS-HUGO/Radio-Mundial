@@ -226,6 +226,21 @@
         if (RadioState.IsFeedbackModalOpen && string.IsNullOrWhiteSpace(_model.StationName) && !string.IsNullOrWhiteSpace(RadioState.PreselectedFeedbackStation))
         {
             _model.StationName = RadioState.PreselectedFeedbackStation;
+            if (RadioState.ActiveStation is not null)
+            {
+                if (string.IsNullOrWhiteSpace(_model.StationLocation))
+                {
+                    _model.StationLocation = $"{RadioState.ActiveStation.City}, {RadioState.ActiveStation.State} ({RadioState.ActiveStation.CountryCode})";
+                }
+                if (string.IsNullOrWhiteSpace(_model.StationFrequency))
+                {
+                    _model.StationFrequency = $"{RadioState.ActiveStation.Frequency} {RadioState.ActiveStation.Band}";
+                }
+                if (string.IsNullOrWhiteSpace(_model.StationStreamUrl))
+                {
+                    _model.StationStreamUrl = RadioState.ActiveStation.StreamUrl;
+                }
+            }
         }
         InvokeAsync(StateHasChanged);
     }

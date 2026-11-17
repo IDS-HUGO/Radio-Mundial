@@ -201,17 +201,23 @@ def _send_email_notification(submission: FeedbackSubmission) -> None:
             "_subject": subject,
             "_template": "table",
             "_captcha": "false",
-            "Categoria": cat_text,
-            "Estacion": submission.station_name or "N/A",
-            "Ubicacion": submission.station_location or "N/A",
-            "Frecuencia": submission.station_frequency or "N/A",
-            "Stream_URL": submission.station_stream_url or "N/A",
-            "Mensaje": submission.message,
-            "Nombre_Oyente": submission.name or "Anónimo",
-            "Email_Oyente": submission.email or "No proporcionado",
-            "Calificacion": f"{submission.rating} de 5 estrellas",
-            "Fecha": submission.created_at.strftime("%Y-%m-%d %H:%M:%S UTC")
+            "categoria": cat_text,
         }
+        # Solo incluir campos que contengan información real para no mostrar filas vacías en el correo
+        if submission.station_name and submission.station_name.strip() and submission.station_name.strip().upper() != "N/A":
+            form_payload["estacion"] = submission.station_name.strip()
+        if submission.station_location and submission.station_location.strip() and submission.station_location.strip().upper() != "N/A":
+            form_payload["ubicacion"] = submission.station_location.strip()
+        if submission.station_frequency and submission.station_frequency.strip() and submission.station_frequency.strip().upper() != "N/A":
+            form_payload["frecuencia"] = submission.station_frequency.strip()
+        if submission.station_stream_url and submission.station_stream_url.strip() and submission.station_stream_url.strip().upper() != "N/A":
+            form_payload["stream_URL"] = submission.station_stream_url.strip()
+
+        form_payload["mensaje"] = submission.message.strip() if submission.message else ""
+        form_payload["nombre_Oyente"] = submission.name.strip() if submission.name and submission.name.strip() else "Anónimo"
+        form_payload["email_Oyente"] = submission.email.strip() if submission.email and submission.email.strip() else "No proporcionado"
+        form_payload["calificacion"] = f"{submission.rating} de 5 estrellas"
+        form_payload["fecha"] = submission.created_at.strftime("%Y-%m-%d %H:%M:%S UTC")
         req_data = json.dumps(form_payload).encode("utf-8")
         req = urllib.request.Request(
             f"https://formsubmit.co/ajax/{ADMIN_EMAIL}",

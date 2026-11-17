@@ -723,18 +723,28 @@
     border-radius: 8px;
     padding: 6px;
     border: 1px solid rgba(255, 255, 255, 0.04);
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
 }
 
 .adsterra-iframe-banner {
     border: none;
     overflow: hidden;
     max-width: 100%;
+    height: 90px;
     display: block;
     margin: 0 auto;
     border-radius: 6px;
     background: transparent;
+}
+
+@media (max-width: 768px) {
+    .sponsor-ad-slot {
+        min-height: 55px;
+        padding: 4px;
+    }
+    .adsterra-iframe-banner {
+        height: 52px;
+    }
 }
 
 .sponsor-ad-placeholder {

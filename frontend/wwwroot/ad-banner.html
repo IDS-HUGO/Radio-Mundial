@@ -25,38 +25,116 @@
       color: rgba(212, 163, 115, 0.75);
       text-align: center;
       padding: 4px 10px;
+      pointer-events: auto;
     }
     .fallback-note a {
       color: #ffd89b;
       text-decoration: underline;
       font-weight: 600;
     }
+    #ad-container {
+      width: 728px;
+      height: 90px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+    @media (max-width: 768px) {
+      #ad-container {
+        transform: scale(0.48);
+        transform-origin: center center;
+      }
+    }
+    @media (max-width: 480px) {
+      #ad-container {
+        transform: scale(0.44);
+        transform-origin: center center;
+      }
+    }
+    @media (max-width: 360px) {
+      #ad-container {
+        transform: scale(0.39);
+        transform-origin: center center;
+      }
+    }
   </style>
+
   <script>
-    // Bloqueo estricto contra popunders, redirecciones y secuestro de clics en la web principal
+    // Escudo de Protección AdShield:
+    // Permite al anuncio verificar el dominio padre y referer para que valide y monetice,
+    // pero redirige cualquier intento de escuchar clics en la web principal hacia el banner local.
     try {
-      Object.defineProperty(window, 'parent', { get: () => window, configurable: false });
-      Object.defineProperty(window, 'top', { get: () => window, configurable: false });
-      window.open = function() {
-        console.warn('[AdBanner] Intento de ventana emergente o redirección neutralizado con éxito.');
-        return null;
-      };
-    } catch (e) {}
+      if (window.parent && window.parent !== window) {
+        const pWin = window.parent;
+        const pDoc = window.parent.document;
+        const origWinAdd = pWin.addEventListener;
+        const origDocAdd = pDoc.addEventListener;
+
+        pWin.addEventListener = function(type, listener, options) {
+          if (['click', 'mousedown', 'mouseup', 'touchstart', 'touchend', 'pointerdown'].includes(type)) {
+            return window.addEventListener(type, listener, options);
+          }
+          return origWinAdd.call(pWin, type, listener, options);
+        };
+
+        pDoc.addEventListener = function(type, listener, options) {
+          if (['click', 'mousedown', 'mouseup', 'touchstart', 'touchend', 'pointerdown'].includes(type)) {
+            return document.addEventListener(type, listener, options);
+          }
+          return origDocAdd.call(pDoc, type, listener, options);
+        };
+      }
+    } catch (e) {
+      console.warn('[AdShield]', e);
+    }
   </script>
 </head>
 <body>
   <div class="fallback-note" id="fallback">
     📻 Espacio de Patrocinio Hi-Fi • <a href="mailto:hugofranciscoluisinclan@gmail.com?subject=Patrocinio%20en%20Radio%20Mundial" target="_blank" rel="noopener noreferrer">Anuncia tu Emisora o Marca Aquí</a>
   </div>
-  <script type="text/javascript">
-    atOptions = {
-      'key' : '395c96f03cf0e12525fa611c4c90c295',
-      'format' : 'iframe',
-      'height' : 90,
-      'width' : 728,
-      'params' : {}
+
+  <div id="ad-container">
+    <script type="text/javascript">
+      atOptions = {
+        'key' : '395c96f03cf0e12525fa611c4c90c295',
+        'format' : 'iframe',
+        'height' : 90,
+        'width' : 728,
+        'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="https://bauval.org/22/395c96f03cf0e12525fa611c4c90c295"></script>
+  </div>
+
+  <script>
+    // Ocultar texto de patrocinio alternativo cuando el anuncio se inyecte con éxito
+    const hideFallback = () => {
+      const fb = document.getElementById('fallback');
+      if (fb) fb.style.display = 'none';
     };
+
+    const observer = new MutationObserver(() => {
+      const adEl = document.querySelector('#ad-container iframe, #ad-container img, #ad-container ins');
+      if (adEl) {
+        hideFallback();
+        observer.disconnect();
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    let checkCount = 0;
+    const checkInterval = setInterval(() => {
+      checkCount++;
+      const adEl = document.querySelector('#ad-container iframe, #ad-container img, #ad-container ins');
+      if (adEl) {
+        hideFallback();
+        clearInterval(checkInterval);
+      }
+      if (checkCount > 25) clearInterval(checkInterval);
+    }, 200);
   </script>
-  <script type="text/javascript" src="https://bauval.org/22/395c96f03cf0e12525fa611c4c90c295"></script>
 </body>
 </html>

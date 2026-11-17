@@ -23,3 +23,5 @@ build/
 # OS
 .DS_Store
 Thumbs.db
+
+GUIA_DESPLIEGUE_FREE.md

@@ -1,12 +1,11 @@
 # 🚀 Guía Maestra de Despliegue en Servicios 100% Gratuitos
+
 ## Radio Mundial — Arquitectura Hexagonal Hi-Fi Transistor Streaming
-> **Autor & Desarrollador:** Hugo Francisco Luis Inclan (`hugofranciscoluisinclan@gmail.com`)  
-> **Copyright (c) 2026 Hugo Francisco Luis Inclan.** Todos los derechos reservados.  
-> **Costo Operativo Mensual:** **$0.00 USD / mes (100% Gratis de por vida)**.
 
 ---
 
 ## 📌 ÍNDICE RÁPIDO
+
 1. [¿Qué se sube a Git? ¿Todo junto o por separado?](#1-qué-se-sube-a-git-todo-junto-o-por-separado)
 2. [Matriz de Configuración: ¿Qué se configura, en qué archivo y dónde?](#2-matriz-de-configuración-qué-se-configura-en-qué-archivo-y-dónde)
 3. [Paso 1: Subir el Proyecto a GitHub](#paso-1-subir-el-proyecto-a-github)
@@ -23,6 +22,7 @@
 ## 1. ¿Qué se sube a Git? ¿Todo junto o por separado?
 
 ### 🏆 Opción Recomendada: Todo en UN solo repositorio (Monorepo)
+
 **Recomendación profesional:** Sube **todo el proyecto junto en un solo repositorio** en GitHub.
 
 ```
@@ -36,6 +36,7 @@ Radio-Mundial/ (Repositorio Único en GitHub)
 ```
 
 #### ¿Por qué es la mejor opción?
+
 1. **Soporte Nativo de Monorepo:** Tanto **Render** como **Cloudflare Pages** tienen la casilla **`Root Directory`**. Le indicas a Render que su raíz es `backend`, y a Cloudflare que su raíz es `frontend`. Ambos leen del mismo repositorio sin estorbarse.
 2. **Sincronización Atómica:** Cuando agregas nuevas emisoras, un solo `git commit` y `git push` actualiza frontend y backend simultáneamente.
 3. **Cero Mantenimiento Doble:** No tienes que clonar, configurar ni autenticar dos repositorios diferentes.
@@ -46,20 +47,21 @@ Radio-Mundial/ (Repositorio Único en GitHub)
 
 El archivo `.gitignore` ya está preconfigurado en la raíz del proyecto para protegerte:
 
-| Directorio / Archivo | ¿Se sube a Git? | Razón |
-| :--- | :---: | :--- |
-| `backend/main.py`, `domain/`, `application/`, `infrastructure/` | **SÍ** | Código fuente del servidor FastAPI |
-| `backend/data/seed_stations.json` | **SÍ** | Catálogo mundial con las 18,300+ estaciones |
-| `backend/requirements.txt`, `Dockerfile` | **SÍ** | Instrucciones de compilación para la nube |
-| `backend/venv/`, `__pycache__/`, `.env` | **NO (Ignorado)** | Binarios locales y claves privadas |
-| `frontend/Pages/`, `Components/`, `Layout/`, `Domain/` | **SÍ** | Código fuente Blazor WASM C# |
-| `frontend/wwwroot/` (css, index.html, sample-data) | **SÍ** | Recursos estáticos y catálogo offline |
-| `frontend/bin/`, `frontend/obj/` | **NO (Ignorado)** | Archivos compilados temporales de .NET |
-| `img/` | **SÍ** | Logos vectoriales e íconos de la radio |
+| Directorio / Archivo                                                    |    ¿Se sube a Git?    | Razón                                       |
+| :---------------------------------------------------------------------- | :---------------------: | :------------------------------------------- |
+| `backend/main.py`, `domain/`, `application/`, `infrastructure/` |      **SÍ**      | Código fuente del servidor FastAPI          |
+| `backend/data/seed_stations.json`                                     |      **SÍ**      | Catálogo mundial con las 18,300+ estaciones |
+| `backend/requirements.txt`, `Dockerfile`                            |      **SÍ**      | Instrucciones de compilación para la nube   |
+| `backend/venv/`, `__pycache__/`, `.env`                           | **NO (Ignorado)** | Binarios locales y claves privadas           |
+| `frontend/Pages/`, `Components/`, `Layout/`, `Domain/`          |      **SÍ**      | Código fuente Blazor WASM C#                |
+| `frontend/wwwroot/` (css, index.html, sample-data)                    |      **SÍ**      | Recursos estáticos y catálogo offline      |
+| `frontend/bin/`, `frontend/obj/`                                    | **NO (Ignorado)** | Archivos compilados temporales de .NET       |
+| `img/`                                                                |      **SÍ**      | Logos vectoriales e íconos de la radio      |
 
 ---
 
 ### (Alternativa) ¿Y si prefieres separarlo en dos repositorios?
+
 Si por política o preferencia personal deseas tener 2 repositorios en GitHub (`radio-mundial-backend` y `radio-mundial-frontend`), puedes hacerlo con los siguientes comandos:
 
 ```bash
@@ -77,6 +79,7 @@ git remote add origin https://github.com/TU_USUARIO/radio-mundial-frontend.git
 git add . && git commit -m "feat: frontend blazor wasm"
 git push -u origin master
 ```
+
 *(Nota: En Render y Cloudflare Pages simplemente conectarías cada repositorio por separado y dejarías `Root Directory` en blanco).*
 
 ---
@@ -85,30 +88,31 @@ git push -u origin master
 
 Para evitar confusiones, aquí tienes la tabla exacta de configuraciones:
 
-| Qué Configurar | En Qué Archivo / Pantalla | Qué Valor Poner en Producción |
-| :--- | :--- | :--- |
-| **URL de la API en Frontend** | `frontend/wwwroot/appsettings.json` | `"BackendHttpUrl": "https://radio-mundial-api.onrender.com"` |
-| **URL WebSocket en Frontend** | `frontend/wwwroot/appsettings.json` | `"BackendWsUrl": "wss://radio-mundial-api.onrender.com/ws"` |
-| **Orígenes Permitidos (CORS)** | `backend/infrastructure/config/settings.py` | `"https://radio-mundial.pages.dev"`, `"https://tudominio.com"`, `"*"` |
-| **Directorio Raíz en Render** | Panel Render -> Settings -> Root Directory | `backend` |
-| **Comando Build en Render** | Panel Render -> Settings -> Build Command | `pip install -r requirements.txt` |
-| **Comando Start en Render** | Panel Render -> Settings -> Start Command | `uvicorn main:app --host 0.0.0.0 --port $PORT --workers 2` |
-| **Directorio Raíz en Cloudflare**| Panel Cloudflare -> Settings -> Root Directory | `frontend` |
-| **Comando Build en Cloudflare**| Panel Cloudflare -> Settings -> Build Command | `dotnet publish -c Release -o output` |
-| **Directorio Salida Cloudflare**| Panel Cloudflare -> Settings -> Output Directory | `output/wwwroot` |
+| Qué Configurar                          | En Qué Archivo / Pantalla                       | Qué Valor Poner en Producción                                             |
+| :--------------------------------------- | :----------------------------------------------- | :-------------------------------------------------------------------------- |
+| **URL de la API en Frontend**      | `frontend/wwwroot/appsettings.json`            | `"BackendHttpUrl": "https://radio-mundial-api.onrender.com"`              |
+| **URL WebSocket en Frontend**      | `frontend/wwwroot/appsettings.json`            | `"BackendWsUrl": "wss://radio-mundial-api.onrender.com/ws"`               |
+| **Orígenes Permitidos (CORS)**    | `backend/infrastructure/config/settings.py`    | `"https://radio-mundial.pages.dev"`, `"https://tudominio.com"`, `"*"` |
+| **Directorio Raíz en Render**     | Panel Render -> Settings -> Root Directory       | `backend`                                                                 |
+| **Comando Build en Render**        | Panel Render -> Settings -> Build Command        | `pip install -r requirements.txt`                                         |
+| **Comando Start en Render**        | Panel Render -> Settings -> Start Command        | `uvicorn main:app --host 0.0.0.0 --port $PORT --workers 2`                |
+| **Directorio Raíz en Cloudflare** | Panel Cloudflare -> Settings -> Root Directory   | `frontend`                                                                |
+| **Comando Build en Cloudflare**    | Panel Cloudflare -> Settings -> Build Command    | `dotnet publish -c Release -o output`                                     |
+| **Directorio Salida Cloudflare**   | Panel Cloudflare -> Settings -> Output Directory | `output/wwwroot`                                                          |
 
 ---
 
 ## PASO 1: Subir el Proyecto a GitHub
 
 1. Abre tu terminal en la carpeta principal del proyecto:
+
 ```bash
 cd /home/productdeath/Documentos/UNIVERSAL/PERSONAL/Radio-Mundial
 ```
 
 2. Crea tu repositorio en [github.com/new](https://github.com/new) con el nombre `Radio-Mundial` (puede ser público o privado).
-
 3. Conecta y sube tu código:
+
 ```bash
 git add -A
 git commit -m "feat: Radio Mundial v6.0 - 18,300+ emisoras, paginado y diseno vintage"
@@ -124,11 +128,13 @@ git push -u origin master
 Render ofrece servidores gratuitos con soporte de WebSockets, compresión GZip y certificados SSL/TLS automáticos.
 
 ### 2.1 Crear el Web Service
+
 1. Inicia sesión en [dashboard.render.com](https://dashboard.render.com/) con tu cuenta de GitHub.
 2. Haz clic en el botón superior **"New +"** y selecciona **"Web Service"**.
 3. Elige la opción **"Build and deploy from a Git repository"** y haz clic en **Connect** junto a tu repositorio `Radio-Mundial`.
 
 ### 2.2 Rellenar la Configuración
+
 Completa exactamente estos campos:
 
 * **Name:** `radio-mundial-api`
@@ -147,13 +153,14 @@ Completa exactamente estos campos:
 * **Instance Type:** Selecciona **Free** (0.1 CPU, 512 MB RAM).
 
 ### 2.3 Variables de Entorno (Environment Variables)
+
 Haz clic en **"Advanced"** -> **"Add Environment Variable"** y añade:
 
-| Variable | Valor |
-| :--- | :--- |
-| `PYTHONUNBUFFERED` | `1` |
-| `ENABLE_WARMUP` | `true` |
-| `ALLOWED_ORIGINS` | `["*"]` |
+| Variable             | Valor     |
+| :------------------- | :-------- |
+| `PYTHONUNBUFFERED` | `1`     |
+| `ENABLE_WARMUP`    | `true`  |
+| `ALLOWED_ORIGINS`  | `["*"]` |
 
 4. Haz clic en **"Create Web Service"**.
 5. Render compilará tu servidor en aproximadamente 90 segundos y te entregará tu URL pública:
@@ -166,15 +173,18 @@ Haz clic en **"Advanced"** -> **"Add Environment Variable"** y añade:
 Una vez que tengas la URL de Render, asegúrate de que el frontend apunte a ella:
 
 1. Abre [`frontend/wwwroot/appsettings.json`](file:///home/productdeath/Documentos/UNIVERSAL/PERSONAL/Radio-Mundial/frontend/wwwroot/appsettings.json):
+
 ```json
 {
   "BackendHttpUrl": "https://radio-mundial-api.onrender.com",
   "BackendWsUrl": "wss://radio-mundial-api.onrender.com/ws"
 }
 ```
+
 *(Si tu servicio en Render tiene otro nombre, reemplázalo con tu URL).*
 
 2. Guarda y confirma el cambio en git:
+
 ```bash
 git add frontend/wwwroot/appsettings.json
 git commit -m "config: conectar frontend con backend de render"
@@ -188,6 +198,7 @@ git push origin master
 Cloudflare Pages es la red perimetral más rápida del mundo, con CDN Anycast en más de 300 ciudades, **ancho de banda ilimitado y costo $0.00**.
 
 ### Método Recomendado: Despliegue Automático desde GitHub
+
 1. Inicia sesión en [dash.cloudflare.com](https://dash.cloudflare.com/).
 2. En el menú lateral izquierdo, haz clic en **Compute (Workers) > Workers & Pages**.
 3. Haz clic en **Create application** y ve a la pestaña **Pages** -> **Connect to Git**.
@@ -206,12 +217,13 @@ Cloudflare Pages es la red perimetral más rápida del mundo, con CDN Anycast en
    * `DOTNET_CLI_TELEMETRY_OPTOUT` = `1`
 7. Haz clic en **"Save and Deploy"**.
 
-En 60 segundos tu sitio web estará disponible mundialmente en:  
+En 60 segundos tu sitio web estará disponible mundialmente en:
 👉 **`https://radio-mundial.pages.dev`**
 
 ---
 
 ### Método Alternativo: Despliegue Inmediato por Terminal (Wrangler CLI)
+
 Si prefieres compilar en tu máquina y subirlo en 15 segundos sin configurar el builder de Cloudflare:
 
 ```bash
@@ -277,14 +289,17 @@ Para indexar de inmediato en los motores de búsqueda:
 ## Diagnóstico de Problemas Comunes
 
 ### 1. Error de CORS al consultar la API
+
 * **Síntoma:** En la consola del navegador aparece: `Access-Control-Allow-Origin missing`.
 * **Solución:** Verifica que en Render la variable de entorno `ALLOWED_ORIGINS` contenga `["*"]` o incluya exactamente la URL de tu frontend: `https://radio-mundial.pages.dev`.
 
 ### 2. Error 404 al recargar una ruta en Blazor WASM
+
 * **Síntoma:** Al entrar directo a una subpágina aparece `404 Not Found` de Cloudflare.
 * **Solución:** El archivo [`frontend/wwwroot/404.html`](file:///home/productdeath/Documentos/UNIVERSAL/PERSONAL/Radio-Mundial/frontend/wwwroot/404.html) ya está incluido en el proyecto para redirigir automáticamente todas las rutas a `index.html` sin recargar la aplicación.
 
 ### 3. El audio no reproduce en algunos navegadores
+
 * **Causa:** Algunos navegadores bloquean la reproducción automática (*autoplay*) si el usuario no ha interactuado antes con la pantalla.
 * **Solución:** Radio Mundial requiere que el oyente haga clic en el botón de encendido o en cualquier perilla/tarjeta para iniciar el flujo de audio con permisos del navegador.
 
@@ -292,13 +307,13 @@ Para indexar de inmediato en los motores de búsqueda:
 
 ## 📊 Arquitectura de Costos Final
 
-| Componente | Proveedor | Nivel de Servicio | Costo Mensual |
-| :--- | :--- | :--- | :---: |
-| **Alojamiento Frontend WASM** | Cloudflare Pages | Edge Global Anycast (300+ ciudades) | **$0.00** |
-| **Ancho de Banda Web** | Cloudflare | Ilimitado | **$0.00** |
-| **Servidor API & WebSocket** | Render.com | Free Web Service (512 MB RAM) | **$0.00** |
-| **Catálogo de Estaciones** | In-Memory JSON | 18,331 estaciones precargadas | **$0.00** |
-| **Certificados SSL/TLS HTTPS** | Cloudflare / Let's Encrypt | Renovación automática de por vida | **$0.00** |
-| **Ping Keep-Alive 24/7** | Cron-Job.org | 1 petición cada 10 min | **$0.00** |
-| **Streaming de Audio en Vivo** | CDN de las emisoras | Tráfico directo al oyente | **$0.00** |
-| **TOTAL** | | **Nivel de Producción Profesional** | **$0.00 USD / mes** |
+| Componente                           | Proveedor                  | Nivel de Servicio                          |       Costo Mensual       |
+| :----------------------------------- | :------------------------- | :----------------------------------------- | :-----------------------: |
+| **Alojamiento Frontend WASM**  | Cloudflare Pages           | Edge Global Anycast (300+ ciudades)        |      **$0.00**      |
+| **Ancho de Banda Web**         | Cloudflare                 | Ilimitado                                  |      **$0.00**      |
+| **Servidor API & WebSocket**   | Render.com                 | Free Web Service (512 MB RAM)              |      **$0.00**      |
+| **Catálogo de Estaciones**    | In-Memory JSON             | 18,331 estaciones precargadas              |      **$0.00**      |
+| **Certificados SSL/TLS HTTPS** | Cloudflare / Let's Encrypt | Renovación automática de por vida        |      **$0.00**      |
+| **Ping Keep-Alive 24/7**       | Cron-Job.org               | 1 petición cada 10 min                    |      **$0.00**      |
+| **Streaming de Audio en Vivo** | CDN de las emisoras        | Tráfico directo al oyente                 |      **$0.00**      |
+| **TOTAL**                      |                            | **Nivel de Producción Profesional** | **$0.00 USD / mes** |

@@ -32,6 +32,17 @@
       font-weight: 600;
     }
   </style>
+  <script>
+    // Bloqueo estricto contra popunders, redirecciones y secuestro de clics en la web principal
+    try {
+      Object.defineProperty(window, 'parent', { get: () => window, configurable: false });
+      Object.defineProperty(window, 'top', { get: () => window, configurable: false });
+      window.open = function() {
+        console.warn('[AdBanner] Intento de ventana emergente o redirección neutralizado con éxito.');
+        return null;
+      };
+    } catch (e) {}
+  </script>
 </head>
 <body>
   <div class="fallback-note" id="fallback">

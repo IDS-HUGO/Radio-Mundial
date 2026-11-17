@@ -14,7 +14,7 @@
                 </p>
             </div>
             <div class="cookie-actions">
-                <button class="btn-cookie-accept" @onclick="RadioState.AcceptCookiesAsync">
+                <button type="button" class="btn-cookie-accept" @onclick="RadioState.AcceptCookiesAsync" @onclick:stopPropagation="true">
                     Aceptar y Continuar
                 </button>
             </div>

@@ -140,7 +140,7 @@ En la pantalla que tienes abierta en Render (`New Web Service`), llena cada camp
      * *Start Command:* `uvicorn main:app --host 0.0.0.0 --port $PORT --workers 2`
 
 3. **Branch:**  
-   Asegúrate de que esté seleccionada tu rama: **`master`** (o `main`).
+   Selecciona tu rama activa: **`main`**
 
 4. **Region:**  
    Déjalo en: **`Oregon (US West)`** (o la región más cercana a ti).

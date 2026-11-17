@@ -70,14 +70,14 @@ cd backend
 git init
 git remote add origin https://github.com/TU_USUARIO/radio-mundial-backend.git
 git add . && git commit -m "feat: backend api"
-git push -u origin master
+git push -u origin main
 
 # Para el frontend:
 cd ../frontend
 git init
 git remote add origin https://github.com/TU_USUARIO/radio-mundial-frontend.git
 git add . && git commit -m "feat: frontend blazor wasm"
-git push -u origin master
+git push -u origin main
 ```
 
 *(Nota: En Render y Cloudflare Pages simplemente conectarías cada repositorio por separado y dejarías `Root Directory` en blanco).*
@@ -116,9 +116,9 @@ cd /home/productdeath/Documentos/UNIVERSAL/PERSONAL/Radio-Mundial
 ```bash
 git add -A
 git commit -m "feat: Radio Mundial v6.0 - 18,300+ emisoras, paginado y diseno vintage"
-git branch -M master
+git branch -M main
 git remote add origin https://github.com/TU_USUARIO/Radio-Mundial.git
-git push -u origin master
+git push -u origin main
 ```
 
 ---
@@ -198,7 +198,7 @@ Una vez que tengas la URL de Render, asegúrate de que el frontend apunte a ella
 ```bash
 git add frontend/wwwroot/appsettings.json
 git commit -m "config: conectar frontend con backend de render"
-git push origin master
+git push origin main
 ```
 
 ---
@@ -215,7 +215,7 @@ Cloudflare Pages es la red perimetral más rápida del mundo, con CDN Anycast en
 4. Selecciona tu cuenta de GitHub y elige el repositorio `Radio-Mundial`.
 5. En la pantalla **Set up builds and deployments**, configura:
    * **Project name:** `radio-mundial`
-   * **Production branch:** `master`
+   * **Production branch:** `main`
    * **Framework preset:** `None`
    * **Root directory:** `frontend` ⚠️ *(Indica que el frontend está en esa subcarpeta)*
    * **Build command:**

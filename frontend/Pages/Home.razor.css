@@ -665,14 +665,24 @@
 }
 
 .sponsor-ad-slot {
-    min-height: 75px;
+    min-height: 95px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: rgba(0, 0, 0, 0.15);
     border-radius: 8px;
-    padding: 12px;
+    padding: 8px;
     border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.adsterra-iframe-banner {
+    border: none;
+    overflow: hidden;
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+    border-radius: 6px;
+    background: transparent;
 }
 
 .sponsor-ad-placeholder {

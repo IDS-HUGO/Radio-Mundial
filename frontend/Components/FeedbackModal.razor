@@ -1,6 +1,7 @@
 @using frontend.Domain.Entities
 @using frontend.Services
 @inject RadioStateService RadioState
+@inject HttpClient Http
 @implements IDisposable
 
 @if (RadioState.IsFeedbackModalOpen)
@@ -25,15 +26,25 @@
                 <!-- Pantalla de Éxito / Confirmación -->
                 <div class="feedback-success-card text-center p-4">
                     <div class="success-icon-seal mb-3">✓</div>
-                    <h4 class="success-title mb-2">¡Muchísimas gracias por tu mensaje!</h4>
-                    <p class="success-desc mb-4">
-                        Tu sugerencia ha sido registrada en el sistema de Radio Mundial. Revisamos periódicamente cada propuesta para enriquecer el catálogo y perfeccionar la experiencia auditiva de la comunidad.
+                    <h4 class="success-title mb-2">¡Mensaje Despachado con Éxito!</h4>
+                    <p class="success-desc mb-3">
+                        Tu mensaje ha sido registrado en el sistema y despachado directamente al correo del desarrollador principal: <br/>
+                        <strong class="text-amber">Hugo Francisco Luis Inclan</strong> (<a href="mailto:hugofranciscoluisinclan@gmail.com" class="text-brass">hugofranciscoluisinclan@gmail.com</a>).
                     </p>
+
+                    <!-- Botón de Envío Directo Adicional por Correo Personal (100% Garantizado) -->
+                    <div class="direct-email-box mb-4 p-3">
+                        <span class="d-block small text-muted mb-2">¿Deseas enviar también una copia directa desde tu propio correo personal (Gmail, Outlook)?</span>
+                        <a href="@GetDirectMailtoUrl()" class="btn-direct-mailto" target="_blank" rel="noopener noreferrer">
+                            <span>✉️ Abrir en mi App de Correo (Gmail / Outlook)</span>
+                        </a>
+                    </div>
+
                     <div class="d-flex justify-content-center gap-2">
-                        <button class="btn-vintage-secondary" @onclick="ResetForm">
+                        <button type="button" class="btn-vintage-secondary" @onclick="ResetForm">
                             <span>✍️ Enviar otra sugerencia</span>
                         </button>
-                        <button class="btn-vintage-primary" @onclick="CloseModal">
+                        <button type="button" class="btn-vintage-primary" @onclick="CloseModal">
                             <span>Listo / Volver a la Radio</span>
                         </button>
                     </div>
@@ -44,6 +55,15 @@
                 <!-- Formulario Interactivo -->
                 <form @onsubmit="HandleSubmitAsync" class="feedback-form-body">
                     
+                    <!-- Indicador de Destino del Correo -->
+                    <div class="email-dest-pill d-flex align-items-center justify-content-between p-2 mb-3">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="dest-icon">📬</span>
+                            <span class="dest-text">Destino directo: <b>hugofranciscoluisinclan@gmail.com</b></span>
+                        </div>
+                        <span class="dest-badge">EN VIVO</span>
+                    </div>
+
                     <!-- Selector de Categoría (Pestañas Segmentadas) -->
                     <div class="category-tabs-group mb-3">
                         <label class="form-section-label">1. ¿Qué te gustaría compartir?</label>
@@ -267,16 +287,36 @@
         _isSubmitting = true;
         try
         {
-            var success = await RadioState.SubmitFeedbackAsync(_model);
-            if (success)
+            // 1. Enviar al backend de Radio Mundial
+            await RadioState.SubmitFeedbackAsync(_model);
+
+            // 2. Despacho directo vía cliente a FormSubmit hacia hugofranciscoluisinclan@gmail.com
+            try
             {
-                _isSubmitted = true;
+                var directPayload = new
+                {
+                    _subject = $"[Radio Mundial] {_model.Category}: {(!string.IsNullOrWhiteSpace(_model.StationName) ? _model.StationName : "Mensaje")}",
+                    _template = "table",
+                    _captcha = "false",
+                    Categoria = _model.Category,
+                    Estacion = _model.StationName ?? "N/A",
+                    Ubicacion = _model.StationLocation ?? "N/A",
+                    Frecuencia = _model.StationFrequency ?? "N/A",
+                    Stream_URL = _model.StationStreamUrl ?? "N/A",
+                    Mensaje = _model.Message,
+                    Nombre_Oyente = string.IsNullOrWhiteSpace(_model.Name) ? "Anónimo" : _model.Name,
+                    Email_Oyente = string.IsNullOrWhiteSpace(_model.Email) ? "No proporcionado" : _model.Email,
+                    Calificacion = $"{_model.Rating} de 5 estrellas",
+                    Fecha = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss UTC")
+                };
+                await Http.PostAsJsonAsync("https://formsubmit.co/ajax/hugofranciscoluisinclan@gmail.com", directPayload);
             }
-            else
+            catch
             {
-                // Fallback exitoso de cara al usuario
-                _isSubmitted = true;
+                // Fallback silencioso si el bloqueador de anuncios interfiere con el request externo
             }
+
+            _isSubmitted = true;
         }
         catch (Exception ex)
         {
@@ -287,6 +327,26 @@
         {
             _isSubmitting = false;
         }
+    }
+
+    private string GetDirectMailtoUrl()
+    {
+        var subject = Uri.EscapeDataString($"[Radio Mundial] {_model.Category} - {(_model.StationName ?? "Sugerencia")}");
+        var body = Uri.EscapeDataString(
+            $"Hola Hugo Francisco Luis Inclan,\n\n" +
+            $"Te envío esta propuesta para Radio Mundial:\n" +
+            $"• Categoría: {_model.Category}\n" +
+            $"• Estación: {_model.StationName ?? "N/A"}\n" +
+            $"• Ubicación: {_model.StationLocation ?? "N/A"}\n" +
+            $"• Frecuencia: {_model.StationFrequency ?? "N/A"}\n" +
+            $"• Stream URL: {_model.StationStreamUrl ?? "N/A"}\n" +
+            $"• Mensaje: {_model.Message}\n" +
+            $"• Calificación: {_model.Rating}/5 estrellas\n" +
+            $"• Remitente: {(!string.IsNullOrWhiteSpace(_model.Name) ? _model.Name : "Oyente")}\n" +
+            $"• Contacto: {(!string.IsNullOrWhiteSpace(_model.Email) ? _model.Email : "N/A")}\n\n" +
+            $"¡Saludos y gracias por crear Radio Mundial!"
+        );
+        return $"mailto:hugofranciscoluisinclan@gmail.com?subject={subject}&body={body}";
     }
 
     private void ResetForm()

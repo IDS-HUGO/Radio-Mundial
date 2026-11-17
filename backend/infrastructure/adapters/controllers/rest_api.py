@@ -11,6 +11,10 @@ import asyncio
 import json
 import logging
 import os
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import urllib.request
 from fastapi import APIRouter, Query, HTTPException, Response, status
 from domain.entities import Station, FilterOptions, FeedbackSubmission
 from domain.exceptions import StationNotFoundException
@@ -127,6 +131,106 @@ async def get_station_by_id(station_id: str, response: Response) -> Station:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(ex))
 
 
+ADMIN_EMAIL = os.getenv("NOTIFICATION_EMAIL", "hugofranciscoluisinclan@gmail.com")
+
+
+def _send_email_notification(submission: FeedbackSubmission) -> None:
+    """Envía la notificación por correo al creador de Radio Mundial."""
+    smtp_user = os.getenv("SMTP_USER")
+    smtp_pass = os.getenv("SMTP_PASS") or os.getenv("SMTP_PASSWORD")
+    smtp_host = os.getenv("SMTP_HOST", "smtp.gmail.com")
+    smtp_port = int(os.getenv("SMTP_PORT", "465"))
+
+    category_labels = {
+        "AGREGAR_ESTACION": "📻 Sugerencia para Agregar Nueva Emisora",
+        "MEJORA": "💡 Propuesta de Mejora para Radio Mundial",
+        "ESTACION_CAIDA": "⚠️ Reporte de Emisora con Fallas / Caída",
+        "COMENTARIO_GENERAL": "💬 Comentario / Saludo de la Comunidad"
+    }
+    cat_text = category_labels.get(submission.category, submission.category)
+    subject = f"[Radio Mundial] {cat_text} - {submission.station_name or submission.name or 'Nuevo Mensaje'}"
+
+    # 1. Intento por SMTP directo si hay credenciales configuradas
+    if smtp_user and smtp_pass:
+        try:
+            msg = MIMEMultipart("alternative")
+            msg["Subject"] = subject
+            msg["From"] = f"Radio Mundial <{smtp_user}>"
+            msg["To"] = ADMIN_EMAIL
+
+            body_html = f"""
+            <div style="font-family: Arial, sans-serif; background: #241811; color: #f5eedb; padding: 20px; border-radius: 10px;">
+                <h2 style="color: #d4a373; margin-top: 0;">📻 Radio Mundial — Nuevo Mensaje en el Buzón</h2>
+                <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; border: 1px solid rgba(212,163,115,0.3);">
+                    <p><b>Categoría:</b> {cat_text}</p>
+                    <p><b>Estación:</b> {submission.station_name or 'N/A'}</p>
+                    <p><b>Ubicación:</b> {submission.station_location or 'N/A'}</p>
+                    <p><b>Frecuencia:</b> {submission.station_frequency or 'N/A'}</p>
+                    <p><b>Stream URL:</b> {submission.station_stream_url or 'N/A'}</p>
+                    <p><b>Mensaje:</b></p>
+                    <blockquote style="background: rgba(0,0,0,0.3); padding: 10px; border-left: 3px solid #d4a373; margin: 10px 0;">
+                        {submission.message}
+                    </blockquote>
+                    <p><b>Nombre del Oyente:</b> {submission.name or 'Anónimo'}</p>
+                    <p><b>Correo del Oyente:</b> {submission.email or 'No proporcionado'}</p>
+                    <p><b>Calificación:</b> {'★' * (submission.rating or 5)} ({submission.rating}/5)</p>
+                    <p><b>Fecha (UTC):</b> {submission.created_at.strftime('%Y-%m-%d %H:%M:%S')}</p>
+                </div>
+                <p style="font-size: 11px; color: #a89f91; margin-top: 15px;">Radio Mundial — Hugo Francisco Luis Inclan (c) 2026</p>
+            </div>
+            """
+            msg.attach(MIMEText(body_html, "html", "utf-8"))
+
+            if smtp_port == 465:
+                with smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=10) as server:
+                    server.login(smtp_user, smtp_pass)
+                    server.sendmail(smtp_user, [ADMIN_EMAIL], msg.as_string())
+            else:
+                with smtplib.SMTP(smtp_host, smtp_port, timeout=10) as server:
+                    server.starttls()
+                    server.login(smtp_user, smtp_pass)
+                    server.sendmail(smtp_user, [ADMIN_EMAIL], msg.as_string())
+            logger.info(f"Notificación enviada exitosamente por SMTP a {ADMIN_EMAIL}")
+            return
+        except Exception as e:
+            logger.warning(f"Error enviando correo por SMTP: {e}. Intentando fallback FormSubmit...")
+
+    # 2. Despacho por Gateway FormSubmit (Envío directo a hugofranciscoluisinclan@gmail.com)
+    try:
+        form_payload = {
+            "_subject": subject,
+            "_template": "table",
+            "_captcha": "false",
+            "Categoria": cat_text,
+            "Estacion": submission.station_name or "N/A",
+            "Ubicacion": submission.station_location or "N/A",
+            "Frecuencia": submission.station_frequency or "N/A",
+            "Stream_URL": submission.station_stream_url or "N/A",
+            "Mensaje": submission.message,
+            "Nombre_Oyente": submission.name or "Anónimo",
+            "Email_Oyente": submission.email or "No proporcionado",
+            "Calificacion": f"{submission.rating} de 5 estrellas",
+            "Fecha": submission.created_at.strftime("%Y-%m-%d %H:%M:%S UTC")
+        }
+        req_data = json.dumps(form_payload).encode("utf-8")
+        req = urllib.request.Request(
+            f"https://formsubmit.co/ajax/{ADMIN_EMAIL}",
+            data=req_data,
+            headers={
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Origin": "https://radio-mundial.pages.dev",
+                "Referer": "https://radio-mundial.pages.dev/",
+                "User-Agent": "RadioMundial-Dispatcher/1.0"
+            }
+        )
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            resp_body = resp.read().decode("utf-8")
+            logger.info(f"Notificación de buzón despachada vía FormSubmit a {ADMIN_EMAIL}: {resp_body[:100]}")
+    except Exception as ex:
+        logger.warning(f"Aviso al despachar FormSubmit: {ex}")
+
+
 @router.post("/api/feedback", status_code=status.HTTP_201_CREATED)
 async def submit_feedback(submission: FeedbackSubmission) -> dict[str, str]:
     """Registra un comentario, reporte de estación caída o solicitud de nueva emisora."""
@@ -150,6 +254,10 @@ async def submit_feedback(submission: FeedbackSubmission) -> dict[str, str]:
                 json.dump(records, f, indent=2, ensure_ascii=False)
                 
             logger.info(f"Feedback recibido: [{submission.category}] id={submission.id} estación={submission.station_name}")
+
+            # Despachar notificación por correo de forma asíncrona (no bloqueante)
+            asyncio.create_task(asyncio.to_thread(_send_email_notification, submission))
+
             return {
                 "status": "success",
                 "id": submission.id,

@@ -591,22 +591,109 @@
 
 @media (max-width: 600px) {
     .retro-radio-stage {
-        padding-top: 40px;
+        padding-top: 18px;
+        margin: 0.2rem auto 0.5rem auto;
+    }
+    .retro-antenna-wrapper {
+        height: 38px;
+    }
+    .antenna-extended {
+        height: 52px;
+    }
+    .retro-handle-arc {
+        height: 34px;
+        top: 2px;
     }
     .retro-radio-body {
-        padding: 1.2rem 1rem;
-        border-radius: 32px;
+        padding: 0.85rem 0.75rem;
+        border-radius: 24px;
+    }
+    .tuner-control-panel {
+        gap: 6px;
+        margin-bottom: 8px;
     }
     .retro-knob {
-        width: 48px;
-        height: 48px;
+        width: 42px;
+        height: 42px;
+    }
+    .knob-label {
+        font-size: 0.52rem;
+    }
+    .knob-volume-badge {
+        font-size: 0.55rem;
+        padding: 1px 4px;
     }
     .tuner-scale-window {
-        height: 85px;
+        height: 72px;
+        padding: 3px 5px;
+    }
+    .tuner-indicators-row {
+        margin-bottom: 2px;
+    }
+    .indicator-text {
+        font-size: 0.52rem;
+    }
+    .btn-band-switch {
+        font-size: 0.55rem;
+        padding: 1px 5px;
+    }
+    .dial-station-name {
+        font-size: 0.58rem;
+        max-width: 115px;
+    }
+    .listeners-indicator {
+        font-size: 0.52rem;
+    }
+
+    /* Ocultar números intermedios en el dial para evitar solapamientos en pantalla móvil */
+    .scale-fm .tick-major:nth-child(3) i,
+    .scale-fm .tick-major:nth-child(5) i,
+    .scale-fm .tick-major:nth-child(9) i,
+    .scale-am .tick-major:nth-child(3) i,
+    .scale-am .tick-major:nth-child(5) i,
+    .scale-am .tick-major:nth-child(9) i {
+        display: none !important;
+    }
+
+    .tick-major i {
+        font-size: 0.48rem !important;
+        top: -9px !important;
+    }
+
+    .band-tag {
+        font-size: 0.58rem !important;
+        width: 22px !important;
+    }
+
+    /* Altavoz compacto en pantalla pequeña */
+    .retro-speaker-grille {
+        padding: 0.5rem 0.8rem;
+    }
+    .grille-acoustic-cloth {
+        gap: 4px;
+    }
+    .grille-slot {
+        height: 4px;
+    }
+    .speaker-vintage-badge {
+        padding: 2px 7px;
+        bottom: 6px;
+        right: 8px;
+    }
+    .badge-script {
+        font-size: 0.6rem;
+    }
+    .badge-sub {
+        font-size: 0.44rem;
+    }
+
+    .retro-push-buttons {
+        gap: 4px;
+        margin-top: 8px;
     }
     .btn-retro-push {
-        font-size: 0.62rem;
-        padding: 4px 8px;
+        font-size: 0.56rem;
+        padding: 3px 6px;
     }
 }
 
@@ -807,14 +894,36 @@
 
 @media (max-width: 600px) {
     .retro-author-badge {
-        padding: 0.85rem 0.9rem;
-        margin-top: 10px;
+        padding: 0.65rem 0.85rem;
+        margin-top: 8px;
+    }
+    .author-plate-title {
+        font-size: 0.56rem;
+        margin-bottom: 2px;
     }
     .author-name-title {
-        font-size: 0.95rem;
+        font-size: 0.88rem;
+        margin-bottom: 2px;
+    }
+    .author-role-sub {
+        font-size: 0.6rem;
+        margin-bottom: 4px;
+    }
+    .author-help-note {
+        font-size: 0.62rem;
+        margin-bottom: 6px;
     }
     .author-email-link {
-        font-size: 0.72rem;
-        padding: 4px 8px;
+        font-size: 0.68rem;
+        padding: 3px 8px;
+        margin-bottom: 6px;
+    }
+    .author-actions-row {
+        gap: 6px;
+    }
+    .btn-author-feedback,
+    .btn-author-paypal {
+        font-size: 0.62rem;
+        padding: 3px 8px;
     }
 }

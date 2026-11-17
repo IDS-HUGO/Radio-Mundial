@@ -113,9 +113,29 @@
             
             <!-- Columna Izquierda: Radio Retro Fija (Sticky Dock) -->
             <div class="studio-left-dock">
-                <div class="sticky-radio-anchor">
-                    <RetroRadio />
+                <div class="d-lg-none mb-2 text-center mobile-radio-toggle-container">
+                    <button type="button" class="btn-toggle-mobile-radio" @onclick="ToggleMobileRadio">
+                        <span>📻 @(_isRadioCollapsedMobile ? "Mostrar Sintonizador Vintage ▼" : "Minimizar Sintonizador ▲")</span>
+                    </button>
                 </div>
+
+                @if (!_isRadioCollapsedMobile)
+                {
+                    <div class="sticky-radio-anchor">
+                        <RetroRadio />
+                    </div>
+                }
+                else
+                {
+                    <div class="mini-radio-banner d-lg-none" @onclick="ToggleMobileRadio">
+                        <span class="mini-radio-icon">📻</span>
+                        <div class="mini-radio-info">
+                            <span class="mini-radio-title">@(RadioState.ActiveStation?.Name ?? "Sintonizador Vintage Hi-Fi")</span>
+                            <span class="mini-radio-subtitle">@(RadioState.IsPlaying ? "● EN VIVO · Toca para abrir sintonizador" : "Toca para abrir sintonizador analógico")</span>
+                        </div>
+                        <span class="mini-radio-action">Abrir ▾</span>
+                    </div>
+                }
             </div>
 
             <!-- Columna Derecha: Consola de Filtros y Rejilla de Emisoras -->
@@ -138,9 +158,29 @@
              DISPOSICIÓN TRADICIONAL (RADIO ARRIBA / FILTROS ABAJO)
              ============================================================== -->
         <div class="w-100">
-            <div class="mb-3 text-center">
-                <RetroRadio />
+            <div class="d-lg-none mb-2 text-center mobile-radio-toggle-container">
+                <button type="button" class="btn-toggle-mobile-radio" @onclick="ToggleMobileRadio">
+                    <span>📻 @(_isRadioCollapsedMobile ? "Mostrar Sintonizador Vintage ▼" : "Minimizar Sintonizador ▲")</span>
+                </button>
             </div>
+
+            @if (!_isRadioCollapsedMobile)
+            {
+                <div class="mb-3 text-center">
+                    <RetroRadio />
+                </div>
+            }
+            else
+            {
+                <div class="mini-radio-banner d-lg-none mb-3" @onclick="ToggleMobileRadio">
+                    <span class="mini-radio-icon">📻</span>
+                    <div class="mini-radio-info">
+                        <span class="mini-radio-title">@(RadioState.ActiveStation?.Name ?? "Sintonizador Vintage Hi-Fi")</span>
+                        <span class="mini-radio-subtitle">@(RadioState.IsPlaying ? "● EN VIVO · Toca para abrir sintonizador" : "Toca para abrir sintonizador analógico")</span>
+                    </div>
+                    <span class="mini-radio-action">Abrir ▾</span>
+                </div>
+            }
 
             @RenderFilterConsole()
 
@@ -159,7 +199,7 @@
         <section class="master-console-deck p-3 mb-4" aria-label="Consola de Búsqueda y Sintonización">
             
             <!-- Fila 1: Barra Principal de Búsqueda Instantánea -->
-            <div class="search-bar-row mb-3">
+            <div class="search-bar-row mb-2">
                 <div class="studio-search-wrapper">
                     <span class="search-icon-symbol">🔍</span>
                     <input type="text" 
@@ -174,8 +214,25 @@
                 </div>
             </div>
 
+            <!-- Botón Móvil para Colapsar/Desplegar Filtros Avanzados -->
+            <div class="d-md-none mb-2">
+                <button type="button" class="btn-toggle-filters-mobile w-100" @onclick="ToggleMobileFilters">
+                    <span class="d-flex align-items-center gap-2">
+                        <span>🎛️</span>
+                        <span>@(_showMobileFilters ? "Ocultar Filtros Avanzados" : "Filtros (País, Ciudad, Género)")</span>
+                    </span>
+                    <span class="d-flex align-items-center gap-2">
+                        @if (GetActiveFiltersCount() > 0)
+                        {
+                            <span class="active-badge-pill">@GetActiveFiltersCount() @(GetActiveFiltersCount() == 1 ? "activo" : "activos")</span>
+                        }
+                        <span>@(_showMobileFilters ? "▲" : "▼")</span>
+                    </span>
+                </button>
+            </div>
+
             <!-- Fila 2: Barra de Filtros Desplegables en Cuadrícula Compacta y Ordenada -->
-            <div class="dropdowns-filter-grid mb-2">
+            <div class="dropdowns-filter-grid mb-2 @(_showMobileFilters ? "mobile-expanded" : "")">
                 
                 <!-- Desplegable 1: Continente -->
                 <div class="filter-col">
@@ -605,8 +662,32 @@
 @code {
     private bool IsSideBySide { get; set; } = true;
     private bool ShowFmAmGuide { get; set; } = false;
+    private bool _isRadioCollapsedMobile = false;
+    private bool _showMobileFilters = false;
     private int _currentPage = 1;
     private int _pageSize = 9;
+
+    private void ToggleMobileRadio()
+    {
+        _isRadioCollapsedMobile = !_isRadioCollapsedMobile;
+    }
+
+    private void ToggleMobileFilters()
+    {
+        _showMobileFilters = !_showMobileFilters;
+    }
+
+    private int GetActiveFiltersCount()
+    {
+        int count = 0;
+        if (RadioState.SelectedContinent != "Todos") count++;
+        if (RadioState.SelectedCountry != "Todos") count++;
+        if (RadioState.SelectedState != "Todos") count++;
+        if (RadioState.SelectedCity != "Todas") count++;
+        if (RadioState.SelectedGenre != "Todos") count++;
+        if (RadioState.SelectedBand != "TODAS") count++;
+        return count;
+    }
 
     private void SetPageSize(int size)
     {

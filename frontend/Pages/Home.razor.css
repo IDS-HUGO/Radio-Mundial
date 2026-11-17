@@ -370,6 +370,54 @@
     align-items: end;
 }
 
+@media (max-width: 767px) {
+    .dropdowns-filter-grid {
+        display: none;
+    }
+    
+    .dropdowns-filter-grid.mobile-expanded {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        animation: fadeInFilter 0.2s ease-out;
+    }
+}
+
+@keyframes fadeInFilter {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Botón Móvil para Colapsar/Desplegar Filtros */
+.btn-toggle-filters-mobile {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 9px 14px;
+    color: var(--text-main);
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-card);
+}
+
+.btn-toggle-filters-mobile:hover {
+    border-color: var(--brass);
+    background: rgba(197, 159, 84, 0.08);
+}
+
+.active-badge-pill {
+    background: var(--accent-amber);
+    color: #ffffff;
+    font-size: 0.68rem;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
 .filter-col {
     display: flex;
     flex-direction: column;
@@ -1135,5 +1183,150 @@
     }
     .nav-numbers-group {
         order: -1;
+    }
+}
+
+/* ==============================================================================
+   Controles Móviles del Sintonizador Retro y Optimización Móvil
+   ============================================================================== */
+.mobile-radio-toggle-container {
+    margin-bottom: 0.5rem;
+}
+
+.btn-toggle-mobile-radio {
+    background: linear-gradient(135deg, rgba(212, 163, 115, 0.18), rgba(184, 115, 51, 0.25));
+    border: 1px solid rgba(212, 163, 115, 0.45);
+    color: var(--accent-amber);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-toggle-mobile-radio:hover {
+    background: linear-gradient(135deg, rgba(212, 163, 115, 0.3), rgba(184, 115, 51, 0.4));
+    border-color: var(--brass);
+    color: #ffffff;
+}
+
+.mini-radio-banner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 8px 12px;
+    cursor: pointer;
+    box-shadow: var(--card-shadow);
+    transition: all 0.2s ease;
+}
+
+.mini-radio-banner:hover {
+    border-color: var(--brass);
+}
+
+.mini-radio-icon {
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+.mini-radio-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.mini-radio-title {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mini-radio-subtitle {
+    font-size: 0.68rem;
+    color: var(--accent-amber);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mini-radio-action {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text-highlight);
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: rgba(197, 159, 84, 0.15);
+    border: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    .studio-header-bar {
+        margin-bottom: 0.5rem !important;
+        gap: 0.5rem !important;
+    }
+    
+    .badge-vintage-live,
+    .studio-subtext {
+        font-size: 0.6rem !important;
+    }
+    
+    .studio-title {
+        font-size: 1.2rem !important;
+    }
+    
+    .theme-segmented-switch,
+    .lang-segmented-switch {
+        padding: 2px !important;
+    }
+    
+    .btn-theme-chip,
+    .btn-lang-chip {
+        padding: 2px 6px !important;
+        font-size: 0.75rem !important;
+    }
+    
+    .btn-studio-feedback,
+    .btn-studio-donate {
+        padding: 3px 8px !important;
+        font-size: 0.7rem !important;
+    }
+    
+    .studio-metrics-group {
+        width: 100%;
+        justify-content: space-between;
+        gap: 4px !important;
+    }
+    
+    .studio-metric-card {
+        padding: 3px 6px !important;
+        flex: 1 1 auto;
+        text-align: center;
+    }
+    
+    .metric-val {
+        font-size: 0.82rem !important;
+    }
+    
+    .metric-sub {
+        font-size: 0.55rem !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .stations-responsive-grid {
+        grid-template-columns: 1fr;
     }
 }

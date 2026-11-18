@@ -36,3 +36,9 @@ frontend/wwwroot/lib/bootstrap/dist/**/*.map
 frontend/wwwroot/lib/bootstrap/dist/**/*.rtl.*
 
 
+
+# Herramientas y videos locales
+local_promo/
+*.mp4
+*.webm
+

@@ -11,4 +11,5 @@ public interface IPreferencesPort
     Task SavePreferencesAsync(UserPreferences preferences);
     Task<UserPreferences?> LoadPreferencesAsync();
     Task ApplyThemeAsync(string themeMode);
+    Task<string> GetBrowserLanguageAsync();
 }

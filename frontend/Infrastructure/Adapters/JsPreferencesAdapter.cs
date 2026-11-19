@@ -56,4 +56,17 @@ public class JsPreferencesAdapter : IPreferencesPort
         }
         catch { }
     }
+
+    public async Task<string> GetBrowserLanguageAsync()
+    {
+        try
+        {
+            var lang = await _jsRuntime.InvokeAsync<string>("radioAudio.getBrowserLanguage");
+            return !string.IsNullOrWhiteSpace(lang) ? lang : "es";
+        }
+        catch
+        {
+            return "es";
+        }
+    }
 }

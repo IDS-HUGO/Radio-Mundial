@@ -233,13 +233,27 @@ public class RadioStateService : IAsyncDisposable
             Volume = Math.Clamp(prefs.Volume, 0.0, 1.0);
             FavoriteStationIds = new HashSet<string>(prefs.FavoriteStationIds ?? []);
             if (!string.IsNullOrWhiteSpace(prefs.Theme)) CurrentTheme = prefs.Theme;
-            if (!string.IsNullOrWhiteSpace(prefs.Language)) CurrentLanguage = prefs.Language;
+            
+            if (!string.IsNullOrWhiteSpace(prefs.Language))
+            {
+                CurrentLanguage = prefs.Language;
+            }
+            else
+            {
+                var detected = await _preferencesPort.GetBrowserLanguageAsync();
+                CurrentLanguage = string.Equals(detected, "en", StringComparison.OrdinalIgnoreCase) ? "en" : "es";
+            }
 
             if (!string.IsNullOrWhiteSpace(prefs.LastStationId))
             {
                 var last = AllStations.FirstOrDefault(s => s.Id == prefs.LastStationId);
                 if (last is not null) ActiveStation = last;
             }
+        }
+        else
+        {
+            var detected = await _preferencesPort.GetBrowserLanguageAsync();
+            CurrentLanguage = string.Equals(detected, "en", StringComparison.OrdinalIgnoreCase) ? "en" : "es";
         }
         await _preferencesPort.ApplyThemeAsync(CurrentTheme);
     }

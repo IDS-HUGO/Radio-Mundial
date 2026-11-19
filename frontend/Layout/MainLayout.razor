@@ -52,20 +52,6 @@
                     <span class="d-none d-sm-inline">Donar</span>
                 </a>
 
-                <!-- Selector de Idioma (ES / EN) -->
-                <div class="topbar-segmented-switch" title="Language / Idioma">
-                    <button type="button" 
-                            class="btn-segmented-chip @(RadioState.CurrentLanguage == "es" ? "chip-active" : "")" 
-                            @onclick='() => RadioState.SetLanguageAsync("es")'>
-                        ES
-                    </button>
-                    <button type="button" 
-                            class="btn-segmented-chip @(RadioState.CurrentLanguage == "en" ? "chip-active" : "")" 
-                            @onclick='() => RadioState.SetLanguageAsync("en")'>
-                        EN
-                    </button>
-                </div>
-
                 <!-- Selector de Tema (Oscuro / Claro / Sistema) -->
                 <div class="topbar-segmented-switch theme-switch" title="Tema: Oscuro / Claro / Sistema">
                     <button type="button" 

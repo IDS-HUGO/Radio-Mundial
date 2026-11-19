@@ -1,6 +1,6 @@
 /* =========================================================================
    FeedbackModal.razor.css — Radio Mundial
-   Estética Bento Hi-Fi: Grafito / Carbón (#13161D) + Acentos Ámbar (#FF6B00)
+   Estética Bento Hi-Fi: Café Espresso & Caramelo Tostado (#1C1510) + Acentos Caramelo (#C88A4B / #8D5B2C)
    Autor: Hugo Francisco Luis Inclan (c) 2026.
    ========================================================================= */
 
@@ -74,8 +74,8 @@
     width: 42px;
     height: 42px;
     border-radius: 10px;
-    background: rgba(255, 107, 0, 0.12);
-    border: 1px solid rgba(255, 107, 0, 0.25);
+    background: var(--accent-glow);
+    border: 1px solid var(--border-highlight);
 }
 
 .feedback-title {
@@ -159,16 +159,16 @@
 }
 
 .category-chip:hover {
-    background: rgba(255, 107, 0, 0.1);
-    border-color: rgba(255, 107, 0, 0.35);
-    color: #ff944d;
+    background: var(--accent-glow);
+    border-color: var(--border-highlight);
+    color: var(--accent-amber);
 }
 
 .category-chip.active {
-    background: #ff6b00;
-    border-color: #ff8533;
+    background: var(--accent-orange);
+    border-color: var(--accent-amber);
     color: #ffffff;
-    box-shadow: 0 2px 10px rgba(255, 107, 0, 0.35);
+    box-shadow: 0 2px 10px var(--accent-glow);
 }
 
 [data-theme="light"] .category-chip {
@@ -178,34 +178,34 @@
 }
 
 [data-theme="light"] .category-chip.active {
-    background: #ff6b00;
+    background: var(--accent-orange);
     color: #ffffff;
-    border-color: #ff8533;
+    border-color: var(--accent-orange);
 }
 
 /* Tarjeta de detalles de estación */
 .station-details-card {
-    background: #0d0f15;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
     border-radius: 10px;
 }
 
 [data-theme="light"] .station-details-card {
-    background: #f8fafc;
-    border-color: rgba(0, 0, 0, 0.08);
+    background: var(--bg-card-hover);
+    border-color: var(--border-color);
 }
 
 .card-hint-badge {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.68rem;
     font-weight: 700;
-    color: #ff944d;
+    color: var(--accent-amber);
 }
 
 .btn-quick-fill {
     background: transparent;
-    border: 1px dashed rgba(255, 107, 0, 0.4);
-    color: #ff944d;
+    border: 1px dashed var(--border-highlight);
+    color: var(--accent-amber);
     font-size: 0.72rem;
     padding: 0.2rem 0.6rem;
     border-radius: 6px;
@@ -214,8 +214,8 @@
 }
 
 .btn-quick-fill:hover {
-    background: rgba(255, 107, 0, 0.15);
-    color: #ffb380;
+    background: var(--accent-glow);
+    color: var(--accent-orange);
 }
 
 /* Labels e Inputs */
@@ -245,25 +245,25 @@
 }
 
 .studio-input:focus, .studio-textarea:focus {
-    background: #0f1118;
-    border-color: #ff6b00;
-    color: #ffffff;
-    box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.2);
+    background: var(--bg-card);
+    border-color: var(--accent-orange);
+    color: var(--text-main);
+    box-shadow: 0 0 0 2px var(--accent-glow);
     outline: none;
 }
 
 [data-theme="light"] .studio-input,
 [data-theme="light"] .studio-textarea {
     background: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    color: #0f172a;
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
 }
 
 [data-theme="light"] .studio-input:focus,
 [data-theme="light"] .studio-textarea:focus {
     background: #fff;
-    border-color: #ff6b00;
-    box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.15);
+    border-color: var(--accent-orange);
+    box-shadow: 0 0 0 2px var(--accent-glow);
 }
 
 .border-top-console {
@@ -296,8 +296,8 @@
 }
 
 .btn-star.star-active {
-    color: #ffb703;
-    text-shadow: 0 0 8px rgba(255, 183, 3, 0.5);
+    color: var(--accent-amber);
+    text-shadow: 0 0 8px var(--accent-glow);
 }
 
 .btn-star:hover {
@@ -306,23 +306,23 @@
 
 /* Botones */
 .btn-vintage-primary {
-    background: #ff6b00;
+    background: var(--accent-orange);
     color: #fff;
-    border: 1px solid #ff8533;
+    border: 1px solid var(--accent-amber);
     padding: 0.5rem 1.2rem;
     border-radius: 8px;
     font-size: 0.82rem;
     font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 2px 8px rgba(255, 107, 0, 0.3);
+    box-shadow: 0 2px 8px var(--accent-glow);
     transition: all 0.15s ease;
 }
 
 .btn-vintage-primary:hover:not(:disabled) {
-    background: #e05d00;
-    border-color: #ff9e59;
+    background: var(--accent-warm);
+    border-color: var(--accent-orange);
     color: #fff;
-    box-shadow: 0 4px 12px rgba(255, 107, 0, 0.45);
+    box-shadow: 0 4px 12px var(--accent-glow-strong);
 }
 
 .btn-vintage-secondary {
@@ -433,8 +433,8 @@
 
 /* Caja de Envío Directo por Correo en Pantalla de Éxito */
 .direct-email-box {
-    background: #090a0e;
-    border: 1px dashed rgba(255, 107, 0, 0.35);
+    background: var(--bg-card);
+    border: 1px dashed var(--border-highlight);
     border-radius: 10px;
     max-width: 480px;
     margin: 0 auto;
@@ -442,27 +442,27 @@
 }
 
 [data-theme="light"] .direct-email-box {
-    background: #f8fafc;
+    background: var(--bg-card-hover);
 }
 
 .btn-direct-mailto {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: #ff6b00;
+    background: var(--accent-orange);
     color: #ffffff;
     font-weight: 700;
     font-size: 0.78rem;
     padding: 8px 16px;
     border-radius: 8px;
     text-decoration: none;
-    box-shadow: 0 2px 8px rgba(255, 107, 0, 0.35);
+    box-shadow: 0 2px 8px var(--accent-glow);
     transition: all 0.15s ease;
 }
 
 .btn-direct-mailto:hover {
     color: #ffffff;
     transform: translateY(-1px);
-    box-shadow: 0 4px 14px rgba(255, 107, 0, 0.5);
-    background: #e05d00;
+    box-shadow: 0 4px 14px var(--accent-glow-strong);
+    background: var(--accent-warm);
 }

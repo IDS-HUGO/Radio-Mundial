@@ -85,9 +85,9 @@
     letter-spacing: 0.14em;
     padding: 2px 7px;
     border-radius: 4px;
-    background: rgba(255, 107, 0, 0.1);
+    background: var(--accent-glow);
     color: var(--accent-orange);
-    border: 1px solid rgba(255, 107, 0, 0.25);
+    border: 1px solid var(--border-highlight);
     display: none;
 }
 
@@ -190,23 +190,23 @@
 }
 
 .btn-topbar-feedback:hover {
-    border-color: rgba(255, 107, 0, 0.4);
+    border-color: var(--border-highlight);
 }
 
 .btn-topbar-donate {
-    background: linear-gradient(135deg, rgba(255, 107, 0, 0.15), rgba(245, 158, 11, 0.1));
-    border-color: rgba(255, 107, 0, 0.35);
+    background: linear-gradient(135deg, var(--accent-glow), rgba(212, 163, 115, 0.1));
+    border-color: var(--border-highlight);
     color: var(--accent-orange);
 }
 
 .btn-topbar-donate:hover {
-    background: linear-gradient(135deg, rgba(255, 107, 0, 0.25), rgba(245, 158, 11, 0.18));
+    background: linear-gradient(135deg, var(--accent-glow-strong), rgba(212, 163, 115, 0.18));
     border-color: var(--accent-orange);
     color: var(--text-main);
     box-shadow: 0 0 12px var(--accent-glow);
 }
 
-/* Segmented Switches para Idioma y Tema */
+/* Segmented Switches para Tema */
 .topbar-segmented-switch {
     display: inline-flex;
     align-items: center;
@@ -244,54 +244,55 @@
     width: 100%;
 }
 
-/* Modo Claro: Header Refinado Braun */
+/* Modo Claro: Header Refinado Latte & Café */
 [data-theme="light"] .app-topbar {
-    background: rgba(255, 255, 255, 0.92);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    background: rgba(255, 255, 255, 0.94);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 4px 16px rgba(40, 20, 10, 0.04);
 }
 
 [data-theme="light"] .unified-status-pill {
-    background: #f1f5f9;
-    border-color: rgba(0, 0, 0, 0.08);
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+    background: #F3ECE3;
+    border-color: var(--border-color);
+    box-shadow: inset 0 1px 2px rgba(40, 20, 10, 0.04);
+    color: var(--text-secondary);
 }
 
 [data-theme="light"] .btn-topbar-action {
-    background: #ffffff;
-    border-color: rgba(0, 0, 0, 0.1);
-    color: #0f172a;
+    background: #FFFFFF;
+    border-color: var(--border-color);
+    color: var(--text-main);
 }
 
 [data-theme="light"] .btn-topbar-action:hover {
-    background: #f8fafc;
-    border-color: rgba(0, 0, 0, 0.15);
+    background: #FAF6F0;
+    border-color: var(--border-medium);
 }
 
 [data-theme="light"] .btn-topbar-donate {
-    background: rgba(234, 88, 12, 0.08);
-    border-color: rgba(234, 88, 12, 0.3);
-    color: #ea580c;
+    background: rgba(141, 91, 44, 0.08);
+    border-color: rgba(141, 91, 44, 0.3);
+    color: var(--accent-orange);
 }
 
 [data-theme="light"] .btn-topbar-donate:hover {
-    background: rgba(234, 88, 12, 0.15);
-    color: #c2410c;
+    background: rgba(141, 91, 44, 0.16);
+    color: var(--accent-warm);
 }
 
 [data-theme="light"] .topbar-segmented-switch {
-    background: #f1f5f9;
-    border-color: rgba(0, 0, 0, 0.08);
+    background: #EFE7DC;
+    border-color: var(--border-color);
 }
 
 [data-theme="light"] .btn-segmented-chip {
-    color: #64748b;
+    color: var(--text-muted);
 }
 
 [data-theme="light"] .btn-segmented-chip.chip-active {
-    background: #ffffff;
-    color: #ea580c;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    background: #FFFFFF;
+    color: var(--accent-orange);
+    box-shadow: 0 1px 3px rgba(40, 20, 10, 0.1);
 }
 
 /* --------------------------------------------------------------------------

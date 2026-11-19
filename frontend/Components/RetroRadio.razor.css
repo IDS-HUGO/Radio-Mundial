@@ -119,8 +119,8 @@
     position: relative;
     width: 100%;
     background: 
-        radial-gradient(ellipse at 50% -10%, rgba(255, 107, 0, 0.08) 0%, transparent 60%),
-        linear-gradient(165deg, #181c26 0%, #12151d 40%, #0c0e14 100%);
+        radial-gradient(ellipse at 50% -10%, var(--accent-glow) 0%, transparent 60%),
+        linear-gradient(165deg, #241A13 0%, #1A130E 40%, #110B07 100%);
     border-radius: 26px;
     padding: 1.35rem 1.4rem 1.15rem 1.4rem;
     box-shadow: 
@@ -129,37 +129,37 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.12),
         inset 0 -4px 10px rgba(0, 0, 0, 0.7);
     z-index: 3;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-color);
     transition: background 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 .retro-radio-body.radio-power-on {
     box-shadow: 
         0 30px 60px -10px rgba(0, 0, 0, 0.9),
-        0 0 24px rgba(255, 107, 0, 0.08),
+        0 0 24px var(--accent-glow),
         inset 0 1px 0 rgba(255, 255, 255, 0.14),
         inset 0 -4px 10px rgba(0, 0, 0, 0.7);
-    border-color: rgba(255, 107, 0, 0.25);
+    border-color: var(--border-highlight);
 }
 
-/* Modo Claro: Acabado Off-White / Architectural Matte Chalk (Braun Signature) */
+/* Modo Claro: Acabado Latte Artesanal & Madera Clara */
 [data-theme="light"] .retro-radio-body {
     background: 
-        radial-gradient(ellipse at 50% -10%, rgba(234, 88, 12, 0.06) 0%, transparent 60%),
-        linear-gradient(165deg, #ffffff 0%, #f4f5f8 40%, #e8eaee 100%);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+        radial-gradient(ellipse at 50% -10%, var(--accent-glow) 0%, transparent 60%),
+        linear-gradient(165deg, #FFFFFF 0%, #FAF5EE 45%, #F0E6D8 100%);
+    border: 1px solid var(--border-color);
     box-shadow: 
-        0 24px 48px -12px rgba(0, 0, 0, 0.12),
-        0 8px 20px rgba(0, 0, 0, 0.06),
+        0 24px 48px -12px rgba(40, 20, 10, 0.1),
+        0 8px 20px rgba(40, 20, 10, 0.05),
         inset 0 1px 0 #ffffff,
-        inset 0 -3px 8px rgba(0, 0, 0, 0.05);
+        inset 0 -3px 8px rgba(40, 20, 10, 0.04);
 }
 
 [data-theme="light"] .retro-radio-body.radio-power-on {
-    border-color: rgba(234, 88, 12, 0.4);
+    border-color: var(--border-highlight);
     box-shadow: 
-        0 26px 52px -10px rgba(0, 0, 0, 0.14),
-        0 0 24px rgba(234, 88, 12, 0.14),
+        0 26px 52px -10px rgba(40, 20, 10, 0.14),
+        0 0 24px var(--accent-glow),
         inset 0 1px 0 #ffffff;
 }
 
@@ -252,19 +252,19 @@
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.6rem;
     font-weight: 700;
-    color: #ff944d;
-    background: rgba(255, 107, 0, 0.1);
+    color: var(--accent-orange);
+    background: var(--accent-glow);
     padding: 2px 7px;
     border-radius: 4px;
-    border: 1px solid rgba(255, 107, 0, 0.25);
+    border: 1px solid var(--border-highlight);
     letter-spacing: 0.04em;
 }
 
 [data-theme="light"] .knob-volume-badge,
 [data-theme="light"] .knob-tuning-badge {
-    color: #ea580c;
-    background: rgba(234, 88, 12, 0.08);
-    border-color: rgba(234, 88, 12, 0.25);
+    color: var(--accent-orange);
+    background: var(--accent-glow);
+    border-color: var(--border-highlight);
 }
 
 .volume-slider-box {
@@ -277,15 +277,15 @@
 .retro-slider {
     width: 100%;
     height: 4px;
-    accent-color: #ff6b00;
+    accent-color: var(--accent-orange);
     cursor: pointer;
     background: #1f2430;
     border-radius: 2px;
 }
 
 [data-theme="light"] .retro-slider {
-    background: #cbd5e1;
-    accent-color: #ea580c;
+    background: #E5DACD;
+    accent-color: var(--accent-orange);
 }
 
 .knob-arrows-row {
@@ -295,9 +295,9 @@
 }
 
 .btn-knob-step {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: #1b1f2b;
-    color: #94a3b8;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-secondary);
     font-size: 0.58rem;
     padding: 2px 7px;
     border-radius: 4px;
@@ -308,19 +308,19 @@
 
 [data-theme="light"] .btn-knob-step {
     background: #ffffff;
-    border-color: rgba(0, 0, 0, 0.12);
-    color: #475569;
+    border-color: var(--border-color);
+    color: var(--text-secondary);
 }
 
 .btn-knob-step:hover {
-    background: #ff6b00;
+    background: var(--accent-orange);
     color: #ffffff;
-    border-color: #ff6b00;
+    border-color: var(--accent-orange);
 }
 
 [data-theme="light"] .btn-knob-step:hover {
-    background: #ea580c;
-    border-color: #ea580c;
+    background: var(--accent-orange);
+    border-color: var(--accent-orange);
     color: #ffffff;
 }
 
@@ -400,14 +400,14 @@
     left: calc(50% - 1.5px);
     width: 3px;
     height: 9px;
-    background: #ff6b00;
+    background: var(--accent-orange);
     border-radius: 2px;
-    box-shadow: 0 0 6px #ff6b00;
+    box-shadow: 0 0 6px var(--accent-orange);
 }
 
 [data-theme="light"] .knob-indicator-dot::after {
-    background: #ea580c;
-    box-shadow: 0 0 5px rgba(234, 88, 12, 0.8);
+    background: var(--accent-orange);
+    box-shadow: 0 0 5px var(--accent-glow);
 }
 
 .knob-label {
@@ -415,11 +415,11 @@
     font-size: 0.58rem;
     font-weight: 700;
     letter-spacing: 0.08em;
-    color: #64748b;
+    color: var(--text-muted);
 }
 
 [data-theme="light"] .knob-label {
-    color: #475569;
+    color: var(--text-muted);
 }
 
 /* -------------------------------------------------------------------------
@@ -429,9 +429,9 @@
     position: relative;
     flex: 1;
     height: 98px;
-    background: #08090d;
+    background: var(--dial-bg);
     border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.09);
+    border: 1px solid var(--border-color);
     box-shadow: inset 0 3px 12px rgba(0, 0, 0, 0.95);
     overflow: hidden;
     padding: 7px 12px;
@@ -441,13 +441,13 @@
 }
 
 .radio-power-on .tuner-scale-window {
-    box-shadow: inset 0 0 24px rgba(255, 107, 0, 0.12), inset 0 3px 12px rgba(0, 0, 0, 0.95);
+    box-shadow: inset 0 0 24px var(--accent-glow), inset 0 3px 12px rgba(0, 0, 0, 0.95);
 }
 
 /* Modo Claro: Pantalla de Cristal Blanco / Clean Crystal Dial (Braun) */
 [data-theme="light"] .tuner-scale-window {
-    background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: var(--dial-bg);
+    border: 1px solid var(--border-color);
     box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
@@ -543,13 +543,13 @@
 }
 
 .btn-band-switch.band-switch-active {
-    background: #ff6b00;
+    background: var(--accent-orange);
     color: #ffffff;
-    box-shadow: 0 1px 4px rgba(255, 107, 0, 0.4);
+    box-shadow: 0 1px 4px var(--accent-glow);
 }
 
 [data-theme="light"] .btn-band-switch.band-switch-active {
-    background: #ea580c;
+    background: var(--accent-orange);
     color: #ffffff;
 }
 
@@ -558,31 +558,31 @@
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.7rem;
     font-weight: 700;
-    color: #f1f5f9;
+    color: var(--text-main);
     display: inline-flex;
     align-items: center;
     gap: 4px;
 }
 
 [data-theme="light"] .station-meta-display {
-    color: #0f172a;
+    color: var(--text-main);
 }
 
 .dial-station-name {
-    color: #f8fafc;
+    color: var(--text-main);
 }
 
 [data-theme="light"] .dial-station-name {
-    color: #0f172a;
+    color: var(--text-main);
 }
 
 .dial-station-freq {
-    color: #ff944d;
+    color: var(--accent-amber);
     font-size: 0.65rem;
 }
 
 [data-theme="light"] .dial-station-freq {
-    color: #ea580c;
+    color: var(--accent-orange);
 }
 
 /* Mini Ecualizador Animado en el Dial */
@@ -596,13 +596,13 @@
 
 .dial-audio-eq span {
     width: 2px;
-    background: #ff6b00;
+    background: var(--accent-orange);
     border-radius: 1px;
     animation: dial-eq-jump 0.8s ease-in-out infinite alternate;
 }
 
 [data-theme="light"] .dial-audio-eq span {
-    background: #ea580c;
+    background: var(--accent-orange);
 }
 
 .dial-audio-eq span:nth-child(1) { height: 4px; animation-delay: 0.1s; }
@@ -653,11 +653,11 @@
     font-size: 0.66rem;
     font-weight: 800;
     width: 26px;
-    color: #ff944d;
+    color: var(--accent-orange);
 }
 
 [data-theme="light"] .band-tag {
-    color: #ea580c;
+    color: var(--accent-orange);
 }
 
 .ticks-container {
@@ -677,7 +677,7 @@
 }
 
 [data-theme="light"] .tick {
-    background: rgba(0, 0, 0, 0.22);
+    background: rgba(70, 42, 20, 0.22);
 }
 
 .tick-major {
@@ -686,7 +686,7 @@
 }
 
 [data-theme="light"] .tick-major {
-    background: #1e293b;
+    background: #3B2A1E;
 }
 
 .tick-major i {
@@ -702,7 +702,7 @@
 }
 
 [data-theme="light"] .tick-major i {
-    color: #334155;
+    color: #5C4638;
     font-weight: 700;
 }
 
@@ -721,13 +721,13 @@
 .needle-core {
     width: 100%;
     height: 100%;
-    background: #ff6b00;
-    box-shadow: 0 0 6px rgba(255, 107, 0, 0.9), 0 0 12px rgba(255, 107, 0, 0.4);
+    background: var(--needle-red);
+    box-shadow: 0 0 6px var(--needle-red-glow), 0 0 12px rgba(217, 72, 59, 0.4);
 }
 
 [data-theme="light"] .needle-core {
-    background: #ea580c;
-    box-shadow: 0 0 6px rgba(234, 88, 12, 0.7);
+    background: var(--needle-red);
+    box-shadow: 0 0 6px var(--needle-red-glow);
 }
 
 .needle-shadow {
@@ -842,12 +842,12 @@
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.5rem;
     font-weight: 700;
-    color: #ff944d;
+    color: var(--accent-orange);
     letter-spacing: 0.1em;
 }
 
 [data-theme="light"] .badge-sub {
-    color: #ea580c;
+    color: var(--accent-orange);
 }
 
 /* -------------------------------------------------------------------------
@@ -898,18 +898,18 @@
 .btn-retro-push:active, .push-active {
     transform: translateY(3px);
     box-shadow: 0 1px 0 #0d0f16, 0 2px 6px rgba(0, 0, 0, 0.4);
-    background: linear-gradient(180deg, #ff6b00 0%, #e05d00 100%) !important;
+    background: linear-gradient(180deg, var(--accent-orange) 0%, var(--accent-warm) 100%) !important;
     color: #ffffff !important;
-    border-color: #ff8533 !important;
-    box-shadow: 0 0 14px rgba(255, 107, 0, 0.45);
+    border-color: var(--accent-amber) !important;
+    box-shadow: 0 0 14px var(--accent-glow-strong);
 }
 
 [data-theme="light"] .btn-retro-push:active,
 [data-theme="light"] .push-active {
-    box-shadow: 0 1px 0 #c2410c, 0 2px 6px rgba(0, 0, 0, 0.15);
-    background: linear-gradient(180deg, #ea580c 0%, #c2410c 100%) !important;
-    border-color: #ea580c !important;
-    box-shadow: 0 0 12px rgba(234, 88, 12, 0.35);
+    box-shadow: 0 1px 0 var(--accent-warm), 0 2px 6px rgba(40, 20, 10, 0.15);
+    background: linear-gradient(180deg, var(--accent-orange) 0%, var(--accent-warm) 100%) !important;
+    border-color: var(--accent-orange) !important;
+    box-shadow: 0 0 12px var(--accent-glow);
 }
 
 @keyframes acoustic-pulse {
@@ -926,29 +926,29 @@
     width: 100%;
     max-width: 540px;
     margin-top: 14px;
-    background: #13161D;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
     border-radius: 18px;
     padding: 1.15rem 1.35rem 1.05rem 1.35rem;
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+    box-shadow: var(--card-shadow);
     z-index: 2;
     transition: background 0.25s ease, transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 [data-theme="light"] .retro-author-badge {
-    background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.05);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow);
 }
 
 .retro-author-badge:hover {
-    border-color: rgba(255, 107, 0, 0.35);
-    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 107, 0, 0.08);
+    border-color: var(--border-highlight);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5), 0 0 20px var(--accent-glow);
 }
 
 [data-theme="light"] .retro-author-badge:hover {
-    border-color: rgba(234, 88, 12, 0.35);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08), 0 0 16px rgba(234, 88, 12, 0.06);
+    border-color: var(--border-highlight);
+    box-shadow: 0 12px 28px rgba(40, 20, 10, 0.08), 0 0 16px var(--accent-glow);
 }
 
 /* Tornillos de Precisión en las Esquinas */
@@ -994,17 +994,17 @@
     font-size: 0.65rem;
     font-weight: 800;
     letter-spacing: 0.08em;
-    color: #ff944d;
-    background: rgba(255, 107, 0, 0.1);
+    color: var(--accent-orange);
+    background: var(--accent-glow);
     padding: 2px 8px;
     border-radius: 6px;
-    border: 1px solid rgba(255, 107, 0, 0.25);
+    border: 1px solid var(--border-highlight);
 }
 
 [data-theme="light"] .plate-vintage-seal {
-    color: #ea580c;
-    background: rgba(234, 88, 12, 0.08);
-    border-color: rgba(234, 88, 12, 0.2);
+    color: var(--accent-orange);
+    background: var(--accent-glow);
+    border-color: var(--border-highlight);
 }
 
 .plate-year {
@@ -1012,31 +1012,31 @@
     font-size: 0.62rem;
     font-weight: 700;
     letter-spacing: 0.06em;
-    color: #64748b;
+    color: var(--text-muted);
 }
 
 .author-name-title {
     font-size: 1.05rem;
     font-weight: 800;
-    color: #f8fafc;
+    color: var(--text-main);
     letter-spacing: -0.02em;
     line-height: 1.25;
 }
 
 [data-theme="light"] .author-name-title {
-    color: #0f172a;
+    color: var(--text-main);
 }
 
 .author-role-sub {
     font-size: 0.72rem;
     font-weight: 600;
-    color: #94a3b8;
+    color: var(--text-secondary);
     letter-spacing: 0.02em;
     margin-bottom: 6px;
 }
 
 [data-theme="light"] .author-role-sub {
-    color: #475569;
+    color: var(--text-secondary);
 }
 
 .author-contact-card {
@@ -1049,7 +1049,7 @@
 
 .author-contact-intro {
     font-size: 0.76rem;
-    color: #64748b;
+    color: var(--text-muted);
     line-height: 1.35;
 }
 
@@ -1057,9 +1057,9 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #f1f5f9;
+    background: var(--bg-card-hover);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.74rem;
     font-weight: 600;
@@ -1070,24 +1070,24 @@
 }
 
 [data-theme="light"] .author-email-link {
-    background: #f8fafc;
-    border-color: rgba(0, 0, 0, 0.08);
-    color: #0f172a;
+    background: #FFFFFF;
+    border-color: var(--border-color);
+    color: var(--text-main);
 }
 
 .author-email-link:hover {
-    background: rgba(255, 107, 0, 0.15);
-    border-color: rgba(255, 107, 0, 0.4);
-    color: #ff944d;
+    background: var(--accent-glow);
+    border-color: var(--border-highlight);
+    color: var(--accent-amber);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 [data-theme="light"] .author-email-link:hover {
-    background: rgba(234, 88, 12, 0.1);
-    border-color: rgba(234, 88, 12, 0.3);
-    color: #ea580c;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    background: var(--accent-glow);
+    border-color: var(--border-highlight);
+    color: var(--accent-orange);
+    box-shadow: 0 4px 12px rgba(40, 20, 10, 0.06);
 }
 
 .author-email-link .email-icon {

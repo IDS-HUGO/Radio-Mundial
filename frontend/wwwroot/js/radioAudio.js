@@ -221,7 +221,7 @@ window.radioAudio = {
             document.documentElement.setAttribute('data-theme', effective);
             const metaTheme = document.querySelector('meta[name="theme-color"]');
             if (metaTheme) {
-                metaTheme.setAttribute('content', effective === 'dark' ? '#0f0a06' : '#fdf8f0');
+                metaTheme.setAttribute('content', effective === 'dark' ? '#0E0B08' : '#F7F2EB');
             }
         } catch (e) {
             console.debug('[RadioAudio] Apply theme handled:', e);
@@ -247,7 +247,23 @@ window.radioAudio = {
 
     getStoredLanguage: function () {
         try {
-            return localStorage.getItem('rm_lang') || this.getCookie('rm_lang') || 'es';
+            return localStorage.getItem('rm_lang') || this.getCookie('rm_lang') || this.getBrowserLanguage();
+        } catch (e) {
+            return 'es';
+        }
+    },
+
+    getBrowserLanguage: function () {
+        try {
+            const langs = (navigator.languages && navigator.languages.length)
+                ? navigator.languages
+                : [navigator.language || navigator.userLanguage || 'es'];
+            for (let i = 0; i < langs.length; i++) {
+                const l = (langs[i] || '').toLowerCase().trim();
+                if (l.startsWith('es')) return 'es';
+            }
+            const primary = (langs[0] || '').toLowerCase().trim();
+            return primary.startsWith('es') ? 'es' : 'en';
         } catch (e) {
             return 'es';
         }

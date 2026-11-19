@@ -96,7 +96,7 @@
         <section class="master-console-deck p-3 p-md-4 mb-4" aria-label="Consola de Búsqueda y Sintonización">
             
             <!-- Semántica SEO para Motores de Búsqueda (Sin alterar la interfaz visual) -->
-            <div class="visually-hidden">
+            <div class="visually-hidden" style="position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0, 0, 0, 0) !important; white-space: nowrap !important; border: 0 !important;">
                 <h1>Escuchar estaciones de radio en vivo gratis de todo el mundo</h1>
                 <h2>Explorar radios por país, estado o género</h2>
             </div>
@@ -128,7 +128,7 @@
                             @onclick="ToggleAdvancedFilters"
                             title="Desplegar u ocultar filtros avanzados de ubicación y género">
                         <span class="filters-icon">🎛️</span>
-                        <span class="d-none d-sm-inline">Filtros</span>
+                        <span class="filters-btn-text">Filtros</span>
                         @if (GetActiveFiltersCount() > 0)
                         {
                             <span class="active-badge-pill">@GetActiveFiltersCount()</span>
@@ -152,7 +152,10 @@
                 <div class="dropdowns-filter-grid mb-3">
                     <!-- Desplegable 1: Continente -->
                     <div class="filter-col">
-                        <label class="filter-field-label">🌐 @RadioState.T("CONTINENT")</label>
+                        <label class="filter-field-label">
+                            <span class="filter-icon">🌐</span>
+                            <span>@RadioState.T("CONTINENT")</span>
+                        </label>
                         <select class="form-select studio-dropdown-select" 
                                 value="@RadioState.SelectedContinent" 
                                 @onchange="OnContinentChanged">
@@ -167,11 +170,14 @@
 
                     <!-- Desplegable 2: País -->
                     <div class="filter-col">
-                        <label class="filter-field-label">🏳️ @RadioState.T("COUNTRY")</label>
+                        <label class="filter-field-label">
+                            <span class="filter-icon">🌎</span>
+                            <span>@RadioState.T("COUNTRY")</span>
+                        </label>
                         <select class="form-select studio-dropdown-select" 
                                 value="@RadioState.SelectedCountry" 
                                 @onchange="OnCountryChanged">
-                            <option value="Todos">🌐 @RadioState.T("COUNTRY_ALL")</option>
+                            <option value="Todos">🌎 @RadioState.T("COUNTRY_ALL")</option>
                             @foreach (var c in RadioState.GetAvailableCountries())
                             {
                                 <option value="@c">@GetCountryFlag(c) @c</option>
@@ -181,7 +187,10 @@
 
                     <!-- Desplegable 3: Estado / Región -->
                     <div class="filter-col">
-                        <label class="filter-field-label">📍 @RadioState.T("STATE")</label>
+                        <label class="filter-field-label">
+                            <span class="filter-icon">📍</span>
+                            <span>@RadioState.T("STATE")</span>
+                        </label>
                         <select class="form-select studio-dropdown-select" 
                                 value="@RadioState.SelectedState" 
                                 @onchange="OnStateChanged">
@@ -195,7 +204,10 @@
 
                     <!-- Desplegable 4: Ciudad -->
                     <div class="filter-col">
-                        <label class="filter-field-label">🏙️ @RadioState.T("CITY")</label>
+                        <label class="filter-field-label">
+                            <span class="filter-icon">🏙️</span>
+                            <span>@RadioState.T("CITY")</span>
+                        </label>
                         <select class="form-select studio-dropdown-select" 
                                 value="@RadioState.SelectedCity" 
                                 @onchange="OnCityChanged">
@@ -209,7 +221,10 @@
 
                     <!-- Desplegable 5: Género Musical -->
                     <div class="filter-col">
-                        <label class="filter-field-label">🎵 @RadioState.T("GENRE")</label>
+                        <label class="filter-field-label">
+                            <span class="filter-icon">🎵</span>
+                            <span>@RadioState.T("GENRE")</span>
+                        </label>
                         <select class="form-select studio-dropdown-select" 
                                 value="@RadioState.SelectedGenre" 
                                 @onchange="OnGenreChanged">
@@ -223,7 +238,10 @@
 
                     <!-- Selector Unificado de Banda (FM / AM / TODAS) -->
                     <div class="filter-col band-col">
-                        <label class="filter-field-label">📻 @RadioState.T("BAND")</label>
+                        <label class="filter-field-label">
+                            <span class="filter-icon">📻</span>
+                            <span>@RadioState.T("BAND")</span>
+                        </label>
                         <div class="band-segmented-pill">
                             <button type="button" class="btn-band-chip @(RadioState.SelectedBand == "TODAS" ? "chip-active" : "")" 
                                     @onclick='() => RadioState.SetBandFilter("TODAS")'>TODAS</button>

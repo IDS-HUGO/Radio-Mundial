@@ -45,6 +45,16 @@
     flex-shrink: 0;
 }
 
+.brand-h1-wrapper {
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    margin: 0;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+}
+
 .brand-link {
     display: flex;
     align-items: center;

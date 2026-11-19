@@ -1,257 +1,50 @@
 /* ==============================================================================
-   Radio Mundial - Studio Cockpit & Master Console
-   Paleta "Café Viejo": Nogal, Marfil Cálido, Pergamino y Latón Envejecido.
-   CERO colores neón. Inspirado en receptores Hi-Fi analógicos a válvulas.
+   Radio Mundial — Modern Bento Grid & Hi-Fi Industrial Audio UI
+   Estándar Visual Dribbble: Bento Grid + Neo-Skeuomorphism (Dieter Rams / Teenage Engineering)
    ============================================================================== */
 
 .studio-cockpit-container {
-    max-width: 1680px;
+    max-width: 1640px;
     margin: 0 auto;
     width: 100%;
 }
 
 /* --------------------------------------------------------------------------
-   Barra Superior de Estudio
-   -------------------------------------------------------------------------- */
-.studio-header-bar {
-    padding-bottom: 0.65rem;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.badge-vintage-live {
-    background: rgba(192, 57, 43, 0.15);
-    color: var(--needle-red);
-    border: 1px solid rgba(192, 57, 43, 0.35);
-    font-size: 0.65rem;
-    font-weight: 800;
-    padding: 2px 7px;
-    border-radius: 4px;
-    letter-spacing: 0.08em;
-}
-
-.studio-subtext {
-    font-size: 0.72rem;
-    color: var(--text-muted);
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-}
-
-.studio-title {
-    color: var(--text-main);
-    font-weight: 900;
-    letter-spacing: -0.03em;
-    font-size: 1.55rem;
-}
-
-.text-amber {
-    color: var(--accent-amber);
-}
-
-/* Conmutador Segmentado de Tema */
-.theme-segmented-switch {
-    display: inline-flex;
-    background: var(--bg-surface);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 2px;
-    gap: 2px;
-}
-
-.btn-theme-chip {
-    background: transparent;
-    border: none;
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    padding: 3px 8px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.15s ease;
-}
-
-.btn-theme-chip:hover {
-    color: var(--text-main);
-    background: rgba(197, 159, 84, 0.12);
-}
-
-.btn-theme-chip.theme-active {
-    background: var(--brass);
-    color: #ffffff;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-}
-
-/* Conmutador Segmentado de Idioma */
-.lang-segmented-switch {
-    display: inline-flex;
-    background: var(--bg-surface);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 2px;
-    gap: 2px;
-}
-
-.btn-lang-chip {
-    background: transparent;
-    border: none;
-    color: var(--text-muted);
-    font-size: 0.7rem;
-    font-weight: 800;
-    padding: 3px 8px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.15s ease;
-}
-
-.btn-lang-chip:hover {
-    color: var(--text-main);
-    background: rgba(197, 159, 84, 0.12);
-}
-
-.btn-lang-chip.lang-active {
-    background: var(--accent-amber);
-    color: #ffffff;
-}
-
-/* Conmutador de Disposición */
-.btn-layout-toggle {
-    background: var(--bg-surface);
-    border: 1px solid var(--border-color);
-    color: var(--text-muted);
-    font-size: 0.72rem;
-    font-weight: 700;
-    padding: 5px 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.15s ease;
-}
-
-.btn-layout-toggle:hover {
-    color: var(--text-main);
-    border-color: var(--brass);
-}
-
-/* Botón de Buzón de Sugerencias en Header */
-.btn-studio-feedback {
-    background: var(--bg-surface);
-    border: 1px solid var(--border-color);
-    color: var(--text-highlight);
-    font-size: 0.72rem;
-    font-weight: 700;
-    padding: 5px 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.18s ease;
-}
-
-.btn-studio-feedback:hover {
-    background: rgba(197, 159, 84, 0.15);
-    border-color: var(--brass);
-    color: var(--accent-amber);
-    transform: translateY(-1px);
-}
-
-/* Botón Donar / PayPal en Header */
-.btn-studio-donate {
-    background: rgba(197, 159, 84, 0.12);
-    border: 1px solid rgba(197, 159, 84, 0.4);
-    color: var(--accent-amber);
-    font-size: 0.72rem;
-    font-weight: 700;
-    padding: 5px 12px;
-    border-radius: 8px;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.18s ease;
-}
-
-.btn-studio-donate:hover {
-    background: rgba(197, 159, 84, 0.25);
-    border-color: var(--brass);
-    color: #ffffff;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-}
-
-/* Métricas de Estudio */
-.studio-metrics-group {
-    display: inline-flex;
-    align-items: center;
-    background: var(--bg-surface);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 3px 8px;
-}
-
-.studio-metric-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1px 8px;
-    border-right: 1px solid var(--border-color);
-}
-
-.studio-metric-card:last-child {
-    border-right: none;
-}
-
-.metric-val {
-    font-size: 0.82rem;
-    font-weight: 800;
-    color: var(--text-main);
-    line-height: 1.1;
-}
-
-.metric-sub {
-    font-size: 0.58rem;
-    font-weight: 700;
-    color: var(--text-muted);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-}
-
-.status-connection-indicator {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    padding-left: 6px;
-    font-size: 0.68rem;
-    font-weight: 700;
-}
-
-.status-connection-indicator.is-online .dot-led {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #27ae60;
-}
-
-.status-connection-indicator.is-online .connection-label {
-    color: var(--text-muted);
-}
-
-.status-connection-indicator.is-offline .dot-led {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--needle-red);
-}
-
-.status-connection-indicator.is-offline .connection-label {
-    color: var(--needle-red);
-}
-
-/* --------------------------------------------------------------------------
-   Disposición Lateral / Sticky Dock & Cockpit Responsivo
+   Bento Cockpit Layout (2 Columnas en Desktop)
    -------------------------------------------------------------------------- */
 .studio-cockpit-row {
     display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
+    flex-direction: column;
     gap: 1.5rem;
 }
 
+@media (min-width: 992px) {
+    .studio-cockpit-row {
+        display: grid;
+        grid-template-columns: 460px 1fr;
+        align-items: start;
+        gap: 1.75rem;
+    }
+}
+
+@media (min-width: 1400px) {
+    .studio-cockpit-row {
+        grid-template-columns: 490px 1fr;
+        gap: 2rem;
+    }
+}
+
+/* Columna Izquierda Fija (Sticky Dock) */
 .studio-left-dock {
     width: 100%;
+}
+
+@media (min-width: 992px) {
+    .sticky-radio-anchor {
+        position: sticky;
+        top: 80px;
+        z-index: 100;
+    }
 }
 
 .studio-right-deck {
@@ -259,992 +52,48 @@
     min-width: 0;
 }
 
-@media (min-width: 992px) {
-    .studio-cockpit-row {
-        flex-wrap: nowrap;
-    }
-    .studio-left-dock {
-        flex: 0 0 540px;
-        max-width: 540px;
-        width: 540px;
-    }
-    .studio-right-deck {
-        flex: 1 1 0;
-        min-width: 0;
-    }
-}
-
-.sticky-radio-anchor {
-    position: sticky;
-    top: 75px;
-    z-index: 90;
-}
-
-.stations-responsive-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1rem;
-    width: 100%;
-}
-
-.station-grid-item {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-}
-
-/* --------------------------------------------------------------------------
-   Consola Maestra de Filtros (Ergonómica y Limpia)
-   -------------------------------------------------------------------------- */
-.master-console-deck {
-    background: var(--bg-surface);
-    border: 1px solid var(--border-color);
-    border-radius: 14px;
-    box-shadow: var(--card-shadow);
-    transition: background-color 0.25s ease, border-color 0.25s ease;
-}
-
-/* Fila 1: Buscador Principal */
-.search-bar-row {
-    width: 100%;
-}
-
-.studio-search-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 0 12px;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.studio-search-wrapper:focus-within {
-    border-color: var(--accent-amber);
-    box-shadow: 0 0 0 3px rgba(212, 126, 42, 0.15);
-}
-
-.search-icon-symbol {
-    font-size: 0.95rem;
-    margin-right: 8px;
-    opacity: 0.7;
-}
-
-.studio-search-field {
-    width: 100%;
-    background: transparent;
-    border: none;
-    outline: none;
-    padding: 9px 0;
-    color: var(--text-main);
-    font-size: 0.88rem;
-    font-weight: 500;
-}
-
-.studio-search-field::placeholder {
-    color: var(--text-muted);
-    font-size: 0.82rem;
-}
-
-.btn-clear-input {
-    background: transparent;
-    border: none;
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    cursor: pointer;
-    padding: 2px 6px;
-    border-radius: 4px;
-}
-
-.btn-clear-input:hover {
-    color: var(--text-main);
-}
-
-/* Fila 2: Cuadrícula de Desplegables */
-.dropdowns-filter-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 10px;
-    align-items: end;
-}
-
-@media (max-width: 767px) {
-    .dropdowns-filter-grid {
-        display: none;
-    }
-    
-    .dropdowns-filter-grid.mobile-expanded {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-        animation: fadeInFilter 0.2s ease-out;
-    }
-}
-
-@keyframes fadeInFilter {
-    from { opacity: 0; transform: translateY(-6px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Botón Móvil para Colapsar/Desplegar Filtros */
-.btn-toggle-filters-mobile {
-    background: var(--bg-surface);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 9px 14px;
-    color: var(--text-main);
-    font-size: 0.82rem;
-    font-weight: 700;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    transition: all 0.2s ease;
-    box-shadow: var(--shadow-card);
-}
-
-.btn-toggle-filters-mobile:hover {
-    border-color: var(--brass);
-    background: rgba(197, 159, 84, 0.08);
-}
-
-.active-badge-pill {
-    background: var(--accent-amber);
-    color: #ffffff;
-    font-size: 0.68rem;
-    font-weight: 800;
-    padding: 2px 8px;
-    border-radius: 12px;
-}
-
-.filter-col {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.filter-field-label {
-    font-size: 0.68rem;
-    font-weight: 800;
-    letter-spacing: 0.05em;
-    color: var(--text-muted);
-    text-transform: uppercase;
-}
-
-.studio-dropdown-select {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    color: var(--text-main);
-    border-radius: 8px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    padding: 7px 10px;
-    outline: none;
-    cursor: pointer;
-    transition: border-color 0.15s ease, background-color 0.15s ease;
-}
-
-.studio-dropdown-select:hover {
-    border-color: var(--brass);
-}
-
-.studio-dropdown-select:focus {
-    border-color: var(--accent-amber);
-    box-shadow: 0 0 0 2px rgba(212, 126, 42, 0.2);
-}
-
-.studio-dropdown-select option {
-    background-color: var(--bg-card);
-    color: var(--text-main);
-}
-
-/* Selector de Banda Segmentado */
-.band-segmented-pill {
-    display: flex;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 2px;
-    gap: 2px;
-    height: 38px;
-    align-items: center;
-}
-
-.btn-band-chip {
-    flex: 1;
-    height: 100%;
-    background: transparent;
-    border: none;
-    border-radius: 6px;
-    color: var(--text-muted);
-    font-size: 0.72rem;
-    font-weight: 800;
-    cursor: pointer;
-    transition: all 0.12s ease;
-}
-
-.btn-band-chip:hover {
-    color: var(--text-main);
-}
-
-.btn-band-chip.chip-active {
-    background: var(--accent-amber);
-    color: #ffffff;
-}
-
-/* Fila 3: Chips de Filtros Activos */
-.active-chips-toolbar {
-    border-top: 1px solid var(--border-color);
-}
-
-.active-chips-label {
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: var(--text-muted);
-    text-transform: uppercase;
-}
-
-.active-filter-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    color: var(--text-main);
-    font-size: 0.74rem;
-    font-weight: 600;
-    padding: 4px 10px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.15s ease;
-    max-width: 100%;
-}
-
-.active-filter-badge span:first-child {
-    max-width: 200px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    display: inline-block;
-}
-
-.active-filter-badge:hover {
-    border-color: var(--needle-red);
-    color: var(--needle-red);
-}
-
-.badge-close {
-    font-size: 0.7rem;
-    opacity: 0.75;
-    flex-shrink: 0;
-    margin-left: 2px;
-}
-
-.btn-reset-filters {
-    background: transparent;
-    border: 1px dashed var(--border-color);
-    color: var(--text-muted);
-    font-size: 0.72rem;
-    font-weight: 700;
-    padding: 3px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.15s ease;
-}
-
-.btn-reset-filters:hover {
-    color: var(--needle-red);
-    border-color: var(--needle-red);
-}
-
-.btn-suggest-link {
-    background: transparent;
-    border: none;
-    color: var(--text-muted);
-    font-size: 0.74rem;
-    cursor: pointer;
-    padding: 0;
-    transition: color 0.15s ease;
-    text-align: left;
-}
-
-.btn-suggest-link u {
-    color: var(--text-highlight);
-    text-underline-offset: 3px;
-}
-
-.btn-suggest-link:hover {
-    color: var(--text-main);
-}
-
-.btn-suggest-link:hover u {
-    color: var(--accent-amber);
-}
-
-.btn-suggest-empty-btn {
-    background: rgba(197, 159, 84, 0.12);
-    border: 1px solid var(--brass);
-    color: var(--text-highlight);
-    font-size: 0.82rem;
-    font-weight: 700;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.18s ease;
-}
-
-.btn-suggest-empty-btn:hover {
-    background: var(--brass);
-    color: #ffffff;
-}
-
-.btn-guide-toggle-small {
-    background: transparent;
-    border: none;
-    color: var(--text-muted);
-    font-size: 0.72rem;
-    text-decoration: underline;
-    cursor: pointer;
-    padding: 0;
-}
-
-.btn-guide-toggle-small:hover {
-    color: var(--text-highlight);
-}
-
-/* Guía FM vs AM */
-.fm-am-guide-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-}
-
-.guide-badge {
-    font-size: 0.65rem;
-    font-weight: 800;
-    background: rgba(197, 159, 84, 0.15);
-    color: var(--brass);
-    padding: 2px 6px;
-    border-radius: 4px;
-}
-
-.guide-title {
-    font-size: 0.95rem;
-    font-weight: 800;
-    color: var(--text-main);
-}
-
-.btn-close-guide {
-    background: transparent;
-    border: none;
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    cursor: pointer;
-}
-
-.guide-box {
-    background: var(--bg-surface);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-}
-
-.guide-box-header {
-    font-size: 0.78rem;
-    font-weight: 800;
-    color: var(--text-main);
-}
-
-.guide-freq-pill {
-    font-size: 0.68rem;
-    font-weight: 700;
-    background: rgba(197, 159, 84, 0.15);
-    color: var(--text-highlight);
-    padding: 1px 6px;
-    border-radius: 4px;
-}
-
-.guide-list {
-    padding-left: 1rem;
-    font-size: 0.76rem;
-    color: var(--text-muted);
-    line-height: 1.45;
-}
-
-/* --------------------------------------------------------------------------
-   Espacio Publicitario y Patrocinio Discreto (Hi-Fi Vintage)
-   -------------------------------------------------------------------------- */
-.studio-sponsor-deck {
-    background: var(--bg-surface);
-    border: 1px dashed rgba(197, 159, 84, 0.35);
-    border-radius: 12px;
-    box-shadow: var(--card-shadow);
-    transition: border-color 0.2s ease;
-    margin-top: 2rem;
-    overflow: hidden;
-}
-
-.studio-sponsor-deck:hover {
-    border-color: rgba(197, 159, 84, 0.6);
-}
-
-.sponsor-tag {
-    font-size: 0.66rem;
-    font-weight: 800;
-    color: var(--brass);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-}
-
-.sponsor-subtag {
-    font-size: 0.62rem;
-    color: var(--text-muted);
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-}
-
-.sponsor-badge {
-    font-size: 0.6rem;
-    font-weight: 800;
-    letter-spacing: 0.05em;
-    color: var(--text-muted);
-    background: rgba(0, 0, 0, 0.25);
-    padding: 2px 8px;
-    border-radius: 10px;
-    border: 1px solid var(--border-color);
-}
-
-.sponsor-ad-slot {
-    min-height: 95px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.15);
-    border-radius: 8px;
-    padding: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.04);
-    overflow: hidden;
-}
-
-.adsterra-iframe-banner {
-    border: none;
-    overflow: hidden;
-    max-width: 100%;
-    height: 90px;
-    display: block;
-    margin: 0 auto;
-    border-radius: 6px;
-    background: transparent;
-}
-
-@media (max-width: 768px) {
-    .sponsor-ad-slot {
-        min-height: 55px;
-        padding: 4px;
-    }
-    .adsterra-iframe-banner {
-        height: 52px;
-    }
-}
-
-.sponsor-ad-placeholder {
-    max-width: 580px;
-}
-
-.sponsor-brand-title {
-    display: block;
-    font-size: 0.86rem;
-    font-weight: 800;
-    color: var(--text-main);
-    margin-bottom: 2px;
-}
-
-.sponsor-brand-desc {
-    font-size: 0.72rem;
-    color: var(--text-muted);
-    line-height: 1.35;
-}
-
-.btn-sponsor-contact {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: var(--accent-amber);
-    background: rgba(197, 159, 84, 0.1);
-    border: 1px solid rgba(197, 159, 84, 0.35);
-    padding: 4px 12px;
-    border-radius: 6px;
-    text-decoration: none;
-    transition: all 0.15s ease;
-}
-
-.btn-sponsor-contact:hover {
-    background: rgba(197, 159, 84, 0.25);
-    border-color: var(--brass);
-    color: #ffffff;
-    transform: translateY(-1px);
-}
-
-/* --------------------------------------------------------------------------
-   Tarjetas de Emisoras
-   -------------------------------------------------------------------------- */
-.retro-station-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 1rem;
-    box-shadow: var(--card-shadow);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
-}
-
-.retro-station-card:hover {
-    transform: translateY(-2px);
-    border-color: var(--brass);
-    background: var(--bg-card-hover);
-}
-
-.card-station-active {
-    border-color: var(--accent-amber);
-    box-shadow: 0 4px 18px rgba(212, 126, 42, 0.2);
-}
-
-.card-station-header {
-    display: flex;
-    gap: 0.85rem;
-    align-items: flex-start;
-    margin-bottom: 0.65rem;
-}
-
-.station-thumb-wrapper {
-    position: relative;
-    width: 48px;
-    height: 48px;
-    flex-shrink: 0;
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid var(--border-color);
-    background: var(--bg-input);
-}
-
-.station-thumb-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.station-header-text {
-    flex: 1;
-    min-width: 0;
-}
-
-.frequency-badge {
-    font-size: 0.65rem;
-    font-weight: 800;
-    padding: 2px 7px;
-    border-radius: 4px;
-    background: rgba(197, 159, 84, 0.15);
-    color: var(--text-highlight);
-    border: 1px solid var(--border-color);
-}
-
-.btn-report-card {
-    background: transparent;
-    border: none;
-    font-size: 0.75rem;
-    opacity: 0.45;
-    cursor: pointer;
-    padding: 0 2px;
-    line-height: 1;
-    transition: opacity 0.18s ease, transform 0.18s ease;
-}
-
-.btn-report-card:hover {
-    opacity: 1;
-    transform: scale(1.15);
-}
-
-.btn-favorite {
-    background: transparent;
-    border: none;
-    color: var(--text-muted);
-    font-size: 1rem;
-    cursor: pointer;
-    line-height: 1;
-    padding: 0;
-}
-
-.btn-favorite:hover, .favorite-active {
-    color: #f1c40f;
-}
-
-.station-name {
-    font-size: 0.95rem;
-    font-weight: 800;
-    color: var(--text-main);
-    margin: 2px 0;
-    line-height: 1.25;
-}
-
-.station-geo-tag {
-    font-size: 0.72rem;
-    color: var(--text-muted);
-    font-weight: 500;
-}
-
-.station-description {
-    font-size: 0.76rem;
-    color: var(--text-muted);
-    line-height: 1.4;
-    margin-bottom: 0.85rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-.card-station-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
-    padding-top: 0.65rem;
-    border-top: 1px solid var(--border-color);
-}
-
-.station-meta-tags {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    flex-wrap: wrap;
-}
-
-.genre-pill {
-    font-size: 0.64rem;
-    font-weight: 700;
-    background: var(--bg-surface);
-    color: var(--text-muted);
-    padding: 2px 6px;
-    border-radius: 4px;
-    border: 1px solid var(--border-color);
-}
-
-.bitrate-tag {
-    font-size: 0.62rem;
-    color: var(--text-muted);
-    font-weight: 600;
-}
-
-.btn-tune-retro {
-    background: linear-gradient(180deg, var(--accent-amber), var(--accent-warm));
-    border: 1px solid var(--brass);
-    color: #ffffff;
-    font-size: 0.74rem;
-    font-weight: 700;
-    padding: 5px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: transform 0.12s ease, opacity 0.12s ease;
-}
-
-.btn-tune-retro:hover {
-    opacity: 0.92;
-    transform: scale(1.02);
-}
-
-.btn-tune-retro.btn-playing {
-    background: var(--needle-red);
-    border-color: var(--needle-red);
-}
-
-/* Estado Vacío */
-.empty-stations-deck {
-    background: var(--bg-card);
-    border: 1px dashed var(--border-color);
-    border-radius: 12px;
-}
-
-.empty-icon {
-    font-size: 2.5rem;
-    opacity: 0.6;
-}
-
-/* Paginación Progresiva y Carga Virtual de Alta Concurrencia */
-.load-more-wrapper {
-    display: flex;
-    justify-content: center;
-    padding: 1.5rem 0 2rem 0;
-}
-
-.btn-load-more {
-    background: var(--bg-surface);
-    border: 1.5px solid var(--brass);
-    color: var(--accent-amber);
-    font-size: 0.9rem;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    padding: 0.65rem 1.85rem;
-    border-radius: 24px;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.btn-load-more:hover {
-    background: var(--accent-amber);
-    border-color: var(--accent-amber);
-    color: #1a120b;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(197, 159, 84, 0.35);
-}
-
-.btn-load-more:active {
-    transform: translateY(0);
-}
-
-/* --------------------------------------------------------------------------
-   Consola de Paginado Analógico / Control de Densidad Sin Scroll Masivo
-   -------------------------------------------------------------------------- */
-.pagination-cockpit-bar {
-    background: var(--bg-surface);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.pagination-stats-box {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.74rem;
-    color: var(--text-muted);
-}
-
-.p-bullet {
-    color: var(--needle-red);
-    font-size: 0.65rem;
-}
-
-.p-stat-text b {
-    color: var(--text-main);
-}
-
-.p-page-badge {
-    background: rgba(197, 159, 84, 0.15);
-    color: var(--accent-amber);
-    border: 1px solid rgba(197, 159, 84, 0.3);
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-weight: 700;
-    font-size: 0.7rem;
-}
-
-.page-size-selector {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.page-size-title {
-    font-size: 0.7rem;
-    font-weight: 600;
-    color: var(--text-muted);
-}
-
-.page-size-chip-group {
-    display: inline-flex;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    padding: 2px;
-    gap: 2px;
-}
-
-.page-size-chip {
-    background: transparent;
-    border: none;
-    color: var(--text-muted);
-    font-size: 0.72rem;
-    font-weight: 700;
-    padding: 2px 7px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.15s ease;
-}
-
-.page-size-chip:hover {
-    color: var(--text-main);
-    background: rgba(197, 159, 84, 0.15);
-}
-
-.page-size-chip.chip-active {
-    background: var(--brass);
-    color: #ffffff;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
-}
-
-/* --------------------------------------------------------------------------
-   Navegación de Páginas Inferior (Botonera Estilo Sintonizador)
-   -------------------------------------------------------------------------- */
-.pagination-nav-footer {
-    background: var(--bg-surface);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-}
-
-.nav-btn-group {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.btn-retro-nav-page {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    color: var(--text-muted);
-    font-size: 0.74rem;
-    font-weight: 700;
-    padding: 5px 11px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.15s ease;
-}
-
-.btn-retro-nav-page:hover:not(:disabled) {
-    background: rgba(197, 159, 84, 0.18);
-    border-color: var(--brass);
-    color: var(--accent-amber);
-    transform: translateY(-1px);
-}
-
-.btn-retro-nav-page:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-}
-
-.nav-numbers-group {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.btn-retro-number {
-    min-width: 32px;
-    height: 30px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    color: var(--text-main);
-    font-size: 0.76rem;
-    font-weight: 800;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.15s ease;
-    padding: 0 6px;
-}
-
-.btn-retro-number:hover {
-    background: rgba(197, 159, 84, 0.2);
-    border-color: var(--brass);
-    color: var(--accent-amber);
-}
-
-.btn-retro-number.number-active {
-    background: linear-gradient(180deg, var(--accent-amber), var(--accent-warm));
-    border-color: var(--brass);
-    color: #ffffff;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-    pointer-events: none;
-}
-
-.nav-page-ellipsis {
-    color: var(--text-muted);
-    padding: 0 4px;
-    font-weight: 800;
-}
-
-@media (max-width: 640px) {
-    .pagination-cockpit-bar,
-    .pagination-nav-footer {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 8px;
-    }
-    .nav-btn-group {
-        justify-content: space-between;
-        width: 100%;
-    }
-    .btn-retro-nav-page {
-        flex: 1;
-        text-align: center;
-    }
-    .nav-numbers-group {
-        order: -1;
-    }
-}
-
-/* ==============================================================================
-   Controles Móviles del Sintonizador Retro y Optimización Móvil
-   ============================================================================== */
+/* Banner Móvil Plegable de la Radio */
 .mobile-radio-toggle-container {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
 }
 
 .btn-toggle-mobile-radio {
-    background: linear-gradient(135deg, rgba(212, 163, 115, 0.18), rgba(184, 115, 51, 0.25));
-    border: 1px solid rgba(212, 163, 115, 0.45);
-    color: var(--accent-amber);
-    padding: 6px 16px;
-    border-radius: 20px;
-    font-size: 0.78rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    font-size: 0.82rem;
     font-weight: 700;
+    padding: 0.65rem 1rem;
+    border-radius: var(--radius-md, 12px);
     cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
+    box-shadow: var(--card-shadow);
     transition: all 0.2s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .btn-toggle-mobile-radio:hover {
-    background: linear-gradient(135deg, rgba(212, 163, 115, 0.3), rgba(184, 115, 51, 0.4));
-    border-color: var(--brass);
-    color: #ffffff;
+    border-color: var(--border-highlight);
+    color: var(--accent-orange);
 }
 
 .mini-radio-banner {
     display: flex;
     align-items: center;
-    gap: 10px;
-    background: var(--bg-surface);
+    gap: 0.75rem;
+    background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 8px 12px;
+    border-radius: 14px;
+    padding: 0.75rem 1rem;
     cursor: pointer;
     box-shadow: var(--card-shadow);
     transition: all 0.2s ease;
 }
 
 .mini-radio-banner:hover {
-    border-color: var(--brass);
+    border-color: var(--border-highlight);
 }
 
 .mini-radio-icon {
-    font-size: 1.3rem;
-    flex-shrink: 0;
+    font-size: 1.4rem;
 }
 
 .mini-radio-info {
@@ -1255,8 +104,8 @@
 }
 
 .mini-radio-title {
-    font-size: 0.85rem;
-    font-weight: 800;
+    font-size: 0.88rem;
+    font-weight: 700;
     color: var(--text-main);
     white-space: nowrap;
     overflow: hidden;
@@ -1264,79 +113,884 @@
 }
 
 .mini-radio-subtitle {
-    font-size: 0.68rem;
-    color: var(--accent-amber);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-size: 0.72rem;
+    color: var(--accent-orange);
 }
 
 .mini-radio-action {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+}
+
+/* --------------------------------------------------------------------------
+   Master Console Deck (Bento Card de Búsqueda y Filtros)
+   -------------------------------------------------------------------------- */
+.master-console-deck {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 18px;
+    box-shadow: var(--card-shadow);
+    backdrop-filter: blur(16px);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Fila de Búsqueda Protagonista */
+.search-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.studio-search-wrapper {
+    flex: 1;
+    min-width: 260px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-icon-symbol {
+    position: absolute;
+    left: 1rem;
+    color: var(--text-muted);
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    transition: color 0.15s ease;
+}
+
+.studio-search-field {
+    width: 100%;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    font-family: var(--font-ui);
+    font-size: 0.92rem;
+    padding: 0.78rem 2.6rem 0.78rem 2.75rem;
+    border-radius: 12px;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.studio-search-field::placeholder {
+    color: var(--text-muted);
+    font-size: 0.86rem;
+}
+
+.studio-search-field:focus {
+    background: var(--bg-surface);
+    border-color: var(--accent-orange);
+    box-shadow: 0 0 0 3px var(--accent-glow), inset 0 1px 2px rgba(0,0,0,0.2);
+    outline: none;
+}
+
+.studio-search-wrapper:focus-within .search-icon-symbol {
+    color: var(--accent-orange);
+}
+
+.btn-clear-input {
+    position: absolute;
+    right: 0.85rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+}
+
+.btn-clear-input:hover {
+    background: var(--accent-orange);
+    color: #fff;
+}
+
+.search-actions-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-toggle-advanced-filters {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 0.76rem 1rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    white-space: nowrap;
+}
+
+.btn-toggle-advanced-filters:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-medium);
+    color: var(--accent-orange);
+}
+
+.btn-toggle-advanced-filters.filters-open {
+    background: rgba(255, 107, 0, 0.12);
+    border-color: var(--accent-orange);
+    color: var(--accent-orange);
+}
+
+.active-badge-pill {
+    background: var(--accent-orange);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 1px 6px;
+    border-radius: 999px;
+}
+
+.arrow-indicator {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+}
+
+.btn-layout-toggle {
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.76rem 0.95rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+
+.btn-layout-toggle:hover {
+    background: var(--bg-card-hover);
+    color: var(--text-main);
+    border-color: var(--border-medium);
+}
+
+/* --------------------------------------------------------------------------
+   Cuadrícula Desplegable de Filtros (Bento Controls)
+   -------------------------------------------------------------------------- */
+.dropdowns-filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.75rem;
+    padding-top: 0.5rem;
+    animation: slideDownFilters 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideDownFilters {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.filter-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.filter-field-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.studio-dropdown-select {
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.52rem 0.75rem;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.studio-dropdown-select:focus {
+    background-color: var(--bg-surface);
+    border-color: var(--accent-orange);
+    color: var(--text-main);
+    box-shadow: 0 0 0 2px var(--accent-glow);
+    outline: none;
+}
+
+.studio-dropdown-select option {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+}
+
+/* Segmented Pill para Bandas FM / AM / TODAS */
+.band-col {
+    grid-column: span 1;
+}
+
+@media (min-width: 768px) {
+    .band-col {
+        grid-column: span 2;
+    }
+}
+
+.band-segmented-pill {
+    display: flex;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 3px;
+    gap: 2px;
+    height: 38px;
+    align-items: center;
+}
+
+.btn-band-chip {
+    flex: 1;
+    height: 100%;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
     font-size: 0.72rem;
     font-weight: 700;
-    color: var(--text-highlight);
-    padding: 3px 8px;
-    border-radius: 6px;
-    background: rgba(197, 159, 84, 0.15);
+    border-radius: 7px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-band-chip:hover {
+    color: var(--text-main);
+}
+
+.btn-band-chip.chip-active {
+    background: var(--accent-orange);
+    color: #fff;
+    box-shadow: 0 2px 6px var(--accent-glow);
+}
+
+/* --------------------------------------------------------------------------
+   Chips de Filtros Activos
+   -------------------------------------------------------------------------- */
+.active-chips-toolbar {
+    margin-top: 0.75rem;
+}
+
+.border-top-console {
+    border-top: 1px solid var(--border-color);
+}
+
+.active-chips-label {
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.active-filter-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(255, 107, 0, 0.12);
+    border: 1px solid rgba(255, 107, 0, 0.35);
+    color: var(--accent-orange);
+    font-size: 0.74rem;
+    font-weight: 700;
+    padding: 0.3rem 0.65rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.active-filter-badge:hover {
+    background: rgba(255, 107, 0, 0.22);
+    border-color: var(--accent-orange);
+}
+
+.badge-close {
+    font-size: 0.7rem;
+    opacity: 0.8;
+}
+
+.btn-reset-filters {
+    background: transparent;
     border: 1px solid var(--border-color);
-    flex-shrink: 0;
+    color: var(--text-muted);
+    font-size: 0.74rem;
+    font-weight: 700;
+    padding: 0.3rem 0.75rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
 }
 
-@media (max-width: 768px) {
-    .studio-header-bar {
-        margin-bottom: 0.5rem !important;
-        gap: 0.5rem !important;
-    }
-    
-    .badge-vintage-live,
-    .studio-subtext {
-        font-size: 0.6rem !important;
-    }
-    
-    .studio-title {
-        font-size: 1.2rem !important;
-    }
-    
-    .theme-segmented-switch,
-    .lang-segmented-switch {
-        padding: 2px !important;
-    }
-    
-    .btn-theme-chip,
-    .btn-lang-chip {
-        padding: 2px 6px !important;
-        font-size: 0.75rem !important;
-    }
-    
-    .btn-studio-feedback,
-    .btn-studio-donate {
-        padding: 3px 8px !important;
-        font-size: 0.7rem !important;
-    }
-    
-    .studio-metrics-group {
-        width: 100%;
-        justify-content: space-between;
-        gap: 4px !important;
-    }
-    
-    .studio-metric-card {
-        padding: 3px 6px !important;
-        flex: 1 1 auto;
-        text-align: center;
-    }
-    
-    .metric-val {
-        font-size: 0.82rem !important;
-    }
-    
-    .metric-sub {
-        font-size: 0.55rem !important;
-    }
+.btn-reset-filters:hover {
+    background: var(--bg-card-hover);
+    color: var(--needle-red);
+    border-color: rgba(239, 68, 68, 0.4);
 }
 
-@media (max-width: 600px) {
+/* Guía Técnica Desplegable */
+.btn-guide-toggle-small {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.15s ease;
+    padding: 4px 0;
+}
+
+.btn-guide-toggle-small:hover {
+    color: var(--accent-orange);
+}
+
+.fm-am-guide-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-medium);
+    border-radius: 14px;
+    animation: slideDownFilters 0.22s ease-out;
+}
+
+.guide-badge {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--accent-orange);
+    background: rgba(255, 107, 0, 0.1);
+    border: 1px solid rgba(255, 107, 0, 0.25);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.guide-title {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--text-main);
+}
+
+.btn-close-guide {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.guide-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+}
+
+.guide-box-header {
+    font-weight: 800;
+    font-size: 0.88rem;
+    color: var(--text-main);
+}
+
+.guide-freq-pill {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--accent-amber);
+    background: rgba(245, 158, 11, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.guide-list {
+    padding-left: 1.1rem;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   Barra Superior de Control de Paginado
+   -------------------------------------------------------------------------- */
+.pagination-cockpit-bar {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+}
+
+.pagination-info-badge, .pagination-page-badge {
+    font-size: 0.76rem;
+    color: var(--text-secondary);
+}
+
+.pagination-info-badge b, .pagination-page-badge b {
+    color: var(--text-main);
+    font-family: var(--font-mono);
+}
+
+.page-size-title {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.page-size-chip-group {
+    display: inline-flex;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 2px;
+    gap: 2px;
+}
+
+.page-size-chip {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.page-size-chip:hover {
+    color: var(--text-main);
+}
+
+.page-size-chip.chip-active {
+    background: var(--bg-card-hover);
+    color: var(--accent-orange);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+   Grid de Emisoras (Bento Cards Estilo Dribbble)
+   -------------------------------------------------------------------------- */
+.stations-responsive-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
     .stations-responsive-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
     }
+}
+
+@media (min-width: 1400px) {
+    .stations-responsive-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.station-grid-item {
+    height: 100%;
+}
+
+/* Tarjeta Bento Individual de Emisora */
+.retro-station-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.9rem;
+    box-shadow: var(--card-shadow);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+}
+
+.retro-station-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: transparent;
+    transition: background 0.2s ease;
+}
+
+.retro-station-card:hover {
+    transform: translateY(-4px);
+    background: var(--bg-card-hover);
+    border-color: rgba(255, 107, 0, 0.35);
+    box-shadow: var(--card-shadow-hover);
+}
+
+.retro-station-card:hover::before {
+    background: linear-gradient(90deg, var(--accent-orange), var(--accent-amber));
+}
+
+/* Estado Activo: Emisora Sintonizada / Reproduciendo */
+.retro-station-card.card-station-active {
+    border-color: var(--accent-orange);
+    box-shadow: var(--card-shadow-active);
+    background: linear-gradient(180deg, var(--bg-card-active) 0%, var(--bg-card) 100%);
+}
+
+.retro-station-card.card-station-active::before {
+    background: var(--accent-orange);
+}
+
+/* Header de la Tarjeta */
+.card-station-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+}
+
+.station-thumb-wrapper {
+    position: relative;
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-medium);
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.station-thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.station-thumb-wrapper.thumb-active {
+    border-color: var(--accent-orange);
+    box-shadow: 0 0 12px var(--accent-glow);
+}
+
+/* Overlay Animado del Ecualizador en la Imagen */
+.thumb-equalizer-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(11, 13, 17, 0.72);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    backdrop-filter: blur(2px);
+}
+
+.eq-bar {
+    width: 3.5px;
+    background: var(--accent-orange);
+    border-radius: 2px;
+    animation: eqPulse 0.8s ease-in-out infinite alternate;
+}
+
+.eq-bar.bar-1 { height: 14px; animation-delay: 0s; }
+.eq-bar.bar-2 { height: 22px; animation-delay: 0.25s; }
+.eq-bar.bar-3 { height: 10px; animation-delay: 0.5s; }
+
+@keyframes eqPulse {
+    0% { transform: scaleY(0.3); }
+    100% { transform: scaleY(1); }
+}
+
+.station-header-text {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Badges de Frecuencia Hi-Fi */
+.frequency-badge {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.18rem 0.55rem;
+    border-radius: 6px;
+    display: inline-block;
+    letter-spacing: 0.02em;
+}
+
+.badge-fm {
+    background: rgba(255, 107, 0, 0.12);
+    color: var(--accent-orange);
+    border: 1px solid rgba(255, 107, 0, 0.25);
+}
+
+.badge-am {
+    background: rgba(245, 158, 11, 0.12);
+    color: var(--accent-amber);
+    border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.btn-report-card, .btn-favorite {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    cursor: pointer;
+    padding: 2px 5px;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+    line-height: 1;
+}
+
+.btn-report-card:hover {
+    color: var(--accent-amber);
+    background: rgba(245, 158, 11, 0.1);
+}
+
+.btn-favorite:hover, .btn-favorite.favorite-active {
+    color: #F59E0B;
+}
+
+.station-name {
+    font-size: 0.96rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin: 0.25rem 0 0.15rem 0;
+    line-height: 1.3;
+}
+
+.station-geo-tag {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+/* Descripción con Line Clamp Estricto (2 líneas uniformes) */
+.station-description {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.45;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 2.25rem;
+}
+
+/* Footer de la Tarjeta */
+.card-station-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.station-meta-tags {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+}
+
+.genre-pill {
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+}
+
+.bitrate-tag {
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+    font-size: 0.66rem;
+}
+
+/* Botón Sintonizar */
+.btn-tune-retro {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: var(--bg-input);
+    border: 1px solid var(--border-medium);
+    color: var(--text-main);
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.42rem 0.85rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+}
+
+.btn-tune-retro:hover {
+    background: var(--accent-orange);
+    border-color: var(--accent-orange);
+    color: #fff;
+    box-shadow: 0 4px 12px var(--accent-glow);
+    transform: translateY(-1px);
+}
+
+.btn-tune-retro.btn-playing {
+    background: var(--accent-orange);
+    border-color: var(--accent-orange);
+    color: #fff;
+    box-shadow: 0 0 14px var(--accent-glow-strong);
+    animation: activeTunePulse 2s infinite ease-in-out;
+}
+
+@keyframes activeTunePulse {
+    0%, 100% { box-shadow: 0 0 10px var(--accent-glow); }
+    50% { box-shadow: 0 0 18px var(--accent-glow-strong); }
+}
+
+/* --------------------------------------------------------------------------
+   Navegación de Páginas Inferior
+   -------------------------------------------------------------------------- */
+.pagination-nav-footer {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+}
+
+.btn-retro-nav-page {
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    font-size: 0.76rem;
+    font-weight: 700;
+    padding: 0.38rem 0.75rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-retro-nav-page:hover:not(:disabled) {
+    background: var(--bg-card-hover);
+    color: var(--accent-orange);
+    border-color: var(--border-medium);
+}
+
+.btn-retro-nav-page:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.btn-retro-number {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+    min-width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-retro-number:hover {
+    color: var(--text-main);
+    background: var(--bg-card-hover);
+}
+
+.btn-retro-number.number-active {
+    background: var(--accent-orange);
+    color: #fff;
+    box-shadow: 0 2px 8px var(--accent-glow);
+}
+
+.nav-page-ellipsis {
+    color: var(--text-muted);
+    padding: 0 4px;
+}
+
+/* --------------------------------------------------------------------------
+   Estado Vacío
+   -------------------------------------------------------------------------- */
+.empty-stations-deck {
+    background: var(--bg-card);
+    border: 1px dashed var(--border-medium);
+    border-radius: 18px;
+}
+
+.empty-icon {
+    font-size: 2.5rem;
+}
+
+.btn-suggest-empty-btn {
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    font-size: 0.82rem;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-suggest-empty-btn:hover {
+    border-color: var(--accent-orange);
+    color: var(--accent-orange);
+}
+
+/* --------------------------------------------------------------------------
+   Espacio de Patrocinio / Sponsor Deck
+   -------------------------------------------------------------------------- */
+.studio-sponsor-deck {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    margin-top: 1.5rem;
+}
+
+.sponsor-tag {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--accent-orange);
+}
+
+.sponsor-subtag {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+}
+
+.sponsor-badge {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    border: 1px solid var(--border-subtle);
+    padding: 1px 6px;
+    border-radius: 4px;
+}
+
+.sponsor-ad-slot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding-top: 0.5rem;
+}
+
+.adsterra-iframe-banner {
+    max-width: 100%;
+    border-radius: 8px;
 }

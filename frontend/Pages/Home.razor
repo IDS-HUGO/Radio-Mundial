@@ -4,118 +4,21 @@
 @inject RadioStateService RadioState
 @implements IDisposable
 
-<PageTitle>Radio Mundial | Transmisión Directa Global</PageTitle>
+<PageTitle>Radio Mundial | Transmisión Directa Global Hi-Fi</PageTitle>
 
-<div class="studio-cockpit-container px-3 px-md-4 py-2">
-    <!-- Barra Superior Compacta de Estudio -->
-    <header class="d-flex flex-wrap align-items-center justify-content-between mb-3 gap-2 studio-header-bar">
-        <div class="d-flex align-items-center gap-3">
-            <div>
-                <div class="d-flex align-items-center gap-2">
-                    <span class="badge-vintage-live">@RadioState.T("LIVE")</span>
-                    <span class="studio-subtext">@RadioState.T("SUBTITLE")</span>
-                </div>
-                <h1 class="h3 fw-black tracking-tight mb-0 studio-title">
-                    Radio <span class="text-amber">Mundial</span><span class="visually-hidden"> — Sintonizador Global de Radio en Vivo FM y AM Gratis por Internet</span>
-                </h1>
-            </div>
-        </div>
-
-        <!-- Controles de Estudio: Tema (Claro/Oscuro/Sistema), Idioma (ES/EN), Disposición y Métricas -->
-        <div class="d-flex flex-wrap align-items-center gap-2">
-            
-            <!-- Selector de Tema (Oscuro / Claro / Sistema) -->
-            <div class="theme-segmented-switch" title="Tema: Oscuro / Claro / Sistema">
-                <button class="btn-theme-chip @(RadioState.CurrentTheme == "dark" ? "theme-active" : "")" 
-                        @onclick='() => RadioState.SetThemeAsync("dark")' title="Modo Oscuro">
-                    🌙
-                </button>
-                <button class="btn-theme-chip @(RadioState.CurrentTheme == "light" ? "theme-active" : "")" 
-                        @onclick='() => RadioState.SetThemeAsync("light")' title="Modo Claro">
-                    ☀️
-                </button>
-                <button class="btn-theme-chip @(RadioState.CurrentTheme == "system" ? "theme-active" : "")" 
-                        @onclick='() => RadioState.SetThemeAsync("system")' title="Adaptar al Sistema">
-                    💻
-                </button>
-            </div>
-
-            <!-- Selector de Idioma (ES / EN) -->
-            <div class="lang-segmented-switch" title="Language / Idioma">
-                <button class="btn-lang-chip @(RadioState.CurrentLanguage == "es" ? "lang-active" : "")" 
-                        @onclick='() => RadioState.SetLanguageAsync("es")'>
-                    ES
-                </button>
-                <button class="btn-lang-chip @(RadioState.CurrentLanguage == "en" ? "lang-active" : "")" 
-                        @onclick='() => RadioState.SetLanguageAsync("en")'>
-                    EN
-                </button>
-            </div>
-
-            <!-- Selector de Disposición Visual (Lateral vs Arriba) -->
-            <button class="btn-layout-toggle d-none d-lg-inline-flex align-items-center gap-2" 
-                    @onclick="ToggleLayoutMode" 
-                    title="Alternar entre panel lateral fijo o vista vertical completa">
-                <span>@(IsSideBySide ? RadioState.T("LAYOUT_SIDE") : RadioState.T("LAYOUT_TOP"))</span>
-            </button>
-
-            <!-- Botón Buzón de Sugerencias / Agregar Emisora -->
-            <button class="btn-studio-feedback d-inline-flex align-items-center gap-1"
-                    @onclick="() => RadioState.OpenFeedbackModal()" 
-                    title="Sugerir emisoras, mejoras o reportar fallas">
-                <span>✍️</span>
-                <span>@RadioState.T("FEEDBACK_BTN")</span>
-            </button>
-
-            <!-- Botón Donar / Stripe -->
-            <a href="https://donate.stripe.com/00w8wO7axb3E5GG1vt5Ne00"
-               target="_blank" 
-               rel="noopener noreferrer" 
-               class="btn-studio-donate d-inline-flex align-items-center gap-1"
-               title="Apoyar a Radio Mundial con tarjeta, Apple Pay o Stripe (Hugo Francisco Luis Inclan)">
-                <span>☕</span>
-                <span>Donar</span>
-            </a>
-
-            <!-- Métricas de Estudio Analógico -->
-            <div class="d-flex align-items-center gap-2 studio-metrics-group">
-                <div class="studio-metric-card" title="Estaciones mostradas en esta pantalla">
-                    <span class="metric-val">@Math.Min(_pageSize, Math.Max(0, RadioState.FilteredStations.Count - (_currentPage - 1) * _pageSize))</span>
-                    <span class="metric-sub">EN PANTALLA</span>
-                </div>
-                <div class="studio-metric-card d-none d-sm-flex" title="Página actual">
-                    <span class="metric-val">@_currentPage / @Math.Max(1, (int)Math.Ceiling((double)RadioState.FilteredStations.Count / _pageSize))</span>
-                    <span class="metric-sub">PÁGINA</span>
-                </div>
-                <div class="studio-metric-card" title="Estaciones disponibles en catálogo">
-                    <span class="metric-val">@RadioState.AllStations.Count</span>
-                    <span class="metric-sub">@RadioState.T("AVAILABLE")</span>
-                </div>
-                <div class="studio-metric-card d-none d-sm-flex" title="Oyentes sintonizados">
-                    <span class="metric-val">@RadioState.ListenersCount</span>
-                    <span class="metric-sub">@RadioState.T("LISTENERS")</span>
-                </div>
-                <div class="status-connection-indicator @(RadioState.IsConnected ? "is-online" : "is-offline")" 
-                     title="@RadioState.ConnectionStatusText">
-                    <span class="dot-led"></span>
-                    <span class="connection-label">@(RadioState.IsConnected ? RadioState.T("CONNECTED") : RadioState.T("RECONNECTING"))</span>
-                </div>
-            </div>
-        </div>
-    </header>
-
+<div class="studio-cockpit-container px-2 px-md-4 py-3">
     @if (IsSideBySide)
     {
         <!-- ==============================================================
-             DISPOSICIÓN LATERAL (COCKPIT): LA RADIO NUNCA SE PIERDE DE VISTA
+             DISPOSICIÓN BENTO COCKPIT: SINTONIZADOR FIJO + CATÁLOGO BENTO
              ============================================================== -->
         <div class="studio-cockpit-row mb-3">
             
-            <!-- Columna Izquierda: Radio Retro Fija (Sticky Dock) -->
+            <!-- Columna Izquierda: Sintonizador Neo-Skeuomorphic + Tarjeta Bento de Autor -->
             <div class="studio-left-dock">
-                <div class="d-lg-none mb-2 text-center mobile-radio-toggle-container">
-                    <button type="button" class="btn-toggle-mobile-radio" @onclick="ToggleMobileRadio">
-                        <span>📻 @(_isRadioCollapsedMobile ? "Mostrar Sintonizador Vintage ▼" : "Minimizar Sintonizador ▲")</span>
+                <div class="d-lg-none mb-3 text-center mobile-radio-toggle-container">
+                    <button type="button" class="btn-toggle-mobile-radio w-100" @onclick="ToggleMobileRadio">
+                        <span>📻 @(_isRadioCollapsedMobile ? "Mostrar Sintonizador Neo-Hi-Fi ▼" : "Minimizar Sintonizador ▲")</span>
                     </button>
                 </div>
 
@@ -130,7 +33,7 @@
                     <div class="mini-radio-banner d-lg-none" @onclick="ToggleMobileRadio">
                         <span class="mini-radio-icon">📻</span>
                         <div class="mini-radio-info">
-                            <span class="mini-radio-title">@(RadioState.ActiveStation?.Name ?? "Sintonizador Vintage Hi-Fi")</span>
+                            <span class="mini-radio-title">@(RadioState.ActiveStation?.Name ?? "Radio Mundial Hi-Fi")</span>
                             <span class="mini-radio-subtitle">@(RadioState.IsPlaying ? "● EN VIVO · Toca para abrir sintonizador" : "Toca para abrir sintonizador analógico")</span>
                         </div>
                         <span class="mini-radio-action">Abrir ▾</span>
@@ -138,15 +41,10 @@
                 }
             </div>
 
-            <!-- Columna Derecha: Consola de Filtros y Rejilla de Emisoras -->
+            <!-- Columna Derecha: Barra Protagonista Glassmorphism + Grid Bento -->
             <div class="studio-right-deck">
-                <!-- Consola Maestra de Filtros (Limpia, Desplegable, Sin Amontonamientos) -->
                 @RenderFilterConsole()
-
-                <!-- Grid de Emisoras Filtradas -->
                 @RenderStationsGrid()
-
-                <!-- Espacio Publicitario Discreto al Fondo -->
                 @RenderSponsorSlot()
             </div>
 
@@ -155,18 +53,18 @@
     else
     {
         <!-- ==============================================================
-             DISPOSICIÓN TRADICIONAL (RADIO ARRIBA / FILTROS ABAJO)
+             DISPOSICIÓN VERTICAL: SINTONIZADOR CENTRADO ARRIBA
              ============================================================== -->
         <div class="w-100">
-            <div class="d-lg-none mb-2 text-center mobile-radio-toggle-container">
-                <button type="button" class="btn-toggle-mobile-radio" @onclick="ToggleMobileRadio">
-                    <span>📻 @(_isRadioCollapsedMobile ? "Mostrar Sintonizador Vintage ▼" : "Minimizar Sintonizador ▲")</span>
+            <div class="d-lg-none mb-3 text-center mobile-radio-toggle-container">
+                <button type="button" class="btn-toggle-mobile-radio w-100" @onclick="ToggleMobileRadio">
+                    <span>📻 @(_isRadioCollapsedMobile ? "Mostrar Sintonizador Neo-Hi-Fi ▼" : "Minimizar Sintonizador ▲")</span>
                 </button>
             </div>
 
             @if (!_isRadioCollapsedMobile)
             {
-                <div class="mb-3 text-center">
+                <div class="mb-4 text-center">
                     <RetroRadio />
                 </div>
             }
@@ -175,7 +73,7 @@
                 <div class="mini-radio-banner d-lg-none mb-3" @onclick="ToggleMobileRadio">
                     <span class="mini-radio-icon">📻</span>
                     <div class="mini-radio-info">
-                        <span class="mini-radio-title">@(RadioState.ActiveStation?.Name ?? "Sintonizador Vintage Hi-Fi")</span>
+                        <span class="mini-radio-title">@(RadioState.ActiveStation?.Name ?? "Radio Mundial Hi-Fi")</span>
                         <span class="mini-radio-subtitle">@(RadioState.IsPlaying ? "● EN VIVO · Toca para abrir sintonizador" : "Toca para abrir sintonizador analógico")</span>
                     </div>
                     <span class="mini-radio-action">Abrir ▾</span>
@@ -183,28 +81,30 @@
             }
 
             @RenderFilterConsole()
-
             @RenderStationsGrid()
-
-            <!-- Espacio Publicitario Discreto al Fondo -->
             @RenderSponsorSlot()
         </div>
     }
 </div>
 
-@* RenderFragment: Consola de Filtros Moderna, Ergonómica y Limpia *@
+@* RenderFragment: Consola de Búsqueda y Filtros Bento Glassmorphism *@
 @code {
     private RenderFragment RenderFilterConsole() => __builder =>
     {
-        <section class="master-console-deck p-3 mb-4" aria-label="Consola de Búsqueda y Sintonización">
+        <section class="master-console-deck p-3 p-md-4 mb-4" aria-label="Consola de Búsqueda y Sintonización">
             
-            <!-- Fila 1: Barra Principal de Búsqueda Instantánea -->
-            <div class="search-bar-row mb-2">
+            <!-- Fila 1: Buscador Protagonista Glassmorphism + Selector de Filtros Avanzados y Layout -->
+            <div class="search-bar-row mb-3">
                 <div class="studio-search-wrapper">
-                    <span class="search-icon-symbol">🔍</span>
+                    <span class="search-icon-symbol">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </span>
                     <input type="text" 
                            class="studio-search-field" 
-                           placeholder="Buscar por país, estado, ciudad, frecuencia (ej. 90.5), género o emisora..." 
+                           placeholder="Buscar por emisora, país, ciudad, género o frecuencia (ej. 102.5, Chiapas)..." 
                            value="@RadioState.SearchQuery" 
                            @oninput="OnSearchInput" />
                     @if (!string.IsNullOrWhiteSpace(RadioState.SearchQuery))
@@ -212,115 +112,123 @@
                         <button class="btn-clear-input" @onclick='() => RadioState.SetSearchQuery(string.Empty)' title="Borrar búsqueda">✕</button>
                     }
                 </div>
-            </div>
 
-            <!-- Botón Móvil para Colapsar/Desplegar Filtros Avanzados -->
-            <div class="d-md-none mb-2">
-                <button type="button" class="btn-toggle-filters-mobile w-100" @onclick="ToggleMobileFilters">
-                    <span class="d-flex align-items-center gap-2">
-                        <span>🎛️</span>
-                        <span>@(_showMobileFilters ? "Ocultar Filtros Avanzados" : "Filtros (País, Ciudad, Género)")</span>
-                    </span>
-                    <span class="d-flex align-items-center gap-2">
+                <div class="search-actions-group">
+                    <!-- Botón Toggle de Filtros Avanzados -->
+                    <button type="button" 
+                            class="btn-toggle-advanced-filters @(_showAdvancedFilters ? "filters-open" : "")" 
+                            @onclick="ToggleAdvancedFilters"
+                            title="Desplegar u ocultar filtros avanzados de ubicación y género">
+                        <span class="filters-icon">🎛️</span>
+                        <span class="d-none d-sm-inline">Filtros</span>
                         @if (GetActiveFiltersCount() > 0)
                         {
-                            <span class="active-badge-pill">@GetActiveFiltersCount() @(GetActiveFiltersCount() == 1 ? "activo" : "activos")</span>
+                            <span class="active-badge-pill">@GetActiveFiltersCount()</span>
                         }
-                        <span>@(_showMobileFilters ? "▲" : "▼")</span>
-                    </span>
-                </button>
+                        <span class="arrow-indicator">@(_showAdvancedFilters ? "▲" : "▼")</span>
+                    </button>
+
+                    <!-- Botón Alternar Disposición (Solo pantallas grandes) -->
+                    <button type="button" 
+                            class="btn-layout-toggle d-none d-lg-inline-flex align-items-center gap-1" 
+                            @onclick="ToggleLayoutMode" 
+                            title="Alternar entre panel lateral o vista superior">
+                        <span>@(IsSideBySide ? "◫ Lateral" : "▤ Arriba")</span>
+                    </button>
+                </div>
             </div>
 
-            <!-- Fila 2: Barra de Filtros Desplegables en Cuadrícula Compacta y Ordenada -->
-            <div class="dropdowns-filter-grid mb-2 @(_showMobileFilters ? "mobile-expanded" : "")">
-                
-                <!-- Desplegable 1: Continente -->
-                <div class="filter-col">
-                    <label class="filter-field-label">🌐 @RadioState.T("CONTINENT")</label>
-                    <select class="form-select studio-dropdown-select" 
-                            value="@RadioState.SelectedContinent" 
-                            @onchange="OnContinentChanged">
-                        <option value="Todos">🌐 @RadioState.T("CONTINENT_ALL")</option>
-                        <option value="América">🌎 América</option>
-                        <option value="Europa">🌍 Europa</option>
-                        <option value="Asia">🌏 Asia</option>
-                        <option value="África">🌍 África</option>
-                        <option value="Oceanía">🌏 Oceanía</option>
-                    </select>
-                </div>
+            <!-- Fila 2: Filtros Desplegables en Cuadrícula Bento (Colapsable) -->
+            @if (_showAdvancedFilters)
+            {
+                <div class="dropdowns-filter-grid mb-3">
+                    <!-- Desplegable 1: Continente -->
+                    <div class="filter-col">
+                        <label class="filter-field-label">🌐 @RadioState.T("CONTINENT")</label>
+                        <select class="form-select studio-dropdown-select" 
+                                value="@RadioState.SelectedContinent" 
+                                @onchange="OnContinentChanged">
+                            <option value="Todos">🌐 @RadioState.T("CONTINENT_ALL")</option>
+                            <option value="América">🌎 América</option>
+                            <option value="Europa">🌍 Europa</option>
+                            <option value="Asia">🌏 Asia</option>
+                            <option value="África">🌍 África</option>
+                            <option value="Oceanía">🌏 Oceanía</option>
+                        </select>
+                    </div>
 
-                <!-- Desplegable 2: País -->
-                <div class="filter-col">
-                    <label class="filter-field-label">🏳️ @RadioState.T("COUNTRY")</label>
-                    <select class="form-select studio-dropdown-select" 
-                            value="@RadioState.SelectedCountry" 
-                            @onchange="OnCountryChanged">
-                        <option value="Todos">🌐 @RadioState.T("COUNTRY_ALL")</option>
-                        @foreach (var c in RadioState.GetAvailableCountries())
-                        {
-                            <option value="@c">@GetCountryFlag(c) @c</option>
-                        }
-                    </select>
-                </div>
+                    <!-- Desplegable 2: País -->
+                    <div class="filter-col">
+                        <label class="filter-field-label">🏳️ @RadioState.T("COUNTRY")</label>
+                        <select class="form-select studio-dropdown-select" 
+                                value="@RadioState.SelectedCountry" 
+                                @onchange="OnCountryChanged">
+                            <option value="Todos">🌐 @RadioState.T("COUNTRY_ALL")</option>
+                            @foreach (var c in RadioState.GetAvailableCountries())
+                            {
+                                <option value="@c">@GetCountryFlag(c) @c</option>
+                            }
+                        </select>
+                    </div>
 
-                <!-- Desplegable 3: Estado / Región -->
-                <div class="filter-col">
-                    <label class="filter-field-label">📍 @RadioState.T("STATE")</label>
-                    <select class="form-select studio-dropdown-select" 
-                            value="@RadioState.SelectedState" 
-                            @onchange="OnStateChanged">
-                        <option value="Todos">📍 @RadioState.T("STATE_ALL")</option>
-                        @foreach (var stateName in RadioState.GetAvailableStates())
-                        {
-                            <option value="@stateName">@stateName</option>
-                        }
-                    </select>
-                </div>
+                    <!-- Desplegable 3: Estado / Región -->
+                    <div class="filter-col">
+                        <label class="filter-field-label">📍 @RadioState.T("STATE")</label>
+                        <select class="form-select studio-dropdown-select" 
+                                value="@RadioState.SelectedState" 
+                                @onchange="OnStateChanged">
+                            <option value="Todos">📍 @RadioState.T("STATE_ALL")</option>
+                            @foreach (var stateName in RadioState.GetAvailableStates())
+                            {
+                                <option value="@stateName">@stateName</option>
+                            }
+                        </select>
+                    </div>
 
-                <!-- Desplegable 4: Ciudad -->
-                <div class="filter-col">
-                    <label class="filter-field-label">🏙️ @RadioState.T("CITY")</label>
-                    <select class="form-select studio-dropdown-select" 
-                            value="@RadioState.SelectedCity" 
-                            @onchange="OnCityChanged">
-                        <option value="Todas">🏙️ @RadioState.T("CITY_ALL")</option>
-                        @foreach (var city in RadioState.GetAvailableCities())
-                        {
-                            <option value="@city">@city</option>
-                        }
-                    </select>
-                </div>
+                    <!-- Desplegable 4: Ciudad -->
+                    <div class="filter-col">
+                        <label class="filter-field-label">🏙️ @RadioState.T("CITY")</label>
+                        <select class="form-select studio-dropdown-select" 
+                                value="@RadioState.SelectedCity" 
+                                @onchange="OnCityChanged">
+                            <option value="Todas">🏙️ @RadioState.T("CITY_ALL")</option>
+                            @foreach (var city in RadioState.GetAvailableCities())
+                            {
+                                <option value="@city">@city</option>
+                            }
+                        </select>
+                    </div>
 
-                <!-- Desplegable 5: Género Musical -->
-                <div class="filter-col">
-                    <label class="filter-field-label">🎵 @RadioState.T("GENRE")</label>
-                    <select class="form-select studio-dropdown-select" 
-                            value="@RadioState.SelectedGenre" 
-                            @onchange="OnGenreChanged">
-                        <option value="Todos">🎵 @RadioState.T("GENRE_ALL")</option>
-                        @foreach (var g in RadioState.FilterOptions.Genres)
-                        {
-                            <option value="@g">@g</option>
-                        }
-                    </select>
-                </div>
+                    <!-- Desplegable 5: Género Musical -->
+                    <div class="filter-col">
+                        <label class="filter-field-label">🎵 @RadioState.T("GENRE")</label>
+                        <select class="form-select studio-dropdown-select" 
+                                value="@RadioState.SelectedGenre" 
+                                @onchange="OnGenreChanged">
+                            <option value="Todos">🎵 @RadioState.T("GENRE_ALL")</option>
+                            @foreach (var g in RadioState.FilterOptions.Genres)
+                            {
+                                <option value="@g">@g</option>
+                            }
+                        </select>
+                    </div>
 
-                <!-- Selector de Banda (FM / AM / TODAS) -->
-                <div class="filter-col band-col">
-                    <label class="filter-field-label">📻 @RadioState.T("BAND")</label>
-                    <div class="band-segmented-pill">
-                        <button class="btn-band-chip @(RadioState.SelectedBand == "TODAS" ? "chip-active" : "")" 
-                                @onclick='() => RadioState.SetBandFilter("TODAS")'>TODAS</button>
-                        <button class="btn-band-chip @(RadioState.SelectedBand == "FM" ? "chip-active" : "")" 
-                                @onclick='() => RadioState.SetBandFilter("FM")'>FM</button>
-                        <button class="btn-band-chip @(RadioState.SelectedBand == "AM" ? "chip-active" : "")" 
-                                @onclick='() => RadioState.SetBandFilter("AM")'>AM</button>
+                    <!-- Selector Unificado de Banda (FM / AM / TODAS) -->
+                    <div class="filter-col band-col">
+                        <label class="filter-field-label">📻 @RadioState.T("BAND")</label>
+                        <div class="band-segmented-pill">
+                            <button type="button" class="btn-band-chip @(RadioState.SelectedBand == "TODAS" ? "chip-active" : "")" 
+                                    @onclick='() => RadioState.SetBandFilter("TODAS")'>TODAS</button>
+                            <button type="button" class="btn-band-chip @(RadioState.SelectedBand == "FM" ? "chip-active" : "")" 
+                                    @onclick='() => RadioState.SetBandFilter("FM")'>FM</button>
+                            <button type="button" class="btn-band-chip @(RadioState.SelectedBand == "AM" ? "chip-active" : "")" 
+                                    @onclick='() => RadioState.SetBandFilter("AM")'>AM</button>
+                        </div>
                     </div>
                 </div>
+            }
 
-            </div>
-
-            <!-- Fila 3: Chips de Filtros Activos (Descartables con 1 Clic) -->
+            <!-- Fila 3: Chips de Filtros Activos (Descartables) -->
             @if (HasActiveFilters())
             {
                 <div class="active-chips-toolbar d-flex flex-wrap align-items-center gap-2 pt-2 border-top-console">
@@ -328,93 +236,89 @@
                     
                     @if (RadioState.SelectedContinent != "Todos")
                     {
-                        <button class="active-filter-badge" @onclick='() => RadioState.SetContinentFilter("Todos")' title="Quitar filtro de continente">
+                        <button type="button" class="active-filter-badge" @onclick='() => RadioState.SetContinentFilter("Todos")' title="Quitar filtro de continente">
                             <span>@RadioState.SelectedContinent</span>
                             <span class="badge-close">✕</span>
                         </button>
                     }
                     @if (RadioState.SelectedCountry != "Todos")
                     {
-                        <button class="active-filter-badge" @onclick='() => RadioState.SetCountryFilter("Todos")' title="Quitar filtro">
+                        <button type="button" class="active-filter-badge" @onclick='() => RadioState.SetCountryFilter("Todos")' title="Quitar filtro de país">
                             <span>@RadioState.SelectedCountry</span>
                             <span class="badge-close">✕</span>
                         </button>
                     }
                     @if (RadioState.SelectedState != "Todos")
                     {
-                        <button class="active-filter-badge" @onclick='() => RadioState.SetStateFilter("Todos")' title="Quitar filtro">
+                        <button type="button" class="active-filter-badge" @onclick='() => RadioState.SetStateFilter("Todos")' title="Quitar filtro de estado">
                             <span>@RadioState.SelectedState</span>
                             <span class="badge-close">✕</span>
                         </button>
                     }
                     @if (RadioState.SelectedCity != "Todas")
                     {
-                        <button class="active-filter-badge" @onclick='() => RadioState.SetCityFilter("Todas")' title="Quitar filtro">
+                        <button type="button" class="active-filter-badge" @onclick='() => RadioState.SetCityFilter("Todas")' title="Quitar filtro de ciudad">
                             <span>@RadioState.SelectedCity</span>
                             <span class="badge-close">✕</span>
                         </button>
                     }
                     @if (RadioState.SelectedGenre != "Todos")
                     {
-                        <button class="active-filter-badge" @onclick='() => RadioState.SetGenreFilter("Todos")' title="Quitar filtro">
+                        <button type="button" class="active-filter-badge" @onclick='() => RadioState.SetGenreFilter("Todos")' title="Quitar filtro de género">
                             <span>@RadioState.SelectedGenre</span>
                             <span class="badge-close">✕</span>
                         </button>
                     }
                     @if (RadioState.SelectedBand != "TODAS")
                     {
-                        <button class="active-filter-badge" @onclick='() => RadioState.SetBandFilter("TODAS")' title="Quitar filtro">
+                        <button type="button" class="active-filter-badge" @onclick='() => RadioState.SetBandFilter("TODAS")' title="Quitar filtro de banda">
                             <span>@RadioState.SelectedBand</span>
                             <span class="badge-close">✕</span>
                         </button>
                     }
                     @if (!string.IsNullOrWhiteSpace(RadioState.SearchQuery))
                     {
-                        <button class="active-filter-badge" @onclick='() => RadioState.SetSearchQuery(string.Empty)' title="Quitar filtro">
+                        <button type="button" class="active-filter-badge" @onclick='() => RadioState.SetSearchQuery(string.Empty)' title="Quitar búsqueda">
                             <span>"@RadioState.SearchQuery"</span>
                             <span class="badge-close">✕</span>
                         </button>
                     }
 
-                    <button class="btn-reset-filters ms-auto" @onclick="RadioState.ResetFilters" title="Restablecer todos los filtros">
+                    <button type="button" class="btn-reset-filters ms-auto" @onclick="RadioState.ResetFilters" title="Restablecer todos los filtros">
                         @RadioState.T("RESET")
                     </button>
                 </div>
             }
 
-            <!-- Enlaces de Asistencia: Sugerencias de Emisoras y Guía FM/AM -->
-            <div class="d-flex flex-wrap justify-content-between align-items-center mt-2 gap-2">
-                <button type="button" class="btn-suggest-link" @onclick="() => RadioState.OpenFeedbackModal()" title="Buzón de sugerencias: sugiere una emisora que no esté en la lista o propón mejoras">
-                    <span>✍️ ¿Falta tu emisora favorita o quieres sugerir una mejora? <u>Haz clic aquí</u></span>
-                </button>
-                <button type="button" class="btn-guide-toggle-small ms-auto" @onclick="ToggleFmAmGuide">
-                    <span>@(ShowFmAmGuide ? "Ocultar Guía FM/AM" : "¿Cuál es la diferencia entre FM y AM?")</span>
+            <!-- Enlace sutil para la Guía Técnica FM/AM -->
+            <div class="d-flex justify-content-end align-items-center mt-2">
+                <button type="button" class="btn-guide-toggle-small" @onclick="ToggleFmAmGuide">
+                    <span>@(ShowFmAmGuide ? "Ocultar Guía Técnica FM / AM" : "📡 Diferencia entre FM y AM")</span>
                 </button>
             </div>
 
-            <!-- Guía Explicativa FM vs AM (Desplegable) -->
+            <!-- Guía Técnica FM vs AM (Desplegable Bento) -->
             @if (ShowFmAmGuide)
             {
                 <div class="fm-am-guide-card p-3 p-md-4 mt-3">
                     <div class="d-flex align-items-center justify-content-between mb-3">
                         <div class="d-flex align-items-center gap-2">
-                            <span class="guide-badge">📡 GUÍA TÉCNICA</span>
-                            <h4 class="guide-title mb-0">Diferencia entre FM y AM</h4>
+                            <span class="guide-badge">📡 GUÍA TÉCNICA HI-FI</span>
+                            <h4 class="guide-title mb-0">Arquitectura de Bandas: FM vs AM</h4>
                         </div>
-                        <button class="btn-close-guide" @onclick="() => ShowFmAmGuide = false">✕</button>
+                        <button type="button" class="btn-close-guide" @onclick="() => ShowFmAmGuide = false">✕</button>
                     </div>
                     <div class="row g-3">
                         <div class="col-12 col-md-6">
                             <div class="guide-box box-fm p-3 h-100">
                                 <div class="d-flex align-items-center justify-content-between mb-2">
                                     <span class="guide-box-header">⚡ FM (Frecuencia Modulada)</span>
-                                    <span class="guide-freq-pill">88.0 – 108.0 MHz</span>
+                                    <span class="guide-freq-pill">87.5 – 108.0 MHz</span>
                                 </div>
                                 <ul class="guide-list mb-0">
-                                    <li><b>Calidad de Sonido:</b> Alta fidelidad (Hi-Fi) estéreo cristalino con ancho de banda completo.</li>
-                                    <li><b>Inmunidad:</b> Resistente a ruidos estáticos, tormentas eléctricas y cables de alta tensión.</li>
-                                    <li><b>Alcance:</b> Línea de visión directa (50 a 100 km). Las ondas atraviesan la atmósfera.</li>
-                                    <li><b>Uso:</b> Música, juventud, emisoras metropolitanas y sonido inmersivo.</li>
+                                    <li><b>Calidad Hi-Fi:</b> Estéreo de alta fidelidad, rango dinámico amplio y nulo ruido de estática.</li>
+                                    <li><b>Inmunidad:</b> Resistente a tormentas y ruido eléctrico industrial.</li>
+                                    <li><b>Cobertura:</b> Línea de vista directa (50 – 100 km).</li>
                                 </ul>
                             </div>
                         </div>
@@ -425,9 +329,9 @@
                                     <span class="guide-freq-pill">540 – 1600 kHz</span>
                                 </div>
                                 <ul class="guide-list mb-0">
-                                    <li><b>Calidad de Sonido:</b> Señal monoaural optimizada para la claridad de la voz humana y la palabra hablada.</li>
-                                    <li><b>Alcance Masivo:</b> Enorme cobertura de cientos o miles de kilómetros. Por la noche, las ondas rebotan en la ionósfera superando montañas.</li>
-                                    <li><b>Uso:</b> Noticias, debate político, deportes y cobertura para sierras, costas y zonas rurales.</li>
+                                    <li><b>Claridad Vocal:</b> Señal monoaural optimizada para radio hablada, deportes y noticias.</li>
+                                    <li><b>Gran Alcance:</b> Miles de kilómetros mediante rebote nocturno en la ionosfera.</li>
+                                    <li><b>Uso:</b> Cobertura en serranías, costas y zonas rurales.</li>
                                 </ul>
                             </div>
                         </div>
@@ -440,16 +344,16 @@
 
     private RenderFragment RenderSponsorSlot() => __builder =>
     {
-        <aside class="studio-sponsor-deck p-3 mb-4" aria-label="Espacio de Publicidad y Patrocinio">
+        <aside class="studio-sponsor-deck p-3 mb-4" aria-label="Espacio de Patrocinio y Publicidad">
             <div class="d-flex align-items-center justify-content-between mb-2">
                 <div class="d-flex align-items-center gap-2">
-                    <span class="sponsor-tag">📻 PATROCINIO & PUBLICIDAD</span>
-                    <span class="sponsor-subtag">ESPACIO DISCRETO HI-FI</span>
+                    <span class="sponsor-tag">📻 PATROCINIO HI-FI</span>
+                    <span class="sponsor-subtag d-none d-sm-inline">ESPACIO DISCRETO SIN POPUNDERS</span>
                 </div>
-                <span class="sponsor-badge">ANUNCIOS</span>
+                <span class="sponsor-badge">SPONSOR</span>
             </div>
 
-            <!-- Contenedor Oficial de Banner Programático 728x90 (Adsterra) -->
+            <!-- Banner Oficial 728x90 (Adsterra Sandboxed) -->
             <div class="sponsor-ad-slot" id="radio-mundial-ad-slot">
                 <iframe src="ad-banner.html" 
                         width="728" 
@@ -470,16 +374,16 @@
         @if (RadioState.FilteredStations.Count == 0)
         {
             <div class="empty-stations-deck text-center py-5 my-3 p-4">
-                <div class="empty-icon mb-2">📻</div>
-                <h4 class="fw-bold mb-1">@RadioState.T("EMPTY_TITLE")</h4>
-                <p class="text-muted small mb-3">
+                <div class="empty-icon mb-3">📻</div>
+                <h4 class="fw-bold mb-2">@RadioState.T("EMPTY_TITLE")</h4>
+                <p class="text-muted small mb-4">
                     @RadioState.T("EMPTY_DESC")
                 </p>
                 <div class="d-flex flex-wrap justify-content-center gap-2">
-                    <button class="btn-tune-retro px-4 py-2" @onclick="RadioState.ResetFilters">
+                    <button type="button" class="btn-tune-retro px-4 py-2" @onclick="RadioState.ResetFilters">
                         @RadioState.T("EMPTY_BTN")
                     </button>
-                    <button class="btn-suggest-empty-btn px-4 py-2" @onclick="() => RadioState.OpenFeedbackModal()">
+                    <button type="button" class="btn-suggest-empty-btn px-4 py-2" @onclick="() => RadioState.OpenFeedbackModal()">
                         ✍️ Sugerir Emisora para esta Zona
                     </button>
                 </div>
@@ -497,7 +401,7 @@
             var endIndex = Math.Min(startIndex + _pageSize, totalCount);
 
             <!-- Barra Superior de Control de Paginado y Densidad -->
-            <div class="pagination-cockpit-bar mb-3 d-flex flex-wrap align-items-center justify-content-between gap-2 p-2">
+            <div class="pagination-cockpit-bar mb-3 d-flex flex-wrap align-items-center justify-content-between gap-2 p-2 px-3">
                 <div class="d-flex align-items-center gap-2">
                     <span class="pagination-info-badge">
                         📻 Emisoras <b>@(startIndex + 1)</b>–<b>@endIndex</b> de <b>@totalCount</b>
@@ -507,9 +411,9 @@
                     </span>
                 </div>
 
-                <!-- Selector de Emisoras por Pantalla (Evita scroll masivo) -->
-                <div class="page-size-selector d-flex align-items-center gap-1 ms-auto">
-                    <span class="page-size-title d-none d-md-inline">Por pantalla:</span>
+                <!-- Selector de Emisoras por Pantalla -->
+                <div class="page-size-selector d-flex align-items-center gap-2 ms-auto">
+                    <span class="page-size-title d-none d-md-inline">Por página:</span>
                     <div class="page-size-chip-group">
                         @foreach (var size in new[] { 6, 9, 12, 18 })
                         {
@@ -525,8 +429,8 @@
                 </div>
             </div>
 
-            <!-- Rejilla Compacta y Super Responsiva de Emisoras -->
-            <div class="stations-responsive-grid mb-3">
+            <!-- Bento Cards Grid de Emisoras (Estilo Dribbble) -->
+            <div class="stations-responsive-grid mb-4">
                 @foreach (var station in pagedStations)
                 {
                     var isCurrent = RadioState.ActiveStation?.Id == station.Id;
@@ -535,16 +439,18 @@
                     var isAm = station.Band.Equals("AM", StringComparison.OrdinalIgnoreCase) || station.Frequency > 150;
 
                     <div class="station-grid-item">
-                        <div class="retro-station-card h-100 @(isCurrent ? "card-station-active" : "")">
+                        <div class="retro-station-card @(isCurrent ? "card-station-active" : "")">
+                            
+                            <!-- Header de la Bento Card -->
                             <div class="card-station-header">
-                                <div class="station-thumb-wrapper @(isPlayingThis ? "thumb-spinning" : "")">
+                                <div class="station-thumb-wrapper @(isPlayingThis ? "thumb-active" : "")">
                                     <img src="@station.LogoUrl" alt="@station.Name" class="station-thumb-img" loading="lazy" />
                                     @if (isPlayingThis)
                                     {
                                         <div class="thumb-equalizer-overlay">
-                                            <div class="eq-bar"></div>
-                                            <div class="eq-bar"></div>
-                                            <div class="eq-bar"></div>
+                                            <div class="eq-bar bar-1"></div>
+                                            <div class="eq-bar bar-2"></div>
+                                            <div class="eq-bar bar-3"></div>
                                         </div>
                                     }
                                 </div>
@@ -557,44 +463,49 @@
                                         <div class="d-flex align-items-center gap-1">
                                             <button type="button" class="btn-report-card" 
                                                     @onclick="() => RadioState.OpenFeedbackModal(station.Name)"
-                                                    title="Reportar falla o sugerir corrección de @station.Name">
+                                                    title="Reportar problema de @station.Name">
                                                 ⚠️
                                             </button>
-                                            <button class="btn-favorite @(isFavorite ? "favorite-active" : "")" 
+                                            <button type="button" class="btn-favorite @(isFavorite ? "favorite-active" : "")" 
                                                     @onclick="() => RadioState.ToggleFavoriteAsync(station.Id)"
                                                     title="@(isFavorite ? "Quitar de favoritas" : "Guardar en favoritas")">
                                                 ★
                                             </button>
                                         </div>
                                     </div>
+
                                     <h3 class="station-name text-truncate" title="@station.Name">
                                         @station.Name
                                     </h3>
+                                    
                                     <div class="station-geo-tag text-truncate">
                                         📍 @station.City, @station.State (@station.CountryCode)
                                     </div>
                                 </div>
                             </div>
 
+                            <!-- Descripción alineada con line-clamp -->
                             <p class="station-description">
-                                @station.Description
+                                @(string.IsNullOrWhiteSpace(station.Description) ? "Transmisión en vivo con audio digital de alta fidelidad." : station.Description)
                             </p>
 
+                            <!-- Footer de la Bento Card -->
                             <div class="card-station-footer">
                                 <div class="station-meta-tags">
                                     <span class="genre-pill">@station.Genre</span>
                                     <span class="bitrate-tag">@station.Bitrate</span>
                                 </div>
 
-                                <button class="btn-tune-retro @(isPlayingThis ? "btn-playing" : "")" 
+                                <button type="button" 
+                                        class="btn-tune-retro @(isPlayingThis ? "btn-playing" : "")" 
                                         @onclick="() => HandleTuneClick(station)">
                                     @if (isPlayingThis)
                                     {
-                                        <span>⏸ @RadioState.T("PAUSE")</span>
+                                        <span>⏸ Sintonizada</span>
                                     }
                                     else
                                     {
-                                        <span>▶ @RadioState.T("TUNE")</span>
+                                        <span>▶ Sintonizar</span>
                                     }
                                 </button>
                             </div>
@@ -603,10 +514,10 @@
                 }
             </div>
 
-            <!-- Navegación de Páginas Inferior (Consola Analógica Vintage) -->
+            <!-- Navegación de Páginas Inferior (Bento Hi-Fi) -->
             @if (totalPages > 1)
             {
-                <nav class="pagination-nav-footer d-flex flex-wrap align-items-center justify-content-between gap-2 p-2 mt-2" aria-label="Navegación de emisoras">
+                <nav class="pagination-nav-footer d-flex flex-wrap align-items-center justify-content-between gap-2 p-2 px-3 mt-2" aria-label="Navegación de emisoras">
                     <div class="nav-btn-group d-flex align-items-center gap-1">
                         <button type="button" class="btn-retro-nav-page" 
                                 disabled="@(_currentPage <= 1)" 
@@ -665,7 +576,7 @@
     private bool IsSideBySide { get; set; } = true;
     private bool ShowFmAmGuide { get; set; } = false;
     private bool _isRadioCollapsedMobile = false;
-    private bool _showMobileFilters = false;
+    private bool _showAdvancedFilters = true;
     private int _currentPage = 1;
     private int _pageSize = 9;
 
@@ -674,9 +585,9 @@
         _isRadioCollapsedMobile = !_isRadioCollapsedMobile;
     }
 
-    private void ToggleMobileFilters()
+    private void ToggleAdvancedFilters()
     {
-        _showMobileFilters = !_showMobileFilters;
+        _showAdvancedFilters = !_showAdvancedFilters;
     }
 
     private int GetActiveFiltersCount()
@@ -743,7 +654,7 @@
     {
         ["México"] = "🇲🇽", ["Estados Unidos"] = "🇺🇸", ["Canadá"] = "🇨🇦",
         ["Guatemala"] = "🇬🇹", ["Costa Rica"] = "🇨🇷", ["El Salvador"] = "🇸🇻",
-        ["Honduras"] = "🇭🇳", ["Nicaragua"] = "🇳🇮", ["Panamá"] = "🇵🇦", ["Belice"] = "🇧🇿",
+        ["Honduras"] = "HN", ["Nicaragua"] = "🇳🇮", ["Panamá"] = "🇵🇦", ["Belice"] = "🇧🇿",
         ["República Dominicana"] = "🇩🇴", ["Puerto Rico"] = "🇵🇷", ["Cuba"] = "🇨🇺", ["Jamaica"] = "🇯🇲",
         ["Colombia"] = "🇨🇴", ["Argentina"] = "🇦🇷", ["Brasil"] = "🇧🇷", ["Chile"] = "🇨🇱",
         ["Perú"] = "🇵🇪", ["Venezuela"] = "🇻🇪", ["Ecuador"] = "🇪🇨", ["Bolivia"] = "🇧🇴",
@@ -760,11 +671,7 @@
         ["Sudáfrica"] = "🇿🇦", ["Nigeria"] = "🇳🇬", ["Egipto"] = "🇪🇬", ["Kenia"] = "🇰🇪",
         ["Marruecos"] = "🇲🇦", ["Ghana"] = "🇬🇭", ["Senegal"] = "🇸🇳", ["Costa de Marfil"] = "🇨🇮",
         ["Argelia"] = "🇩🇿", ["Túnez"] = "🇹🇳",
-        ["Somalilandia"] = "🇸🇴", ["Sáhara Occidental"] = "🇪🇭",
-        ["Guinea Ecuatorial"] = "🇬🇶", ["Santo Tomé y Príncipe"] = "🇸🇹",
-        ["Kosovo"] = "🇽🇰", ["Abjasia"] = "🇬🇪", ["Osetia del Sur"] = "🇬🇪", ["Transnistria"] = "🇲🇩",
-        ["Chipre del Norte"] = "🇨🇾", ["Timor Oriental"] = "🇹🇱",
-        ["Australia"] = "🇦🇺", ["Nueva Zelanda"] = "🇳🇿", ["Fiyi"] = "🇫🇯", ["Papúa Nueva Guinea"] = "🇵🇬"
+        ["Australia"] = "🇦🇺", ["Nueva Zelanda"] = "🇳🇿"
     };
 
     private string GetCountryFlag(string country)

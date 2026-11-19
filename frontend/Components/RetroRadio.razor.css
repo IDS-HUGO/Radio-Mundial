@@ -1,26 +1,27 @@
 /* ==============================================================================
-   Radio Mundial - Vintage Retro Transistor Radio (Estilo Clásico 1970)
+   Radio Mundial - Neo-Skeuomorphic Industrial Audio Transistor (Dieter Rams / Teenage Engineering)
+   Estética Bento Grid + Audio Industrial Hi-Fi
    ============================================================================== */
 
 .retro-radio-stage {
     position: relative;
-    max-width: 580px;
+    max-width: 540px;
     width: 100%;
-    margin: 0.25rem auto 1rem auto;
-    padding-top: 45px;
+    margin: 0.25rem auto 1.25rem auto;
+    padding-top: 36px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    perspective: 1000px;
+    perspective: 1200px;
 }
 
 /* -------------------------------------------------------------------------
-   Antena Telescópica Cromada
+   Antena Telescópica Dark Anodized Chrome
    ------------------------------------------------------------------------- */
 .retro-antenna-wrapper {
     position: absolute;
-    top: 15px;
-    left: 18%;
+    top: 10px;
+    left: 16%;
     z-index: 1;
     transform-origin: bottom left;
     transform: rotate(38deg);
@@ -32,43 +33,44 @@
 }
 
 .antenna-base {
-    width: 14px;
-    height: 12px;
-    background: linear-gradient(90deg, #95a5a6, #ecf0f1, #7f8c8d);
-    border-radius: 4px;
+    width: 12px;
+    height: 10px;
+    background: linear-gradient(90deg, #1f242f, #475263, #1f242f);
+    border-radius: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .antenna-rod {
-    width: 5px;
-    height: 180px;
-    background: linear-gradient(90deg, #bdc3c7 0%, #ffffff 50%, #7f8c8d 100%);
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.25);
+    width: 4px;
+    height: 165px;
+    background: linear-gradient(90deg, #374151 0%, #9ca3af 50%, #374151 100%);
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
     position: relative;
 }
 
 .antenna-tip {
-    width: 11px;
-    height: 11px;
+    width: 9px;
+    height: 9px;
     border-radius: 50%;
-    background: radial-gradient(circle at 35% 35%, #ffffff, #95a5a6, #2c3e50);
+    background: radial-gradient(circle at 35% 35%, #e5e7eb, #6b7280, #1f2937);
     position: absolute;
-    top: -6px;
-    left: -3px;
-    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    top: -5px;
+    left: -2.5px;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
 }
 
 /* -------------------------------------------------------------------------
-   Asa de Transporte Arqueada
+   Asa de Transporte - Aluminio Grafito Pulido
    ------------------------------------------------------------------------- */
 .retro-handle-arc {
     position: absolute;
-    top: 5px;
-    width: 82%;
-    height: 105px;
-    background: linear-gradient(180deg, #5a341a 0%, #3a1e0d 100%);
-    border: 3px solid #734524;
-    border-radius: 90px 90px 0 0;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.45), inset 0 2px 4px rgba(220, 180, 130, 0.3);
+    top: 4px;
+    width: 78%;
+    height: 85px;
+    background: linear-gradient(180deg, #232834 0%, #161922 100%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 70px 70px 0 0;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.18);
     z-index: 2;
     display: flex;
     justify-content: center;
@@ -76,84 +78,95 @@
 
 .handle-inner-space {
     width: 86%;
-    height: 80px;
+    height: 68px;
     background: transparent;
-    border-radius: 70px 70px 0 0;
+    border-radius: 55px 55px 0 0;
     border-bottom: none;
-    box-shadow: inset 0 6px 12px rgba(0,0,0,0.35);
+    box-shadow: inset 0 6px 14px rgba(0, 0, 0, 0.5);
 }
 
 /* -------------------------------------------------------------------------
-   Chasis Principal de la Radio Retro - Estilo "Café Viejo" (Nogal / Caoba)
+   Chasis Principal - Acabado Carbón / Grafito Industrial (Dieter Rams / Rams T3)
    ------------------------------------------------------------------------- */
 .retro-radio-body {
     position: relative;
     width: 100%;
-    /* Acabado Caoba / Nogal Envejecido "Café Viejo" con pátina satinada */
     background: 
-        radial-gradient(ellipse at 50% -10%, rgba(160, 92, 48, 0.45) 0%, transparent 65%),
-        linear-gradient(150deg, #442413 0%, #33190b 35%, #241107 70%, #170904 100%);
-    border-radius: 44px;
-    padding: 1.5rem 1.6rem 1.2rem 1.6rem;
+        radial-gradient(ellipse at 50% -10%, rgba(255, 107, 0, 0.08) 0%, transparent 60%),
+        linear-gradient(165deg, #181c26 0%, #12151d 40%, #0c0e14 100%);
+    border-radius: 26px;
+    padding: 1.35rem 1.4rem 1.15rem 1.4rem;
     box-shadow: 
-        0 26px 52px -12px rgba(0, 0, 0, 0.8),
-        0 14px 28px rgba(35, 17, 7, 0.65),
-        inset 0 3px 6px rgba(214, 164, 114, 0.35),
-        inset 0 -6px 12px rgba(0, 0, 0, 0.7);
+        0 28px 56px -12px rgba(0, 0, 0, 0.85),
+        0 10px 24px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        inset 0 -4px 10px rgba(0, 0, 0, 0.7);
     z-index: 3;
-    border: 2px solid rgba(197, 160, 89, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
-/* Remaches laterales del asa (Latón envejecido) */
+.retro-radio-body.radio-power-on {
+    box-shadow: 
+        0 30px 60px -10px rgba(0, 0, 0, 0.9),
+        0 0 24px rgba(255, 107, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.14),
+        inset 0 -4px 10px rgba(0, 0, 0, 0.7);
+    border-color: rgba(255, 107, 0, 0.25);
+}
+
+/* Remaches de fijación CNC */
 .handle-rivet {
     position: absolute;
-    top: 45px;
-    width: 24px;
-    height: 24px;
+    top: 38px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
-    background: radial-gradient(circle at 35% 35%, #faecb8, #c5a059 40%, #7d5e23 80%, #3d2c0b);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.7);
+    background: radial-gradient(circle at 35% 35%, #475263, #232834 60%, #11131a);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.25);
     z-index: 4;
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.rivet-left { left: -8px; }
-.rivet-right { right: -8px; }
+.rivet-left { left: -7px; }
+.rivet-right { right: -7px; }
 
 /* -------------------------------------------------------------------------
-   Bisel Frontal de Latón Antiguo (Antique Brass Bezel)
+   Bisel CNC Milled de Precisión
    ------------------------------------------------------------------------- */
 .retro-chrome-bezel {
-    background: linear-gradient(145deg, #f5e4b2 0%, #c5a059 30%, #876222 70%, #d8b26e 100%);
-    padding: 7px;
-    border-radius: 32px;
+    background: linear-gradient(145deg, #2b303d 0%, #191c25 50%, #0d0f15 100%);
+    padding: 6px;
+    border-radius: 20px;
     box-shadow: 
-        0 8px 20px rgba(0,0,0,0.5),
-        inset 0 1px 3px rgba(255,255,255,0.8);
+        0 6px 18px rgba(0, 0, 0, 0.6),
+        inset 0 1px 2px rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .retro-front-face {
-    background: #14110d;
-    border-radius: 26px;
+    background: #090a0e;
+    border-radius: 15px;
     overflow: hidden;
-    box-shadow: inset 0 4px 12px rgba(0,0,0,0.85);
+    box-shadow: inset 0 3px 10px rgba(0, 0, 0, 0.9);
     display: flex;
     flex-direction: column;
 }
 
 /* -------------------------------------------------------------------------
-   1. Panel Superior (Cuadrante y Perillas)
+   1. Panel Superior: Cuadrante y Perillas Knurled (Teenage Engineering)
    ------------------------------------------------------------------------- */
 .tuner-control-panel {
-    background: #141619;
-    padding: 1.1rem 1.25rem 0.9rem 1.25rem;
+    background: #11141c;
+    padding: 1.1rem 1.15rem 0.9rem 1.15rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
-    border-bottom: 3px solid #2d3436;
+    gap: 0.9rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-/* Perillas Analógicas Giratorias */
+/* Perillas Milled Metal */
 .knob-container {
     display: flex;
     flex-direction: column;
@@ -163,86 +176,97 @@
 }
 
 .knob-volume-badge, .knob-tuning-badge {
-    font-size: 0.62rem;
-    font-weight: 800;
-    color: #eccc68;
-    background: rgba(0,0,0,0.6);
-    padding: 1px 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: #ff944d;
+    background: rgba(255, 107, 0, 0.1);
+    padding: 2px 7px;
     border-radius: 4px;
-    border: 1px solid rgba(236, 204, 104, 0.3);
+    border: 1px solid rgba(255, 107, 0, 0.25);
+    letter-spacing: 0.04em;
 }
 
 .volume-slider-box {
-    width: 60px;
+    width: 62px;
     display: flex;
     justify-content: center;
-    margin-top: 2px;
+    margin-top: 3px;
 }
 
 .retro-slider {
     width: 100%;
     height: 4px;
-    accent-color: #f39c12;
+    accent-color: #ff6b00;
     cursor: pointer;
+    background: #1f2430;
+    border-radius: 2px;
 }
 
 .knob-arrows-row {
     display: flex;
     gap: 4px;
-    margin-top: 2px;
+    margin-top: 3px;
 }
 
 .btn-knob-step {
-    border: 1px solid rgba(255,255,255,0.2);
-    background: #2f3640;
-    color: #dcdde1;
-    font-size: 0.55rem;
-    padding: 1px 6px;
-    border-radius: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #1b1f2b;
+    color: #94a3b8;
+    font-size: 0.58rem;
+    padding: 2px 7px;
+    border-radius: 4px;
     cursor: pointer;
     line-height: 1;
+    transition: all 0.15s ease;
 }
 
 .btn-knob-step:hover {
-    background: #e67e22;
-    color: #fff;
+    background: #ff6b00;
+    color: #ffffff;
+    border-color: #ff6b00;
 }
 
 .retro-knob {
-    width: 62px;
-    height: 62px;
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
     border: none;
     background: transparent;
     padding: 0;
     cursor: pointer;
-    transition: transform 0.15s ease;
+    transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .retro-knob:hover {
-    transform: scale(1.05);
+    transform: scale(1.04);
 }
 
 .retro-knob:active {
     transform: scale(0.96);
 }
 
+/* Textura Moleteada Diamond Knurling en el borde */
 .knob-metallic-rim {
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background: conic-gradient(from 0deg, #718093, #dcdde1, #ffffff, #718093, #2f3640, #718093);
+    background: conic-gradient(
+        from 0deg, 
+        #2a2f3d, #4b5566, #7d899e, #2a2f3d, #1a1d26, #4b5566, #7d899e, #2a2f3d
+    );
     padding: 5px;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.5), inset 0 2px 3px rgba(255,255,255,0.8);
+    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .knob-cap {
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background: radial-gradient(circle at 40% 40%, #485460, #1e272e 80%);
+    background: radial-gradient(circle at 40% 40%, #202532, #0d0f15 85%);
     position: relative;
-    box-shadow: inset 0 3px 6px rgba(0,0,0,0.7);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.8);
 }
 
 .knob-indicator-dot {
@@ -259,135 +283,173 @@
 .knob-indicator-dot::after {
     content: '';
     position: absolute;
-    top: 5px;
-    left: calc(50% - 2px);
-    width: 4px;
-    height: 10px;
-    background: #ff3f34;
+    top: 6px;
+    left: calc(50% - 1.5px);
+    width: 3px;
+    height: 9px;
+    background: #ff6b00;
     border-radius: 2px;
-    box-shadow: 0 0 5px #ff3f34;
+    box-shadow: 0 0 6px #ff6b00;
 }
 
 .knob-label {
-    font-size: 0.62rem;
-    font-weight: 800;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.58rem;
+    font-weight: 700;
     letter-spacing: 0.08em;
-    color: #95a5a6;
-    text-shadow: 0 1px 2px #000;
+    color: #64748b;
 }
 
-/* Cuadrante de Frecuencia Analógica */
+/* -------------------------------------------------------------------------
+   Cuadrante de Sintonización de Cristal Ahumado (Smoked Glass Dial)
+   ------------------------------------------------------------------------- */
 .tuner-scale-window {
     position: relative;
     flex: 1;
-    height: 95px;
-    background: #0f1013;
+    height: 98px;
+    background: #08090d;
     border-radius: 8px;
-    border: 2px solid #2f3640;
-    box-shadow: inset 0 4px 12px rgba(0,0,0,0.9), 0 1px 2px rgba(255,255,255,0.1);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    box-shadow: inset 0 3px 12px rgba(0, 0, 0, 0.95);
     overflow: hidden;
-    padding: 6px 12px;
+    padding: 7px 12px;
     cursor: pointer;
     user-select: none;
+    transition: box-shadow 0.3s ease;
 }
 
-/* Indicadores de Estado Superior */
+.radio-power-on .tuner-scale-window {
+    box-shadow: inset 0 0 24px rgba(255, 107, 0, 0.12), inset 0 3px 12px rgba(0, 0, 0, 0.95);
+}
+
+/* Fila de Indicadores Superiores */
 .tuner-indicators-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-size: 0.68rem;
-    margin-bottom: 4px;
-    color: #a4b0be;
+    margin-bottom: 5px;
+    color: #94a3b8;
 }
 
 .stereo-indicator {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 5px;
+    font-family: 'JetBrains Mono', monospace;
     font-weight: 800;
-    font-size: 0.65rem;
-    letter-spacing: 0.05em;
-    color: #747d8c;
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    color: #64748b;
 }
 
 .indicator-led {
-    width: 7px;
-    height: 7px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    background-color: #57606f;
+    background-color: #334155;
     transition: all 0.3s ease;
 }
 
 .indicator-glow .indicator-led {
-    background-color: #b92b27;
-    box-shadow: 0 0 4px rgba(185, 43, 39, 0.7);
+    background-color: #10b981;
+    box-shadow: 0 0 8px #10b981;
 }
 
 .indicator-glow .indicator-text {
-    color: #e59a8d;
+    color: #34d399;
 }
 
-/* Conmutador Táctil de Banda FM / AM */
+/* Selector Táctil FM / AM en el Dial */
 .dial-band-switcher {
     display: inline-flex;
     align-items: center;
-    background: #0d0a08;
-    border: 1px solid #4a331e;
+    background: #141720;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 12px;
     padding: 1px 2px;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.8);
     flex-shrink: 0;
 }
 
 .btn-band-switch {
     background: transparent;
-    color: #8c7660;
+    color: #64748b;
     border: none;
-    font-size: 0.62rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
     font-weight: 800;
-    padding: 1px 6px;
+    padding: 2px 7px;
     border-radius: 9px;
     cursor: pointer;
     transition: all 0.15s ease;
 }
 
 .btn-band-switch.band-switch-active {
-    background: linear-gradient(180deg, #d49a3d 0%, #9e6c1a 100%);
-    color: #1a0f05;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.5), 0 0 6px rgba(212, 154, 61, 0.4);
+    background: #ff6b00;
+    color: #ffffff;
+    box-shadow: 0 1px 4px rgba(255, 107, 0, 0.4);
 }
 
 .station-meta-display {
     max-width: 48%;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
     font-weight: 700;
-    color: #f1f2f6;
-    text-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
+    color: #f1f5f9;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
 }
 
 .dial-station-name {
-    color: #f5b041;
+    color: #f8fafc;
 }
 
 .dial-station-freq {
-    color: #e59866;
+    color: #ff944d;
     font-size: 0.65rem;
+}
+
+/* Mini Ecualizador Animado en el Dial */
+.dial-audio-eq {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 10px;
+    margin-left: 2px;
+}
+
+.dial-audio-eq span {
+    width: 2px;
+    background: #ff6b00;
+    border-radius: 1px;
+    animation: dial-eq-jump 0.8s ease-in-out infinite alternate;
+}
+
+.dial-audio-eq span:nth-child(1) { height: 4px; animation-delay: 0.1s; }
+.dial-audio-eq span:nth-child(2) { height: 9px; animation-delay: 0.25s; }
+.dial-audio-eq span:nth-child(3) { height: 6px; animation-delay: 0.4s; }
+
+@keyframes dial-eq-jump {
+    0% { height: 3px; }
+    50% { height: 10px; }
+    100% { height: 5px; }
 }
 
 .listeners-indicator {
-    font-size: 0.65rem;
-    color: #8a7a6b;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    color: #64748b;
     font-weight: 600;
 }
 
-/* Escalas de Bandas FM y AM */
+/* Escalas Serigrafiadas FM y AM */
 .dial-band-scale {
     display: flex;
     align-items: center;
-    height: 26px;
+    height: 27px;
     position: relative;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     transition: opacity 0.3s ease;
 }
 
@@ -396,7 +458,7 @@
 }
 
 .scale-dimmed {
-    opacity: 0.4;
+    opacity: 0.35;
 }
 
 .dial-band-scale:last-of-type {
@@ -404,11 +466,11 @@
 }
 
 .band-tag {
-    font-size: 0.68rem;
-    font-weight: 900;
-    width: 28px;
-    color: #eccc68;
-    text-shadow: 0 1px 2px #000;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.66rem;
+    font-weight: 800;
+    width: 26px;
+    color: #ff944d;
 }
 
 .ticks-container {
@@ -416,20 +478,20 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    height: 16px;
+    height: 17px;
     padding: 0 4px;
 }
 
 .tick {
     position: relative;
     width: 1px;
-    height: 7px;
-    background: rgba(255,255,255,0.35);
+    height: 6px;
+    background: rgba(255, 255, 255, 0.22);
 }
 
 .tick-major {
-    height: 14px;
-    background: #f1f2f6;
+    height: 13px;
+    background: rgba(255, 255, 255, 0.7);
 }
 
 .tick-major i {
@@ -439,12 +501,12 @@
     transform: translateX(-50%);
     font-size: 0.58rem;
     font-style: normal;
-    font-family: system-ui, sans-serif;
-    color: #ced6e0;
-    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    color: #94a3b8;
+    font-weight: 600;
 }
 
-/* Aguja Roja Móvil (The Red Needle) */
+/* Aguja Roja Móvil (Precision Amber-Red Needle) */
 .tuning-needle {
     position: absolute;
     top: 22px;
@@ -459,39 +521,39 @@
 .needle-core {
     width: 100%;
     height: 100%;
-    background: #c0392b;
-    box-shadow: 0 0 3px rgba(192, 57, 43, 0.6);
+    background: #ff6b00;
+    box-shadow: 0 0 6px rgba(255, 107, 0, 0.9), 0 0 12px rgba(255, 107, 0, 0.4);
 }
 
 .needle-shadow {
     position: absolute;
     top: 0;
-    left: 3px;
+    left: 2px;
     width: 2px;
     height: 100%;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.6);
     filter: blur(1px);
 }
 
 .glass-reflection-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0) 55%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 55%);
     pointer-events: none;
     z-index: 6;
 }
 
 /* -------------------------------------------------------------------------
-   2. Panel Inferior (Rejilla de Altavoz Vintage de Tela Acústica / Burlap)
+   2. Panel Inferior: Rejilla Acústica Milled Industrial (Dieter Rams Braun)
    ------------------------------------------------------------------------- */
 .retro-speaker-grille {
     position: relative;
     background: 
-        radial-gradient(circle at 50% 50%, rgba(215, 195, 160, 0.15) 0%, transparent 80%),
-        repeating-linear-gradient(0deg, #dfd2be 0px, #dfd2be 2px, #cebd9f 2px, #cebd9f 4px);
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 80%),
+        linear-gradient(180deg, #0e1017 0%, #090a0e 100%);
     padding: 1.1rem 1.4rem;
-    box-shadow: inset 0 3px 8px rgba(0,0,0,0.5);
-    border-top: 2px solid #3d2a19;
+    box-shadow: inset 0 3px 10px rgba(0, 0, 0, 0.7);
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .grille-acoustic-cloth {
@@ -502,10 +564,10 @@
 
 .grille-slot {
     width: 100%;
-    height: 6px;
-    background: linear-gradient(180deg, #1c140d 0%, #291c12 100%);
-    border-radius: 4px;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.9), 0 1px 1px rgba(255,248,230,0.5);
+    height: 5px;
+    background: #050608;
+    border-radius: 3px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.95), 0 1px 0 rgba(255, 255, 255, 0.06);
     transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
@@ -519,239 +581,118 @@
 
 .speaker-vintage-badge {
     position: absolute;
-    right: 24px;
-    bottom: 14px;
+    right: 20px;
+    bottom: 12px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    background: rgba(245, 238, 222, 0.85);
-    padding: 2px 8px;
-    border-radius: 4px;
-    border: 1px solid #c5a059;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+    background: rgba(19, 22, 29, 0.85);
+    backdrop-filter: blur(8px);
+    padding: 3px 9px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 .badge-script {
-    font-size: 0.76rem;
-    font-weight: 900;
-    font-style: italic;
-    color: #8b2510;
-    letter-spacing: -0.02em;
+    font-size: 0.74rem;
+    font-weight: 800;
+    color: #f1f5f9;
+    letter-spacing: -0.01em;
 }
 
 .badge-sub {
+    font-family: 'JetBrains Mono', monospace;
     font-size: 0.5rem;
-    font-weight: 800;
-    color: #422d1b;
-    letter-spacing: 0.08em;
+    font-weight: 700;
+    color: #ff944d;
+    letter-spacing: 0.1em;
 }
 
 /* -------------------------------------------------------------------------
-   Botones Selectores tipo Push-Button (Marfil y Latón Antiguo)
+   Botones de Transporte Tactiles Neo-Skeuomorphic
    ------------------------------------------------------------------------- */
 .retro-push-buttons {
     display: flex;
     justify-content: center;
-    gap: 6px;
+    gap: 8px;
     margin-top: 14px;
     flex-wrap: wrap;
 }
 
 .btn-retro-push {
-    border: none;
-    background: linear-gradient(180deg, #f7f1e5 0%, #d8ccb6 100%);
-    color: #3b2818;
-    font-size: 0.68rem;
-    font-weight: 800;
-    padding: 6px 12px;
-    border-radius: 6px;
-    box-shadow: 0 4px 0 #8b765c, 0 5px 6px rgba(0,0,0,0.35);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(180deg, #1f2432 0%, #131722 100%);
+    color: #94a3b8;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.66rem;
+    font-weight: 700;
+    padding: 7px 14px;
+    border-radius: 8px;
+    box-shadow: 0 4px 0 #0d0f16, 0 6px 10px rgba(0, 0, 0, 0.5);
     cursor: pointer;
-    transition: all 0.1s ease;
-    letter-spacing: 0.04em;
+    transition: all 0.12s ease;
+    letter-spacing: 0.05em;
 }
 
 .btn-retro-push:hover {
-    background: linear-gradient(180deg, #ffffff 0%, #e6dccb 100%);
+    background: linear-gradient(180deg, #282f42 0%, #1a1e2c 100%);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.18);
 }
 
 .btn-retro-push:active, .push-active {
     transform: translateY(3px);
-    box-shadow: 0 1px 0 #7a5824, 0 2px 4px rgba(0,0,0,0.3);
-    background: linear-gradient(180deg, #c5a059 0%, #9e6c1a 100%);
-    color: #ffffff;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    box-shadow: 0 1px 0 #0d0f16, 0 2px 6px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(180deg, #ff6b00 0%, #e05d00 100%) !important;
+    color: #ffffff !important;
+    border-color: #ff8533 !important;
+    box-shadow: 0 0 14px rgba(255, 107, 0, 0.45);
 }
 
 @keyframes acoustic-pulse {
-    0% { transform: scaleX(0.99); opacity: 0.9; }
+    0% { transform: scaleX(0.99); opacity: 0.85; }
     50% { transform: scaleX(1.0); opacity: 1; }
-    100% { transform: scaleX(0.985); opacity: 0.85; }
-}
-
-@media (max-width: 600px) {
-    .retro-radio-stage {
-        padding-top: 18px;
-        margin: 0.2rem auto 0.5rem auto;
-    }
-    .retro-antenna-wrapper {
-        height: 38px;
-    }
-    .antenna-extended {
-        height: 52px;
-    }
-    .retro-handle-arc {
-        height: 34px;
-        top: 2px;
-    }
-    .retro-radio-body {
-        padding: 0.85rem 0.75rem;
-        border-radius: 24px;
-    }
-    .tuner-control-panel {
-        gap: 6px;
-        margin-bottom: 8px;
-    }
-    .retro-knob {
-        width: 42px;
-        height: 42px;
-    }
-    .knob-label {
-        font-size: 0.52rem;
-    }
-    .knob-volume-badge {
-        font-size: 0.55rem;
-        padding: 1px 4px;
-    }
-    .tuner-scale-window {
-        height: 72px;
-        padding: 3px 5px;
-    }
-    .tuner-indicators-row {
-        margin-bottom: 2px;
-    }
-    .indicator-text {
-        font-size: 0.52rem;
-    }
-    .btn-band-switch {
-        font-size: 0.55rem;
-        padding: 1px 5px;
-    }
-    .dial-station-name {
-        font-size: 0.58rem;
-        max-width: 115px;
-    }
-    .listeners-indicator {
-        font-size: 0.52rem;
-    }
-
-    /* Ocultar números intermedios en el dial para evitar solapamientos en pantalla móvil */
-    .scale-fm .tick-major:nth-child(3) i,
-    .scale-fm .tick-major:nth-child(5) i,
-    .scale-fm .tick-major:nth-child(9) i,
-    .scale-am .tick-major:nth-child(3) i,
-    .scale-am .tick-major:nth-child(5) i,
-    .scale-am .tick-major:nth-child(9) i {
-        display: none !important;
-    }
-
-    .tick-major i {
-        font-size: 0.48rem !important;
-        top: -9px !important;
-    }
-
-    .band-tag {
-        font-size: 0.58rem !important;
-        width: 22px !important;
-    }
-
-    /* Altavoz compacto en pantalla pequeña */
-    .retro-speaker-grille {
-        padding: 0.5rem 0.8rem;
-    }
-    .grille-acoustic-cloth {
-        gap: 4px;
-    }
-    .grille-slot {
-        height: 4px;
-    }
-    .speaker-vintage-badge {
-        padding: 2px 7px;
-        bottom: 6px;
-        right: 8px;
-    }
-    .badge-script {
-        font-size: 0.6rem;
-    }
-    .badge-sub {
-        font-size: 0.44rem;
-    }
-
-    .retro-push-buttons {
-        gap: 4px;
-        margin-top: 8px;
-    }
-    .btn-retro-push {
-        font-size: 0.56rem;
-        padding: 3px 6px;
-    }
+    100% { transform: scaleX(0.985); opacity: 0.8; }
 }
 
 /* -------------------------------------------------------------------------
-   Placa de Autor / Ingeniero de Transmisión (Debajo de la Radio)
-   Estilo Latón Envejecido "Café Viejo" y Nogal Satinado
+   Placa de Autor / Bento Card Hi-Fi ("Sintonizador Maestro")
    ------------------------------------------------------------------------- */
 .retro-author-badge {
     position: relative;
-    width: 96%;
-    max-width: 560px;
+    width: 100%;
+    max-width: 540px;
     margin-top: 14px;
-    background: 
-        radial-gradient(ellipse at 50% 0%, rgba(212, 163, 115, 0.15) 0%, transparent 75%),
-        linear-gradient(160deg, #2a1910 0%, #1e110a 50%, #160c07 100%);
-    border: 1px solid rgba(212, 163, 115, 0.4);
-    border-radius: 12px;
-    padding: 1rem 1.25rem 0.9rem 1.25rem;
-    box-shadow: 
-        0 8px 24px rgba(0, 0, 0, 0.45),
-        inset 0 1px 2px rgba(230, 184, 125, 0.3),
-        inset 0 -1px 3px rgba(0, 0, 0, 0.5);
+    background: #13161D;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 1.15rem 1.35rem 1.05rem 1.35rem;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
     z-index: 2;
     transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .retro-author-badge:hover {
-    border-color: rgba(212, 163, 115, 0.7);
-    box-shadow: 
-        0 10px 28px rgba(0, 0, 0, 0.55),
-        0 0 15px rgba(212, 163, 115, 0.15);
+    border-color: rgba(255, 107, 0, 0.35);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 107, 0, 0.08);
 }
 
-/* Tornillos de fijación en las esquinas */
+/* Tornillos de Precisión en las Esquinas */
 .author-plate-screw {
     position: absolute;
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: radial-gradient(circle at 35% 35%, #e6d3aa 0%, #a8834a 60%, #4a3418 100%);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.6);
+    background: radial-gradient(circle at 35% 35%, #475263, #1f242f);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.author-plate-screw::after {
-    content: '';
-    position: absolute;
-    top: 3.5px;
-    left: 1px;
-    width: 6px;
-    height: 1px;
-    background: #2a1a0c;
-    transform: rotate(45deg);
-}
-
-.screw-tl { top: 8px; left: 8px; }
-.screw-tr { top: 8px; right: 8px; }
-.screw-bl { bottom: 8px; left: 8px; }
-.screw-br { bottom: 8px; right: 8px; }
+.screw-tl { top: 9px; left: 9px; }
+.screw-tr { top: 9px; right: 9px; }
+.screw-bl { bottom: 9px; left: 9px; }
+.screw-br { bottom: 9px; right: 9px; }
 
 .author-plate-content {
     display: flex;
@@ -770,39 +711,38 @@
 }
 
 .plate-vintage-seal {
+    font-family: 'JetBrains Mono', monospace;
     font-size: 0.65rem;
     font-weight: 800;
     letter-spacing: 0.08em;
-    color: #d4a373;
-    text-transform: uppercase;
+    color: #ff944d;
+    background: rgba(255, 107, 0, 0.1);
+    padding: 2px 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 107, 0, 0.25);
 }
 
 .plate-year {
+    font-family: 'JetBrains Mono', monospace;
     font-size: 0.62rem;
     font-weight: 700;
     letter-spacing: 0.06em;
-    color: rgba(212, 163, 115, 0.7);
-    background: rgba(212, 163, 115, 0.1);
-    padding: 1px 6px;
-    border-radius: 4px;
-    border: 1px solid rgba(212, 163, 115, 0.2);
+    color: #64748b;
 }
 
 .author-name-title {
     font-size: 1.05rem;
     font-weight: 800;
-    color: #f7eed8;
-    letter-spacing: -0.01em;
-    line-height: 1.2;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+    color: #f8fafc;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
 }
 
 .author-role-sub {
-    font-size: 0.7rem;
+    font-size: 0.72rem;
     font-weight: 600;
-    color: rgba(230, 214, 186, 0.7);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.02em;
     margin-bottom: 6px;
 }
 
@@ -812,118 +752,150 @@
     align-items: center;
     gap: 6px;
     width: 100%;
-    margin-top: 2px;
 }
 
 .author-contact-intro {
-    font-size: 0.74rem;
-    color: rgba(245, 238, 219, 0.85);
+    font-size: 0.76rem;
+    color: #64748b;
     line-height: 1.35;
-    max-width: 440px;
 }
 
 .author-email-link {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: rgba(212, 163, 115, 0.12);
-    border: 1px solid rgba(212, 163, 115, 0.35);
-    color: #f1c790;
-    font-size: 0.78rem;
-    font-weight: 700;
-    padding: 5px 12px;
-    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #f1f5f9;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.74rem;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 8px;
     text-decoration: none;
     transition: all 0.15s ease;
-    word-break: break-all;
 }
 
 .author-email-link:hover {
-    background: rgba(212, 163, 115, 0.25);
-    border-color: #d4a373;
-    color: #ffffff;
+    background: rgba(255, 107, 0, 0.15);
+    border-color: rgba(255, 107, 0, 0.4);
+    color: #ff944d;
     transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .author-email-link .email-icon {
     font-size: 0.85rem;
 }
 
-.btn-author-feedback {
-    background: transparent;
-    border: 1px dashed rgba(212, 163, 115, 0.3);
-    color: rgba(245, 238, 219, 0.75);
-    font-size: 0.68rem;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.15s ease;
-}
-
-.btn-author-feedback:hover {
-    border-color: #d4a373;
-    color: #f7eed8;
-    background: rgba(212, 163, 115, 0.1);
-}
-
-.btn-author-paypal {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: linear-gradient(135deg, rgba(212, 163, 115, 0.18), rgba(184, 115, 51, 0.25));
-    border: 1px solid rgba(212, 163, 115, 0.45);
-    color: #ffd89b;
-    font-size: 0.68rem;
-    font-weight: 700;
-    padding: 3px 10px;
-    border-radius: 6px;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.15s ease;
-}
-
-.btn-author-paypal:hover {
-    background: linear-gradient(135deg, rgba(212, 163, 115, 0.32), rgba(184, 115, 51, 0.4));
-    border-color: #f1c790;
-    color: #ffffff;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
+/* -------------------------------------------------------------------------
+   Modo Móvil
+   ------------------------------------------------------------------------- */
 @media (max-width: 600px) {
-    .retro-author-badge {
-        padding: 0.65rem 0.85rem;
+    .retro-radio-stage {
+        padding-top: 20px;
+        margin: 0.2rem auto 0.5rem auto;
+    }
+    .retro-handle-arc {
+        height: 38px;
+        top: 2px;
+    }
+    .retro-radio-body {
+        padding: 0.85rem 0.8rem;
+        border-radius: 20px;
+    }
+    .tuner-control-panel {
+        gap: 6px;
+        padding: 0.75rem 0.6rem;
+    }
+    .retro-knob {
+        width: 44px;
+        height: 44px;
+    }
+    .knob-label {
+        font-size: 0.5rem;
+    }
+    .knob-volume-badge {
+        font-size: 0.52rem;
+        padding: 1px 4px;
+    }
+    .tuner-scale-window {
+        height: 74px;
+        padding: 4px 6px;
+    }
+    .indicator-text {
+        font-size: 0.5rem;
+    }
+    .btn-band-switch {
+        font-size: 0.52rem;
+        padding: 1px 4px;
+    }
+    .dial-station-name {
+        font-size: 0.58rem;
+        max-width: 105px;
+    }
+    .listeners-indicator {
+        font-size: 0.5rem;
+    }
+
+    .scale-fm .tick-major:nth-child(3) i,
+    .scale-fm .tick-major:nth-child(5) i,
+    .scale-fm .tick-major:nth-child(9) i,
+    .scale-am .tick-major:nth-child(3) i,
+    .scale-am .tick-major:nth-child(5) i,
+    .scale-am .tick-major:nth-child(9) i {
+        display: none !important;
+    }
+
+    .tick-major i {
+        font-size: 0.46rem !important;
+        top: -9px !important;
+    }
+
+    .band-tag {
+        font-size: 0.54rem !important;
+        width: 20px !important;
+    }
+
+    .retro-speaker-grille {
+        padding: 0.55rem 0.8rem;
+    }
+    .grille-acoustic-cloth {
+        gap: 4px;
+    }
+    .grille-slot {
+        height: 4px;
+    }
+    .speaker-vintage-badge {
+        padding: 2px 6px;
+        bottom: 6px;
+        right: 8px;
+    }
+    .badge-script {
+        font-size: 0.6rem;
+    }
+    .badge-sub {
+        font-size: 0.42rem;
+    }
+
+    .retro-push-buttons {
+        gap: 5px;
         margin-top: 8px;
     }
-    .author-plate-title {
-        font-size: 0.56rem;
-        margin-bottom: 2px;
+    .btn-retro-push {
+        font-size: 0.58rem;
+        padding: 4px 8px;
+    }
+
+    .retro-author-badge {
+        padding: 0.85rem;
+        border-radius: 14px;
     }
     .author-name-title {
-        font-size: 0.88rem;
-        margin-bottom: 2px;
-    }
-    .author-role-sub {
-        font-size: 0.6rem;
-        margin-bottom: 4px;
-    }
-    .author-help-note {
-        font-size: 0.62rem;
-        margin-bottom: 6px;
+        font-size: 0.92rem;
     }
     .author-email-link {
-        font-size: 0.68rem;
-        padding: 3px 8px;
-        margin-bottom: 6px;
-    }
-    .author-actions-row {
-        gap: 6px;
-    }
-    .btn-author-feedback,
-    .btn-author-paypal {
-        font-size: 0.62rem;
-        padding: 3px 8px;
+        font-size: 0.66rem;
+        padding: 4px 10px;
     }
 }

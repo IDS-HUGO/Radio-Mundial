@@ -1,36 +1,94 @@
 @inherits LayoutComponentBase
 @inject RadioStateService RadioState
+@implements IDisposable
 
 <div class="app-layout">
-    <!-- Barra Superior Principal -->
+    <!-- Header Unificado Minimalista (Bento & Industrial Hi-Fi) -->
     <header class="app-topbar">
         <div class="topbar-container">
+            <!-- 1. Marca y Logotipo -->
             <div class="brand-group">
                 <a href="" class="brand-link" title="Radio Mundial — Sintonizador Global Hi-Fi">
-                    <img src="img/radio-mundial-icono.svg" alt="Radio Mundial — Sintonizador Global Hi-Fi" class="brand-logo-img" />
+                    <img src="img/radio-mundial-icono.svg" alt="Radio Mundial" class="brand-logo-img" />
                     <span class="brand-text">Radio<span class="brand-accent">Mundial</span></span>
                 </a>
-                <span class="brand-tagline">TRANSISTOR STREAMING</span>
+                <span class="brand-tagline">HI-FI DIRECT</span>
             </div>
 
-            <div class="topbar-status-group">
-                <button type="button" class="status-pill topbar-feedback-btn" @onclick="() => RadioState.OpenFeedbackModal()" title="Buzón de sugerencias: propón estaciones de tu ciudad o mejoras">
-                    <span class="feedback-pen-icon">✍️</span>
-                    <span class="feedback-label">Sugerir Emisora / Falla</span>
+            <!-- 2. Badge Unificado de Métricas & Estado (Centro) -->
+            <div class="unified-status-pill" title="@RadioState.ConnectionStatusText">
+                <span class="status-led @(RadioState.IsConnected ? "led-online" : "led-reconnecting")"></span>
+                <span class="status-text">
+                    @(RadioState.IsConnected ? RadioState.T("CONNECTED") : RadioState.T("RECONNECTING"))
+                </span>
+                <span class="status-dot-sep">•</span>
+                <span class="status-metric">
+                    <b>@RadioState.AllStations.Count</b> @RadioState.T("AVAILABLE")
+                </span>
+                <span class="status-dot-sep d-none d-sm-inline">•</span>
+                <span class="status-metric d-none d-sm-inline">
+                    <b>@RadioState.ListenersCount</b> @RadioState.T("LISTENERS")
+                </span>
+            </div>
+
+            <!-- 3. Acciones Primarias y Preferencias (Derecha) -->
+            <div class="topbar-actions-group">
+                <!-- Botón Buzón / Sugerir Emisora -->
+                <button type="button" 
+                        class="btn-topbar-action btn-topbar-feedback" 
+                        @onclick="() => RadioState.OpenFeedbackModal()" 
+                        title="Buzón: sugiere estaciones o mejoras">
+                    <span class="action-icon">✍️</span>
+                    <span class="d-none d-md-inline">@RadioState.T("FEEDBACK_BTN")</span>
                 </button>
 
-                <div class="status-pill status-live">
-                    <span class="pulse-dot"></span>
-                    <span>GLOBAL LIVE</span>
+                <!-- Botón Donar / Stripe -->
+                <a href="https://donate.stripe.com/00w8wO7axb3E5GG1vt5Ne00"
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="btn-topbar-action btn-topbar-donate"
+                   title="Apoyar a Radio Mundial (Stripe / Apple Pay / Tarjeta)">
+                    <span class="action-icon">☕</span>
+                    <span class="d-none d-sm-inline">Donar</span>
+                </a>
+
+                <!-- Selector de Idioma (ES / EN) -->
+                <div class="topbar-segmented-switch" title="Language / Idioma">
+                    <button type="button" 
+                            class="btn-segmented-chip @(RadioState.CurrentLanguage == "es" ? "chip-active" : "")" 
+                            @onclick='() => RadioState.SetLanguageAsync("es")'>
+                        ES
+                    </button>
+                    <button type="button" 
+                            class="btn-segmented-chip @(RadioState.CurrentLanguage == "en" ? "chip-active" : "")" 
+                            @onclick='() => RadioState.SetLanguageAsync("en")'>
+                        EN
+                    </button>
                 </div>
-                <div class="status-pill status-audio">
-                    <span>⚡ CDN HD DIRECT</span>
+
+                <!-- Selector de Tema (Oscuro / Claro / Sistema) -->
+                <div class="topbar-segmented-switch theme-switch" title="Tema: Oscuro / Claro / Sistema">
+                    <button type="button" 
+                            class="btn-segmented-chip @(RadioState.CurrentTheme == "dark" ? "chip-active" : "")" 
+                            @onclick='() => RadioState.SetThemeAsync("dark")' title="Modo Oscuro">
+                        🌙
+                    </button>
+                    <button type="button" 
+                            class="btn-segmented-chip @(RadioState.CurrentTheme == "light" ? "chip-active" : "")" 
+                            @onclick='() => RadioState.SetThemeAsync("light")' title="Modo Claro">
+                        ☀️
+                    </button>
+                    <button type="button" 
+                            class="btn-segmented-chip @(RadioState.CurrentTheme == "system" ? "chip-active" : "")" 
+                            @onclick='() => RadioState.SetThemeAsync("system")' title="Tema del Sistema">
+                        💻
+                    </button>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Contenido Principal Full-Width -->
+    <!-- Contenido Principal Bento -->
     <main class="app-main-content">
         @Body
     </main>
@@ -38,9 +96,26 @@
     <!-- Banner de Cookies y Privacidad -->
     <CookieConsent />
 
-    <!-- Barra Inferior de Audio Persistente -->
+    <!-- Barra Inferior Flotante de Audio Persistente -->
     <RadioPlayer />
 
     <!-- Modal Global de Sugerencias y Comentarios -->
     <FeedbackModal />
 </div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        RadioState.OnStateChanged += HandleStateChanged;
+    }
+
+    private void HandleStateChanged()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        RadioState.OnStateChanged -= HandleStateChanged;
+    }
+}

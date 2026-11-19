@@ -1,6 +1,6 @@
 /* ==========================================================================
-   Radio Mundial - MainLayout Scoped Styles
-   Atmósfera de Estudio Analógico / Transistor Hi-Fi
+   Radio Mundial — MainLayout Scoped Styles
+   Header Unificado: Glassmorphism Bento + Audio Industrial Hi-Fi
    ========================================================================== */
 
 .app-layout {
@@ -9,46 +9,52 @@
     flex-direction: column;
     background-color: var(--bg-main);
     color: var(--text-main);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: var(--font-ui);
     position: relative;
-    transition: background-color 0.25s ease, color 0.25s ease;
+    padding-bottom: 90px; /* Espacio para el reproductor flotante inferior */
 }
 
+/* Header Unificado Flotante / Sticky */
 .app-topbar {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background: var(--bg-surface);
+    background: var(--bg-glass-elevated);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border-color);
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
-    transition: background-color 0.25s ease, border-color 0.25s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+    transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .topbar-container {
-    max-width: 1560px;
+    max-width: 1600px;
     margin: 0 auto;
-    padding: 0.65rem 1.25rem;
+    padding: 0.75rem 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 1rem;
 }
 
+/* 1. Brand Group */
 .brand-group {
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    flex-shrink: 0;
 }
 
 .brand-link {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.6rem;
     text-decoration: none;
     color: var(--text-main);
     font-weight: 800;
     font-size: 1.25rem;
-    letter-spacing: -0.02em;
-    transition: opacity 0.18s ease;
+    letter-spacing: -0.025em;
+    transition: opacity 0.15s ease;
 }
 
 .brand-link:hover {
@@ -56,112 +62,194 @@
     color: var(--text-main);
 }
 
-.brand-icon {
-    font-size: 1.35rem;
-}
-
 .brand-logo-img {
-    width: 38px;
-    height: 38px;
+    width: 32px;
+    height: 32px;
     object-fit: contain;
-    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
-    transition: transform 0.2s ease;
+    filter: drop-shadow(0 2px 8px var(--accent-glow));
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .brand-link:hover .brand-logo-img {
-    transform: rotate(10deg) scale(1.05);
+    transform: rotate(12deg) scale(1.08);
 }
 
 .brand-accent {
-    color: var(--accent-amber);
+    color: var(--accent-orange);
 }
 
 .brand-tagline {
+    font-family: var(--font-mono);
     font-size: 0.62rem;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    padding: 3px 8px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    padding: 2px 7px;
     border-radius: 4px;
-    background: rgba(197, 159, 84, 0.15);
-    color: var(--text-highlight);
-    border: 1px solid var(--border-color);
+    background: rgba(255, 107, 0, 0.1);
+    color: var(--accent-orange);
+    border: 1px solid rgba(255, 107, 0, 0.25);
+    display: none;
 }
 
-.topbar-status-group {
-    display: flex;
-    align-items: center;
-    gap: 0.65rem;
+@media (min-width: 768px) {
+    .brand-tagline {
+        display: inline-block;
+    }
 }
 
-.status-pill {
+/* 2. Badge Unificado de Métricas & Estado */
+.unified-status-pill {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    font-size: 0.68rem;
-    font-weight: 700;
-    padding: 3px 10px;
-    border-radius: 20px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    gap: 0.55rem;
     background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    color: var(--text-muted);
+    border: 1px solid var(--border-medium);
+    border-radius: 999px;
+    padding: 0.38rem 0.95rem;
+    font-size: 0.76rem;
+    color: var(--text-secondary);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
+    white-space: nowrap;
 }
 
-.topbar-feedback-btn {
-    background: var(--bg-surface);
-    border: 1px solid var(--border-color);
-    color: var(--text-highlight);
-    cursor: pointer;
-    text-transform: none;
-    letter-spacing: normal;
-    font-size: 0.72rem;
-    transition: all 0.18s ease;
+.status-led {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.topbar-feedback-btn:hover {
-    background: rgba(197, 159, 84, 0.15);
-    border-color: var(--brass);
-    color: var(--accent-amber);
-    transform: translateY(-1px);
+.status-led.led-online {
+    background-color: var(--led-green);
+    box-shadow: 0 0 10px var(--led-green-glow);
+    animation: pulseLed 2s infinite ease-in-out;
 }
 
-.feedback-pen-icon {
-    font-size: 0.8rem;
+.status-led.led-reconnecting {
+    background-color: var(--accent-amber);
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+    animation: pulseLed 1s infinite ease-in-out;
 }
 
-.status-live {
+@keyframes pulseLed {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.7; }
+}
+
+.status-text {
+    font-weight: 600;
     color: var(--text-main);
 }
 
-.pulse-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background-color: var(--needle-red);
-    box-shadow: 0 0 4px var(--needle-red);
+.status-dot-sep {
+    color: var(--text-muted);
+    font-size: 0.8rem;
 }
 
-.status-audio {
-    color: var(--text-highlight);
+.status-metric {
+    font-family: var(--font-mono);
+    color: var(--text-secondary);
+}
+
+.status-metric b {
+    color: var(--text-main);
+    font-weight: 700;
+}
+
+/* 3. Acciones Primarias y Preferencias */
+.topbar-actions-group {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    flex-shrink: 0;
+}
+
+.btn-topbar-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.42rem 0.85rem;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+}
+
+.btn-topbar-action:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-medium);
+    color: var(--text-main);
+    transform: translateY(-1px);
+}
+
+.btn-topbar-feedback:hover {
+    border-color: rgba(255, 107, 0, 0.4);
+}
+
+.btn-topbar-donate {
+    background: linear-gradient(135deg, rgba(255, 107, 0, 0.15), rgba(245, 158, 11, 0.1));
+    border-color: rgba(255, 107, 0, 0.35);
+    color: var(--accent-orange);
+}
+
+.btn-topbar-donate:hover {
+    background: linear-gradient(135deg, rgba(255, 107, 0, 0.25), rgba(245, 158, 11, 0.18));
+    border-color: var(--accent-orange);
+    color: var(--text-main);
+    box-shadow: 0 0 12px var(--accent-glow);
+}
+
+/* Segmented Switches para Idioma y Tema */
+.topbar-segmented-switch {
+    display: inline-flex;
+    align-items: center;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 2px;
+}
+
+.btn-segmented-chip {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.28rem 0.55rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    line-height: 1;
+}
+
+.btn-segmented-chip:hover {
+    color: var(--text-main);
+}
+
+.btn-segmented-chip.chip-active {
+    background: var(--bg-card-hover);
+    color: var(--accent-orange);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .app-main-content {
     flex: 1;
-    padding-bottom: 95px; /* Espacio para barra de audio fija */
+    width: 100%;
 }
 
 @media (max-width: 640px) {
     .topbar-container {
-        padding: 0.5rem 0.85rem;
+        padding: 0.6rem 0.9rem;
     }
-    .brand-tagline {
-        display: none;
-    }
-    .status-audio {
-        display: none;
-    }
-    .topbar-feedback-btn .feedback-label {
-        display: none;
+    .unified-status-pill {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.65rem;
     }
 }

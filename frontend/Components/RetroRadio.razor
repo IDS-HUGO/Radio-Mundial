@@ -84,6 +84,12 @@
                                 {
                                     <span class="dial-station-name">@RadioState.ActiveStation.Name</span>
                                     <span class="dial-station-freq">(@GetActiveFrequency().ToString(IsActiveStationAm() ? "F0" : "F1") @(IsActiveStationAm() ? "kHz AM" : "MHz FM"))</span>
+                                    @if (RadioState.IsPlaying)
+                                    {
+                                        <span class="dial-audio-eq" title="Transmitiendo audio">
+                                            <span></span><span></span><span></span>
+                                        </span>
+                                    }
                                 }
                                 else
                                 {
@@ -189,27 +195,12 @@
             </div>
         </div>
 
-        <!-- Botones Selectores Inferiores tipo Piano Keys (Control Analógico Real) -->
+        <!-- Botones Físicos de Transporte Neo-Skeuomorphic -->
         <div class="retro-push-buttons" aria-label="Teclas de control de la radio">
             <button class="btn-retro-push @(RadioState.IsPlaying ? "push-active" : "")" 
                     @onclick="RadioState.TogglePlayAsync" 
                     title="Encender o apagar la radio">
                 ⏻ @(RadioState.IsPlaying ? "ENCENDIDO" : "APAGADO")
-            </button>
-            <button class="btn-retro-push @(RadioState.SelectedBand == "FM" ? "push-active" : "")" 
-                    @onclick='() => RadioState.SetBandFilter("FM")' 
-                    title="Banda FM (88 - 108 MHz)">
-                FM
-            </button>
-            <button class="btn-retro-push @(RadioState.SelectedBand == "AM" ? "push-active" : "")" 
-                    @onclick='() => RadioState.SetBandFilter("AM")' 
-                    title="Banda AM (540 - 1600 kHz)">
-                AM
-            </button>
-            <button class="btn-retro-push @(RadioState.SelectedBand == "TODAS" ? "push-active" : "")" 
-                    @onclick='() => RadioState.SetBandFilter("TODAS")' 
-                    title="Todas las bandas">
-                TODAS
             </button>
             <button class="btn-retro-push" 
                     @onclick="RadioState.TunePreviousStationAsync" 
@@ -229,7 +220,7 @@
         </div>
     </div>
 
-    <!-- Placa de Autor / Ingeniero de Transmisión Debajo de la Radio -->
+    <!-- Placa de Autor Bento Card Hi-Fi -->
     <div class="retro-author-badge">
         <div class="author-plate-screw screw-tl"></div>
         <div class="author-plate-screw screw-tr"></div>
@@ -251,25 +242,13 @@
 
             <div class="author-contact-card">
                 <span class="author-contact-intro">
-                    ¿Quieres que agregue una estación de tu ciudad o sugerir mejoras?
+                    Transmisión en directo de audio Hi-Fi sin interrupciones.
                 </span>
-                <a href="mailto:hugofranciscoluisinclan@gmail.com?subject=Radio%20Mundial%20-%20Solicitud%20para%20agregar%20estaci%C3%B3n" 
+                <a href="mailto:hugofranciscoluisinclan@gmail.com?subject=Radio%20Mundial%20-%20Hugo%20Francisco%20Luis%20Inclan" 
                    class="author-email-link" 
                    title="Escribir correo a Hugo Francisco Luis Inclan">
                     <span class="email-icon">✉️</span> hugofranciscoluisinclan@gmail.com
                 </a>
-                <div class="d-flex flex-wrap justify-content-center align-items-center gap-2 mt-1">
-                    <button type="button" class="btn-author-feedback" @onclick="() => RadioState.OpenFeedbackModal()" title="Abrir buzón de sugerencias en línea">
-                        <span>✍️ Buzón de Sugerencias</span>
-                    </button>
-                    <a href="https://donate.stripe.com/00w8wO7axb3E5GG1vt5Ne00" 
-                       target="_blank" 
-                       rel="noopener noreferrer" 
-                       class="btn-author-paypal" 
-                       title="Apoyar a Radio Mundial con tarjeta, Apple Pay o Stripe (Hugo Francisco Luis Inclan)">
-                        <span>☕ Donar</span>
-                    </a>
-                </div>
             </div>
         </div>
     </div>

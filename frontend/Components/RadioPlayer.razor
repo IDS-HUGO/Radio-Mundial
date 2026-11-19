@@ -34,14 +34,22 @@
                         <span>@RadioState.ListenersCount</span>
                     </span>
                 </div>
-                <div class="track-title" title="@(RadioState.ActiveStation?.Name ?? RadioState.CurrentTrack.Title)">
-                    @(RadioState.ActiveStation?.Name ?? RadioState.CurrentTrack.Title)
+                <div class="track-title-row">
+                    <div class="track-title" title="@(RadioState.ActiveStation?.Name ?? RadioState.CurrentTrack.Title)">
+                        @(RadioState.ActiveStation?.Name ?? RadioState.CurrentTrack.Title)
+                    </div>
+                    @if (RadioState.IsPlaying)
+                    {
+                        <div class="player-wave-bars" title="Transmitiendo audio en directo">
+                            <span></span><span></span><span></span><span></span>
+                        </div>
+                    }
                 </div>
                 <div class="track-artist" title="@(RadioState.ActiveStation?.Genre ?? RadioState.CurrentTrack.Artist)">
-                    <span class="text-info fw-semibold">@(RadioState.ActiveStation?.Genre)</span>
+                    <span class="text-genre">@(RadioState.ActiveStation?.Genre)</span>
                     @if (!string.IsNullOrEmpty(RadioState.ActiveStation?.Locality))
                     {
-                        <span class="text-muted"> · @RadioState.ActiveStation.Locality</span>
+                        <span class="text-locality"> · @RadioState.ActiveStation.Locality</span>
                     }
                 </div>
             </div>
@@ -49,22 +57,34 @@
 
         <!-- 2. Sección Controles Centrales de Reproducción -->
         <div class="controls-section">
+            <button class="btn-player-skip" @onclick="RadioState.TunePreviousStationAsync" title="Emisora Anterior" aria-label="Anterior">
+                <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor">
+                    <polygon points="19 20 9 12 19 4 19 20"></polygon>
+                    <line x1="5" y1="19" x2="5" y2="5" stroke="currentColor" stroke-width="2.5"></line>
+                </svg>
+            </button>
             <button class="btn-play-pause @(RadioState.IsPlaying ? "playing" : "")" 
                     @onclick="RadioState.TogglePlayAsync"
                     aria-label="@(RadioState.IsPlaying ? "Pausar" : "Reproducir")">
                 @if (RadioState.IsPlaying)
                 {
-                    <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
                         <rect x="6" y="4" width="4" height="16" rx="1.5"></rect>
                         <rect x="14" y="4" width="4" height="16" rx="1.5"></rect>
                     </svg>
                 }
                 else
                 {
-                    <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" style="margin-left: 3px;">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" style="margin-left: 2px;">
                         <polygon points="5 3 19 12 5 21 5 3"></polygon>
                     </svg>
                 }
+            </button>
+            <button class="btn-player-skip" @onclick="RadioState.TuneNextStationAsync" title="Siguiente Emisora" aria-label="Siguiente">
+                <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor">
+                    <polygon points="5 4 15 12 5 20 5 4"></polygon>
+                    <line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2.5"></line>
+                </svg>
             </button>
         </div>
 

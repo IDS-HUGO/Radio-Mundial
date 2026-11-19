@@ -30,18 +30,23 @@
                 <!-- 1. Panel Superior: Cuadrante de Frecuencias y Perillas Analógicas -->
                 <div class="tuner-control-panel">
                     
-                    <!-- Perilla Izquierda: Encendido / Volumen Interactivo (Rueda y Arrastre) -->
+                    <!-- Perilla Izquierda: Encendido / Volumen Interactivo (Táctil en Móvil, Rueda y Arrastre) -->
                     <div class="knob-container knob-left" 
                          @onwheel="HandleVolumeWheel" 
                          @onwheel:preventDefault
-                         title="Gira la perilla o usa la rueda del mouse para cambiar el volumen. Haz clic para Encender/Apagar.">
+                         title="Gira la perilla o desliza para cambiar el volumen. Haz clic para Encender/Apagar.">
                         
                         <div class="knob-volume-badge">
                             🔊 @((int)(RadioState.Volume * 100))%
                         </div>
 
-                        <button class="retro-knob knob-volume @(RadioState.IsPlaying ? "knob-active" : "")" 
+                        <button type="button" 
+                                class="retro-knob knob-volume @(RadioState.IsPlaying ? "knob-active" : "")" 
                                 @onclick="RadioState.TogglePlayAsync"
+                                @onpointerdown="HandleVolumePointerDown"
+                                @onpointermove="HandleVolumePointerMove"
+                                @onpointerup="HandleVolumePointerUp"
+                                @onpointercancel="HandleVolumePointerUp"
                                 aria-label="Encender o Apagar Radio">
                             <div class="knob-metallic-rim">
                                 <div class="knob-cap">
@@ -49,6 +54,11 @@
                                 </div>
                             </div>
                         </button>
+
+                        <div class="knob-arrows-row">
+                            <button type="button" class="btn-knob-step" @onclick="() => AdjustVolumeStepAsync(-0.05)" title="Bajar volumen">−</button>
+                            <button type="button" class="btn-knob-step" @onclick="() => AdjustVolumeStepAsync(0.05)" title="Subir volumen">+</button>
+                        </div>
 
                         <div class="volume-slider-box">
                             <input type="range" 
@@ -147,18 +157,23 @@
                         <div class="glass-reflection-overlay"></div>
                     </div>
 
-                    <!-- Perilla Derecha: Sintonizador Interactivo (Rueda y Clic) -->
+                    <!-- Perilla Derecha: Sintonizador Interactivo (Táctil en Móvil, Rueda y Clic) -->
                     <div class="knob-container knob-right" 
                          @onwheel="HandleTuningWheel"
                          @onwheel:preventDefault
-                         title="Gira o usa la rueda del mouse para sintonizar estaciones hacia adelante o atrás.">
+                         title="Gira o desliza para sintonizar estaciones hacia adelante o atrás.">
                         
                         <div class="knob-tuning-badge">
                             TUNER
                         </div>
 
-                        <button class="retro-knob knob-tuning" 
+                        <button type="button" 
+                                class="retro-knob knob-tuning" 
                                 @onclick="RadioState.TuneNextStationAsync"
+                                @onpointerdown="HandleTuningPointerDown"
+                                @onpointermove="HandleTuningPointerMove"
+                                @onpointerup="HandleTuningPointerUp"
+                                @onpointercancel="HandleTuningPointerUp"
                                 aria-label="Sintonizar Siguiente Emisora">
                             <div class="knob-metallic-rim">
                                 <div class="knob-cap">
@@ -168,8 +183,8 @@
                         </button>
 
                         <div class="knob-arrows-row">
-                            <button class="btn-knob-step" @onclick="RadioState.TunePreviousStationAsync" title="Anterior">◀</button>
-                            <button class="btn-knob-step" @onclick="RadioState.TuneNextStationAsync" title="Siguiente">▶</button>
+                            <button type="button" class="btn-knob-step" @onclick="RadioState.TunePreviousStationAsync" title="Anterior">◀</button>
+                            <button type="button" class="btn-knob-step" @onclick="RadioState.TuneNextStationAsync" title="Siguiente">▶</button>
                         </div>
                         <span class="knob-label">SINTONIZAR</span>
                     </div>
@@ -344,6 +359,84 @@
     private async Task HandleDialClick()
     {
         await RadioState.TuneNextStationAsync();
+    }
+
+    // Gestos táctiles y arrastre en móvil para perilla de volumen
+    private bool _isVolumeDragging;
+    private double _volumeLastY;
+    private double _volumeLastX;
+
+    private void HandleVolumePointerDown(PointerEventArgs e)
+    {
+        _isVolumeDragging = true;
+        _volumeLastY = e.ClientY;
+        _volumeLastX = e.ClientX;
+    }
+
+    private async Task HandleVolumePointerMove(PointerEventArgs e)
+    {
+        if (!_isVolumeDragging) return;
+        var dy = _volumeLastY - e.ClientY; // Hacia arriba sube volumen
+        var dx = e.ClientX - _volumeLastX; // Hacia la derecha sube volumen
+        var movement = dy + dx;
+        if (Math.Abs(movement) >= 14.0)
+        {
+            var delta = movement > 0 ? 0.05 : -0.05;
+            await RadioState.AdjustVolumeRelativeAsync(delta);
+            _volumeLastY = e.ClientY;
+            _volumeLastX = e.ClientX;
+        }
+    }
+
+    private void HandleVolumePointerUp(PointerEventArgs e)
+    {
+        _isVolumeDragging = false;
+    }
+
+    private async Task AdjustVolumeStepAsync(double delta)
+    {
+        await RadioState.AdjustVolumeRelativeAsync(delta);
+    }
+
+    // Gestos táctiles y arrastre en móvil para perilla de sintonizador
+    private bool _isTuningDragging;
+    private double _tuningLastY;
+    private double _tuningLastX;
+    private double _tuningAccumulated;
+
+    private void HandleTuningPointerDown(PointerEventArgs e)
+    {
+        _isTuningDragging = true;
+        _tuningLastY = e.ClientY;
+        _tuningLastX = e.ClientX;
+        _tuningAccumulated = 0;
+    }
+
+    private async Task HandleTuningPointerMove(PointerEventArgs e)
+    {
+        if (!_isTuningDragging) return;
+        var dy = _tuningLastY - e.ClientY;
+        var dx = e.ClientX - _tuningLastX;
+        _tuningAccumulated += (dy + dx);
+        _tuningLastY = e.ClientY;
+        _tuningLastX = e.ClientX;
+
+        if (_tuningAccumulated >= 28.0)
+        {
+            await RadioState.TuneNextStationAsync();
+            _tuningAccumulated = 0;
+        }
+        else if (_tuningAccumulated <= -28.0)
+        {
+            await RadioState.TunePreviousStationAsync();
+            _tuningAccumulated = 0;
+        }
+    }
+
+    private void HandleTuningPointerUp(PointerEventArgs e)
+    {
+        _isTuningDragging = false;
+        _tuningAccumulated = 0;
     }
 
     public void Dispose()

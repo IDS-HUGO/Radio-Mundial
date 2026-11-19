@@ -276,11 +276,12 @@
 
 .retro-slider {
     width: 100%;
-    height: 4px;
+    height: 6px;
     accent-color: var(--accent-orange);
     cursor: pointer;
     background: #1f2430;
-    border-radius: 2px;
+    border-radius: 3px;
+    touch-action: pan-x;
 }
 
 [data-theme="light"] .retro-slider {
@@ -331,15 +332,15 @@
     border: none;
     background: transparent;
     padding: 0;
-    cursor: pointer;
+    cursor: grab;
     transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.retro-knob:hover {
-    transform: scale(1.04);
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .retro-knob:active {
+    cursor: grabbing;
     transform: scale(0.96);
 }
 

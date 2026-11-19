@@ -1,31 +1,6 @@
-# Robots.txt para Radio Mundial (SEO Master Indexation)
+# robots.txt para Radio Mundial
 # Autor: Hugo Francisco Luis Inclan (c) 2026
 User-agent: *
 Allow: /
-Allow: /sample-data/
-Allow: /css/
-Allow: /js/
-Allow: /img/
 
-# Rastreadores principales de Google, Bing, Apple, DuckDuckGo y Yahoo
-User-agent: Googlebot
-Allow: /
-
-User-agent: Googlebot-Image
-Allow: /img/
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: DuckDuckBot
-Allow: /
-
-User-agent: Applebot
-Allow: /
-
-User-agent: YandexBot
-Allow: /
-
-# Sitemap Index para Indexación Instantánea de Motores de Búsqueda
 Sitemap: https://radio-mundial.hugofranciscoluis.workers.dev/sitemap.xml

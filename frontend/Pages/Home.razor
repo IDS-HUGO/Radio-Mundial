@@ -46,6 +46,7 @@
                 @RenderFilterConsole()
                 @RenderStationsGrid()
                 @RenderSponsorSlot()
+                @RenderSeoFooter()
             </div>
 
         </div>
@@ -83,6 +84,7 @@
             @RenderFilterConsole()
             @RenderStationsGrid()
             @RenderSponsorSlot()
+            @RenderSeoFooter()
         </div>
     }
 </div>
@@ -93,6 +95,20 @@
     {
         <section class="master-console-deck p-3 p-md-4 mb-4" aria-label="Consola de Búsqueda y Sintonización">
             
+            <!-- Encabezado Semántico SEO On-Page (H1 / H2) -->
+            <header class="studio-seo-hero mb-3">
+                <div class="d-flex align-items-center gap-2 mb-1">
+                    <span class="seo-pill-tag">🔴 EN VIVO 24/7</span>
+                    <span class="seo-pill-sub">TRANSISTOR HI-FI</span>
+                </div>
+                <h1 class="studio-main-seo-title">
+                    Escuchar estaciones de radio en vivo gratis de todo el mundo
+                </h1>
+                <h2 class="studio-sub-seo-title">
+                    Explorar radios por país o género
+                </h2>
+            </header>
+
             <!-- Fila 1: Buscador Protagonista Glassmorphism + Selector de Filtros Avanzados y Layout -->
             <div class="search-bar-row mb-3">
                 <div class="studio-search-wrapper">
@@ -429,6 +445,18 @@
                 </div>
             </div>
 
+            <!-- Encabezado Semántico H2 del Catálogo de Emisoras -->
+            <div class="stations-section-header mb-3">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                    <h2 class="stations-section-title">
+                        Emisoras populares de México y Latinoamérica
+                    </h2>
+                    <span class="stations-section-tag d-none d-sm-inline">
+                        FM · AM · Streaming Hi-Fi en Directo
+                    </span>
+                </div>
+            </div>
+
             <!-- Bento Cards Grid de Emisoras (Estilo Dribbble) -->
             <div class="stations-responsive-grid mb-4">
                 @foreach (var station in pagedStations)
@@ -444,7 +472,7 @@
                             <!-- Header de la Bento Card -->
                             <div class="card-station-header">
                                 <div class="station-thumb-wrapper @(isPlayingThis ? "thumb-active" : "")">
-                                    <img src="@station.LogoUrl" alt="@station.Name" class="station-thumb-img" loading="lazy" />
+                                    <img src="@station.LogoUrl" alt="@station.Name - Escuchar radio en vivo online" class="station-thumb-img" loading="lazy" />
                                     @if (isPlayingThis)
                                     {
                                         <div class="thumb-equalizer-overlay">
@@ -458,17 +486,19 @@
                                 <div class="station-header-text">
                                     <div class="d-flex align-items-center justify-content-between mb-1">
                                         <span class="frequency-badge @(isAm ? "badge-am" : "badge-fm")">
-                                            @station.Frequency.ToString(isAm ? "F0" : "F1") @station.Band
+                                             @station.Frequency.ToString(isAm ? "F0" : "F1") @station.Band
                                         </span>
                                         <div class="d-flex align-items-center gap-1">
                                             <button type="button" class="btn-report-card" 
                                                     @onclick="() => RadioState.OpenFeedbackModal(station.Name)"
-                                                    title="Reportar problema de @station.Name">
+                                                    title="Reportar problema de @station.Name"
+                                                    aria-label="Reportar problema de transmisión con @station.Name">
                                                 ⚠️
                                             </button>
                                             <button type="button" class="btn-favorite @(isFavorite ? "favorite-active" : "")" 
                                                     @onclick="() => RadioState.ToggleFavoriteAsync(station.Id)"
-                                                    title="@(isFavorite ? "Quitar de favoritas" : "Guardar en favoritas")">
+                                                    title="@(isFavorite ? "Quitar de favoritas" : "Guardar en favoritas")"
+                                                    aria-label="@(isFavorite ? "Quitar de favoritas " + station.Name : "Guardar en favoritas " + station.Name)">
                                                 ★
                                             </button>
                                         </div>
@@ -498,7 +528,8 @@
 
                                 <button type="button" 
                                         class="btn-tune-retro @(isPlayingThis ? "btn-playing" : "")" 
-                                        @onclick="() => HandleTuneClick(station)">
+                                        @onclick="() => HandleTuneClick(station)"
+                                        aria-label="@(isPlayingThis ? "Pausar sintonía de " + station.Name : "Sintonizar " + station.Name)">
                                     @if (isPlayingThis)
                                     {
                                         <span>⏸ Sintonizada</span>
@@ -569,6 +600,42 @@
                 </nav>
             }
         }
+    };
+
+    private RenderFragment RenderSeoFooter() => __builder =>
+    {
+        <footer class="studio-seo-footer-deck p-3 p-md-4 mb-4" aria-label="Guía e Información de Radio Mundial">
+            <div class="row g-4">
+                <div class="col-12 col-md-4">
+                    <div class="seo-feature-box">
+                        <h3 class="seo-footer-heading">📻 Radio en Vivo Gratis y sin Cortes</h3>
+                        <p class="seo-footer-desc">
+                            Radio Mundial te permite escuchar estaciones de radio en vivo gratis por internet en cualquier teléfono móvil, tablet o computadora. Disfruta de transmisiones directas de audio de alta fidelidad (Hi-Fi) sin registro y sin descargas de aplicaciones.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="seo-feature-box">
+                        <h3 class="seo-footer-heading">🇲🇽 Emisoras de México y el Mundo</h3>
+                        <p class="seo-footer-desc">
+                            Sintoniza estaciones de radio organizadas por estado, municipio y localidad de México (cubriendo los 32 estados de la República: Chiapas, Oaxaca, CDMX, Jalisco, Nuevo León y más), junto a miles de frecuencias en vivo de España, Colombia, Argentina, Estados Unidos y más de 230 países.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="seo-feature-box">
+                        <h3 class="seo-footer-heading">🎵 Música, Noticias y Deportes Online</h3>
+                        <p class="seo-footer-desc">
+                            Explora por frecuencias FM y AM, pop latino, regional mexicano, noticias en tiempo real, baladas, rock clásico, jazz y deportes en vivo con un sintonizador retro analógico interactivo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="seo-footer-bottom pt-3 mt-3 d-flex flex-wrap justify-content-between align-items-center gap-2">
+                <span class="seo-footer-copy">© 2026 Radio Mundial · Desarrollado por Hugo Francisco Luis Inclan</span>
+                <span class="seo-footer-tag">Transmisión de Audio Hi-Fi Directo · 100% Gratuito</span>
+            </div>
+        </footer>
     };
 }
 

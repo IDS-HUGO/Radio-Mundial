@@ -199,28 +199,28 @@
 
 <body>
     <div id="app">
-        <!-- Contenido Semántico Pre-renderizado para Motores de Búsqueda (Googlebot / SEO SPA Fallback) -->
-        <main class="spa-seo-fallback" style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:85vh; padding:2.5rem 1.5rem; text-align:center; color:#EFE7DC; background:#0B0D11; font-family:'Plus Jakarta Sans',system-ui,sans-serif;">
-            <div style="font-size:3.5rem; margin-bottom:1rem;">📻</div>
-            <h1 style="font-size:1.85rem; font-weight:800; color:#FF6B00; margin-bottom:0.75rem; max-width:800px; line-height:1.25;">
-                Escuchar estaciones de radio en vivo gratis de todo el mundo
-            </h1>
-            <p style="font-size:1.05rem; color:#A0A6B2; max-width:700px; line-height:1.6; margin-bottom:1.75rem;">
-                Sintoniza estaciones de radio de México, España, Latinoamérica y todo el mundo en vivo. Música, noticias y deportes online gratis y sin cortes en Radio Mundial con sintonizador analógico interactivo Hi-Fi.
+        <!-- Indicador de Carga Hi-Fi Minimalista Oficial -->
+        <svg class="loading-progress" aria-hidden="true">
+            <circle r="40%" cx="50%" cy="50%" />
+            <circle r="40%" cx="50%" cy="50%" />
+        </svg>
+        <div class="loading-progress-text">Sintonizando Radio Mundial Hi-Fi...</div>
+
+        <!-- Contenido Semántico Indexable para Motores de Búsqueda (SEO Técnico Googlebot / Screen Readers) -->
+        <div class="visually-hidden">
+            <h1>Escuchar estaciones de radio en vivo gratis de todo el mundo</h1>
+            <h2>Sintonizador de radio online de México, España, Latinoamérica y el mundo</h2>
+            <p>
+                Sintoniza estaciones de radio de México, España, Latinoamérica y todo el mundo en vivo. Música, noticias y deportes online gratis y sin cortes en Radio Mundial con sintonizador analógico interactivo Hi-Fi. Más de 30,000 emisoras FM y AM disponibles.
             </p>
-            <div style="display:inline-flex; align-items:center; gap:0.75rem; background:rgba(255,255,255,0.06); padding:0.6rem 1.25rem; border-radius:30px; border:1px solid rgba(255,255,255,0.1); margin-bottom:1rem;">
-                <svg class="loading-progress" aria-hidden="true" style="width:20px; height:20px;">
-                    <circle r="40%" cx="50%" cy="50%" />
-                    <circle r="40%" cx="50%" cy="50%" />
-                </svg>
-                <span class="loading-progress-text" style="font-size:0.9rem; font-weight:600; color:#FFB800;">Sintonizando Radio Mundial Hi-Fi...</span>
+        </div>
+
+        <noscript>
+            <div style="padding: 2rem; text-align: center; color: #F8F3ED; background: #0E0B08; font-family: sans-serif;">
+                <h1>Escuchar estaciones de radio en vivo gratis de todo el mundo</h1>
+                <p>Sintoniza estaciones de radio de México, España, Latinoamérica y todo el mundo en vivo. Para escuchar el audio en directo, activa JavaScript en tu navegador.</p>
             </div>
-            <noscript>
-                <div style="margin-top:1.5rem; padding:1rem; background:rgba(255,107,0,0.1); border:1px solid #FF6B00; border-radius:8px; font-size:0.95rem;">
-                    Para escuchar la transmisión de audio en directo, activa JavaScript en tu navegador.
-                </div>
-            </noscript>
-        </main>
+        </noscript>
     </div>
 
     <div id="blazor-error-ui">

@@ -244,12 +244,96 @@
     width: 100%;
 }
 
+/* Modo Claro: Header Refinado Braun */
+[data-theme="light"] .app-topbar {
+    background: rgba(255, 255, 255, 0.92);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .unified-status-pill {
+    background: #f1f5f9;
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .btn-topbar-action {
+    background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.1);
+    color: #0f172a;
+}
+
+[data-theme="light"] .btn-topbar-action:hover {
+    background: #f8fafc;
+    border-color: rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .btn-topbar-donate {
+    background: rgba(234, 88, 12, 0.08);
+    border-color: rgba(234, 88, 12, 0.3);
+    color: #ea580c;
+}
+
+[data-theme="light"] .btn-topbar-donate:hover {
+    background: rgba(234, 88, 12, 0.15);
+    color: #c2410c;
+}
+
+[data-theme="light"] .topbar-segmented-switch {
+    background: #f1f5f9;
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .btn-segmented-chip {
+    color: #64748b;
+}
+
+[data-theme="light"] .btn-segmented-chip.chip-active {
+    background: #ffffff;
+    color: #ea580c;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* --------------------------------------------------------------------------
+   Responsividad Extrema (320px - 1400px+)
+   -------------------------------------------------------------------------- */
+@media (max-width: 991px) {
+    .unified-status-pill {
+        display: none !important;
+    }
+}
+
 @media (max-width: 640px) {
     .topbar-container {
         padding: 0.6rem 0.9rem;
     }
-    .unified-status-pill {
+}
+
+@media (max-width: 480px) {
+    .topbar-container {
+        padding: 0.5rem 0.75rem;
+        gap: 0.4rem;
+    }
+    .brand-link {
+        font-size: 1.05rem;
+        gap: 0.4rem;
+    }
+    .brand-logo-img {
+        width: 24px;
+        height: 24px;
+    }
+    .topbar-actions-group {
+        gap: 0.35rem;
+    }
+    .btn-topbar-action {
+        padding: 0.32rem 0.55rem;
         font-size: 0.7rem;
-        padding: 0.3rem 0.65rem;
+    }
+    .btn-segmented-chip {
+        padding: 0.22rem 0.4rem;
+        font-size: 0.65rem;
+    }
+    .theme-switch .btn-segmented-chip:last-child {
+        display: none; /* Oculta ícono de PC en pantallas micro para asegurar 0 desborde */
     }
 }

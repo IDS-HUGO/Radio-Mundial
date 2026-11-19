@@ -21,7 +21,7 @@
     animation: slide-up 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-:global([data-theme="light"]) .cookie-banner-overlay {
+[data-theme="light"] .cookie-banner-overlay {
     background: rgba(246, 246, 244, 0.95);
     border-color: rgba(0, 0, 0, 0.08);
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);

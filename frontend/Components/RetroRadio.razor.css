@@ -1,6 +1,8 @@
 /* ==============================================================================
-   Radio Mundial - Neo-Skeuomorphic Industrial Audio Transistor (Dieter Rams / Teenage Engineering)
-   Estética Bento Grid + Audio Industrial Hi-Fi
+   Radio Mundial - Neo-Skeuomorphic Industrial Audio Transistor
+   Estilo Dual:
+   - Modo Oscuro: Teenage Engineering Hi-Fi Graphite (#0B0D11 / #151821) + Acento Ámbar
+   - Modo Claro: Dieter Rams / Braun Architectural Matte Chalk (#F4F5F8 / #EBECEF) + Anodized Silver
    ============================================================================== */
 
 .retro-radio-stage {
@@ -16,7 +18,7 @@
 }
 
 /* -------------------------------------------------------------------------
-   Antena Telescópica Dark Anodized Chrome
+   Antena Telescópica
    ------------------------------------------------------------------------- */
 .retro-antenna-wrapper {
     position: absolute;
@@ -40,12 +42,22 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+[data-theme="light"] .antenna-base {
+    background: linear-gradient(90deg, #cbd5e1, #f1f5f9, #94a3b8);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
 .antenna-rod {
     width: 4px;
     height: 165px;
     background: linear-gradient(90deg, #374151 0%, #9ca3af 50%, #374151 100%);
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
     position: relative;
+}
+
+[data-theme="light"] .antenna-rod {
+    background: linear-gradient(90deg, #94a3b8 0%, #ffffff 50%, #94a3b8 100%);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
 }
 
 .antenna-tip {
@@ -59,8 +71,12 @@
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
 }
 
+[data-theme="light"] .antenna-tip {
+    background: radial-gradient(circle at 35% 35%, #ffffff, #cbd5e1, #64748b);
+}
+
 /* -------------------------------------------------------------------------
-   Asa de Transporte - Aluminio Grafito Pulido
+   Asa de Transporte - Aluminio Pulido
    ------------------------------------------------------------------------- */
 .retro-handle-arc {
     position: absolute;
@@ -74,6 +90,13 @@
     z-index: 2;
     display: flex;
     justify-content: center;
+    transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+[data-theme="light"] .retro-handle-arc {
+    background: linear-gradient(180deg, #e2e8f0 0%, #cbd5e1 100%);
+    border-color: rgba(0, 0, 0, 0.12);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08), inset 0 1px 1px #ffffff;
 }
 
 .handle-inner-space {
@@ -85,8 +108,12 @@
     box-shadow: inset 0 6px 14px rgba(0, 0, 0, 0.5);
 }
 
+[data-theme="light"] .handle-inner-space {
+    box-shadow: inset 0 6px 10px rgba(0, 0, 0, 0.1);
+}
+
 /* -------------------------------------------------------------------------
-   Chasis Principal - Acabado Carbón / Grafito Industrial (Dieter Rams / Rams T3)
+   Chasis Principal - Dieter Rams Braun T 3 / Teenage Engineering
    ------------------------------------------------------------------------- */
 .retro-radio-body {
     position: relative;
@@ -103,7 +130,7 @@
         inset 0 -4px 10px rgba(0, 0, 0, 0.7);
     z-index: 3;
     border: 1px solid rgba(255, 255, 255, 0.08);
-    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    transition: background 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 .retro-radio-body.radio-power-on {
@@ -113,6 +140,27 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.14),
         inset 0 -4px 10px rgba(0, 0, 0, 0.7);
     border-color: rgba(255, 107, 0, 0.25);
+}
+
+/* Modo Claro: Acabado Off-White / Architectural Matte Chalk (Braun Signature) */
+[data-theme="light"] .retro-radio-body {
+    background: 
+        radial-gradient(ellipse at 50% -10%, rgba(234, 88, 12, 0.06) 0%, transparent 60%),
+        linear-gradient(165deg, #ffffff 0%, #f4f5f8 40%, #e8eaee 100%);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 
+        0 24px 48px -12px rgba(0, 0, 0, 0.12),
+        0 8px 20px rgba(0, 0, 0, 0.06),
+        inset 0 1px 0 #ffffff,
+        inset 0 -3px 8px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .retro-radio-body.radio-power-on {
+    border-color: rgba(234, 88, 12, 0.4);
+    box-shadow: 
+        0 26px 52px -10px rgba(0, 0, 0, 0.14),
+        0 0 24px rgba(234, 88, 12, 0.14),
+        inset 0 1px 0 #ffffff;
 }
 
 /* Remaches de fijación CNC */
@@ -126,6 +174,12 @@
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.25);
     z-index: 4;
     border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="light"] .handle-rivet {
+    background: radial-gradient(circle at 35% 35%, #ffffff, #cbd5e1 60%, #94a3b8);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15), inset 0 1px 1px #ffffff;
+    border-color: rgba(0, 0, 0, 0.08);
 }
 
 .rivet-left { left: -7px; }
@@ -142,6 +196,13 @@
         0 6px 18px rgba(0, 0, 0, 0.6),
         inset 0 1px 2px rgba(255, 255, 255, 0.15);
     border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+[data-theme="light"] .retro-chrome-bezel {
+    background: linear-gradient(145deg, #ffffff 0%, #e2e8f0 50%, #cbd5e1 100%);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), inset 0 1px 2px #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .retro-front-face {
@@ -151,10 +212,16 @@
     box-shadow: inset 0 3px 10px rgba(0, 0, 0, 0.9);
     display: flex;
     flex-direction: column;
+    transition: background 0.25s ease;
+}
+
+[data-theme="light"] .retro-front-face {
+    background: #f8fafc;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 /* -------------------------------------------------------------------------
-   1. Panel Superior: Cuadrante y Perillas Knurled (Teenage Engineering)
+   1. Panel Superior: Cuadrante y Perillas Knurled
    ------------------------------------------------------------------------- */
 .tuner-control-panel {
     background: #11141c;
@@ -164,6 +231,12 @@
     justify-content: space-between;
     gap: 0.9rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+[data-theme="light"] .tuner-control-panel {
+    background: #eef2f6;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 /* Perillas Milled Metal */
@@ -187,6 +260,13 @@
     letter-spacing: 0.04em;
 }
 
+[data-theme="light"] .knob-volume-badge,
+[data-theme="light"] .knob-tuning-badge {
+    color: #ea580c;
+    background: rgba(234, 88, 12, 0.08);
+    border-color: rgba(234, 88, 12, 0.25);
+}
+
 .volume-slider-box {
     width: 62px;
     display: flex;
@@ -201,6 +281,11 @@
     cursor: pointer;
     background: #1f2430;
     border-radius: 2px;
+}
+
+[data-theme="light"] .retro-slider {
+    background: #cbd5e1;
+    accent-color: #ea580c;
 }
 
 .knob-arrows-row {
@@ -221,10 +306,22 @@
     transition: all 0.15s ease;
 }
 
+[data-theme="light"] .btn-knob-step {
+    background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.12);
+    color: #475569;
+}
+
 .btn-knob-step:hover {
     background: #ff6b00;
     color: #ffffff;
     border-color: #ff6b00;
+}
+
+[data-theme="light"] .btn-knob-step:hover {
+    background: #ea580c;
+    border-color: #ea580c;
+    color: #ffffff;
 }
 
 .retro-knob {
@@ -246,7 +343,7 @@
     transform: scale(0.96);
 }
 
-/* Textura Moleteada Diamond Knurling en el borde */
+/* Textura Moleteada Knurled en el borde */
 .knob-metallic-rim {
     width: 100%;
     height: 100%;
@@ -258,6 +355,16 @@
     padding: 5px;
     box-shadow: 0 5px 14px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.35);
     border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: background 0.25s ease;
+}
+
+[data-theme="light"] .knob-metallic-rim {
+    background: conic-gradient(
+        from 0deg, 
+        #cbd5e1, #f1f5f9, #ffffff, #cbd5e1, #94a3b8, #f1f5f9, #ffffff, #cbd5e1
+    );
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15), inset 0 1px 2px #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .knob-cap {
@@ -267,6 +374,12 @@
     background: radial-gradient(circle at 40% 40%, #202532, #0d0f15 85%);
     position: relative;
     box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.8);
+    transition: background 0.25s ease;
+}
+
+[data-theme="light"] .knob-cap {
+    background: radial-gradient(circle at 40% 40%, #ffffff, #e2e8f0 85%);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
 .knob-indicator-dot {
@@ -292,6 +405,11 @@
     box-shadow: 0 0 6px #ff6b00;
 }
 
+[data-theme="light"] .knob-indicator-dot::after {
+    background: #ea580c;
+    box-shadow: 0 0 5px rgba(234, 88, 12, 0.8);
+}
+
 .knob-label {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.58rem;
@@ -300,8 +418,12 @@
     color: #64748b;
 }
 
+[data-theme="light"] .knob-label {
+    color: #475569;
+}
+
 /* -------------------------------------------------------------------------
-   Cuadrante de Sintonización de Cristal Ahumado (Smoked Glass Dial)
+   Cuadrante de Sintonización de Cristal
    ------------------------------------------------------------------------- */
 .tuner-scale-window {
     position: relative;
@@ -315,11 +437,22 @@
     padding: 7px 12px;
     cursor: pointer;
     user-select: none;
-    transition: box-shadow 0.3s ease;
+    transition: background 0.25s ease, box-shadow 0.3s ease, border-color 0.25s ease;
 }
 
 .radio-power-on .tuner-scale-window {
     box-shadow: inset 0 0 24px rgba(255, 107, 0, 0.12), inset 0 3px 12px rgba(0, 0, 0, 0.95);
+}
+
+/* Modo Claro: Pantalla de Cristal Blanco / Clean Crystal Dial (Braun) */
+[data-theme="light"] .tuner-scale-window {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .radio-power-on .tuner-scale-window {
+    box-shadow: inset 0 0 20px rgba(234, 88, 12, 0.08), inset 0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
 /* Fila de Indicadores Superiores */
@@ -330,6 +463,10 @@
     font-size: 0.68rem;
     margin-bottom: 5px;
     color: #94a3b8;
+}
+
+[data-theme="light"] .tuner-indicators-row {
+    color: #475569;
 }
 
 .stereo-indicator {
@@ -343,12 +480,20 @@
     color: #64748b;
 }
 
+[data-theme="light"] .stereo-indicator {
+    color: #64748b;
+}
+
 .indicator-led {
     width: 6px;
     height: 6px;
     border-radius: 50%;
     background-color: #334155;
     transition: all 0.3s ease;
+}
+
+[data-theme="light"] .indicator-led {
+    background-color: #cbd5e1;
 }
 
 .indicator-glow .indicator-led {
@@ -360,6 +505,10 @@
     color: #34d399;
 }
 
+[data-theme="light"] .indicator-glow .indicator-text {
+    color: #059669;
+}
+
 /* Selector Táctil FM / AM en el Dial */
 .dial-band-switcher {
     display: inline-flex;
@@ -369,6 +518,11 @@
     border-radius: 12px;
     padding: 1px 2px;
     flex-shrink: 0;
+}
+
+[data-theme="light"] .dial-band-switcher {
+    background: #e2e8f0;
+    border-color: rgba(0, 0, 0, 0.08);
 }
 
 .btn-band-switch {
@@ -384,10 +538,19 @@
     transition: all 0.15s ease;
 }
 
+[data-theme="light"] .btn-band-switch {
+    color: #64748b;
+}
+
 .btn-band-switch.band-switch-active {
     background: #ff6b00;
     color: #ffffff;
     box-shadow: 0 1px 4px rgba(255, 107, 0, 0.4);
+}
+
+[data-theme="light"] .btn-band-switch.band-switch-active {
+    background: #ea580c;
+    color: #ffffff;
 }
 
 .station-meta-display {
@@ -401,13 +564,25 @@
     gap: 4px;
 }
 
+[data-theme="light"] .station-meta-display {
+    color: #0f172a;
+}
+
 .dial-station-name {
     color: #f8fafc;
+}
+
+[data-theme="light"] .dial-station-name {
+    color: #0f172a;
 }
 
 .dial-station-freq {
     color: #ff944d;
     font-size: 0.65rem;
+}
+
+[data-theme="light"] .dial-station-freq {
+    color: #ea580c;
 }
 
 /* Mini Ecualizador Animado en el Dial */
@@ -424,6 +599,10 @@
     background: #ff6b00;
     border-radius: 1px;
     animation: dial-eq-jump 0.8s ease-in-out infinite alternate;
+}
+
+[data-theme="light"] .dial-audio-eq span {
+    background: #ea580c;
 }
 
 .dial-audio-eq span:nth-child(1) { height: 4px; animation-delay: 0.1s; }
@@ -453,6 +632,10 @@
     transition: opacity 0.3s ease;
 }
 
+[data-theme="light"] .dial-band-scale {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
 .scale-active-glow {
     opacity: 1 !important;
 }
@@ -473,6 +656,10 @@
     color: #ff944d;
 }
 
+[data-theme="light"] .band-tag {
+    color: #ea580c;
+}
+
 .ticks-container {
     flex: 1;
     display: flex;
@@ -489,9 +676,17 @@
     background: rgba(255, 255, 255, 0.22);
 }
 
+[data-theme="light"] .tick {
+    background: rgba(0, 0, 0, 0.22);
+}
+
 .tick-major {
     height: 13px;
     background: rgba(255, 255, 255, 0.7);
+}
+
+[data-theme="light"] .tick-major {
+    background: #1e293b;
 }
 
 .tick-major i {
@@ -504,6 +699,11 @@
     font-family: 'JetBrains Mono', monospace;
     color: #94a3b8;
     font-weight: 600;
+}
+
+[data-theme="light"] .tick-major i {
+    color: #334155;
+    font-weight: 700;
 }
 
 /* Aguja Roja Móvil (Precision Amber-Red Needle) */
@@ -525,6 +725,11 @@
     box-shadow: 0 0 6px rgba(255, 107, 0, 0.9), 0 0 12px rgba(255, 107, 0, 0.4);
 }
 
+[data-theme="light"] .needle-core {
+    background: #ea580c;
+    box-shadow: 0 0 6px rgba(234, 88, 12, 0.7);
+}
+
 .needle-shadow {
     position: absolute;
     top: 0;
@@ -535,12 +740,20 @@
     filter: blur(1px);
 }
 
+[data-theme="light"] .needle-shadow {
+    background: rgba(0, 0, 0, 0.25);
+}
+
 .glass-reflection-overlay {
     position: absolute;
     inset: 0;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 55%);
     pointer-events: none;
     z-index: 6;
+}
+
+[data-theme="light"] .glass-reflection-overlay {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 55%);
 }
 
 /* -------------------------------------------------------------------------
@@ -554,6 +767,13 @@
     padding: 1.1rem 1.4rem;
     box-shadow: inset 0 3px 10px rgba(0, 0, 0, 0.7);
     border-top: 1px solid rgba(255, 255, 255, 0.07);
+    transition: background 0.25s ease;
+}
+
+[data-theme="light"] .retro-speaker-grille {
+    background: linear-gradient(180deg, #f1f3f6 0%, #e2e6eb 100%);
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.04);
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .grille-acoustic-cloth {
@@ -568,7 +788,13 @@
     background: #050608;
     border-radius: 3px;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.95), 0 1px 0 rgba(255, 255, 255, 0.06);
-    transition: transform 0.2s ease, opacity 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease, background 0.25s ease;
+}
+
+/* En Modo Claro: Ranuras acústicas oscuras sobre chasis mate (Classic Braun Dieter Rams) */
+[data-theme="light"] .grille-slot {
+    background: #2b3340;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6), 0 1px 0 #ffffff;
 }
 
 .grille-vibrating {
@@ -592,6 +818,13 @@
     border-radius: 6px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+[data-theme="light"] .speaker-vintage-badge {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .badge-script {
@@ -601,12 +834,20 @@
     letter-spacing: -0.01em;
 }
 
+[data-theme="light"] .badge-script {
+    color: #0f172a;
+}
+
 .badge-sub {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.5rem;
     font-weight: 700;
     color: #ff944d;
     letter-spacing: 0.1em;
+}
+
+[data-theme="light"] .badge-sub {
+    color: #ea580c;
 }
 
 /* -------------------------------------------------------------------------
@@ -635,10 +876,23 @@
     letter-spacing: 0.05em;
 }
 
+[data-theme="light"] .btn-retro-push {
+    background: linear-gradient(180deg, #ffffff 0%, #e5e7eb 100%);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    color: #374151;
+    box-shadow: 0 3px 0 #cbd5e1, 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
 .btn-retro-push:hover {
     background: linear-gradient(180deg, #282f42 0%, #1a1e2c 100%);
     color: #ffffff;
     border-color: rgba(255, 255, 255, 0.18);
+}
+
+[data-theme="light"] .btn-retro-push:hover {
+    background: #ffffff;
+    color: #0f172a;
+    border-color: rgba(0, 0, 0, 0.2);
 }
 
 .btn-retro-push:active, .push-active {
@@ -648,6 +902,14 @@
     color: #ffffff !important;
     border-color: #ff8533 !important;
     box-shadow: 0 0 14px rgba(255, 107, 0, 0.45);
+}
+
+[data-theme="light"] .btn-retro-push:active,
+[data-theme="light"] .push-active {
+    box-shadow: 0 1px 0 #c2410c, 0 2px 6px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(180deg, #ea580c 0%, #c2410c 100%) !important;
+    border-color: #ea580c !important;
+    box-shadow: 0 0 12px rgba(234, 88, 12, 0.35);
 }
 
 @keyframes acoustic-pulse {
@@ -670,12 +932,23 @@
     padding: 1.15rem 1.35rem 1.05rem 1.35rem;
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
     z-index: 2;
-    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    transition: background 0.25s ease, transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+[data-theme="light"] .retro-author-badge {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.05);
 }
 
 .retro-author-badge:hover {
     border-color: rgba(255, 107, 0, 0.35);
     box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 107, 0, 0.08);
+}
+
+[data-theme="light"] .retro-author-badge:hover {
+    border-color: rgba(234, 88, 12, 0.35);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08), 0 0 16px rgba(234, 88, 12, 0.06);
 }
 
 /* Tornillos de Precisión en las Esquinas */
@@ -687,6 +960,12 @@
     background: radial-gradient(circle at 35% 35%, #475263, #1f242f);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="light"] .author-plate-screw {
+    background: radial-gradient(circle at 35% 35%, #ffffff, #cbd5e1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .screw-tl { top: 9px; left: 9px; }
@@ -722,6 +1001,12 @@
     border: 1px solid rgba(255, 107, 0, 0.25);
 }
 
+[data-theme="light"] .plate-vintage-seal {
+    color: #ea580c;
+    background: rgba(234, 88, 12, 0.08);
+    border-color: rgba(234, 88, 12, 0.2);
+}
+
 .plate-year {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.62rem;
@@ -738,12 +1023,20 @@
     line-height: 1.25;
 }
 
+[data-theme="light"] .author-name-title {
+    color: #0f172a;
+}
+
 .author-role-sub {
     font-size: 0.72rem;
     font-weight: 600;
     color: #94a3b8;
     letter-spacing: 0.02em;
     margin-bottom: 6px;
+}
+
+[data-theme="light"] .author-role-sub {
+    color: #475569;
 }
 
 .author-contact-card {
@@ -776,12 +1069,25 @@
     transition: all 0.15s ease;
 }
 
+[data-theme="light"] .author-email-link {
+    background: #f8fafc;
+    border-color: rgba(0, 0, 0, 0.08);
+    color: #0f172a;
+}
+
 .author-email-link:hover {
     background: rgba(255, 107, 0, 0.15);
     border-color: rgba(255, 107, 0, 0.4);
     color: #ff944d;
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] .author-email-link:hover {
+    background: rgba(234, 88, 12, 0.1);
+    border-color: rgba(234, 88, 12, 0.3);
+    color: #ea580c;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 .author-email-link .email-icon {
@@ -793,49 +1099,49 @@
    ------------------------------------------------------------------------- */
 @media (max-width: 600px) {
     .retro-radio-stage {
-        padding-top: 20px;
+        padding-top: 18px;
         margin: 0.2rem auto 0.5rem auto;
     }
     .retro-handle-arc {
-        height: 38px;
+        height: 36px;
         top: 2px;
     }
     .retro-radio-body {
-        padding: 0.85rem 0.8rem;
-        border-radius: 20px;
+        padding: 0.75rem 0.7rem;
+        border-radius: 18px;
     }
     .tuner-control-panel {
-        gap: 6px;
-        padding: 0.75rem 0.6rem;
+        gap: 5px;
+        padding: 0.7rem 0.5rem;
     }
     .retro-knob {
         width: 44px;
         height: 44px;
     }
     .knob-label {
-        font-size: 0.5rem;
+        font-size: 0.48rem;
     }
     .knob-volume-badge {
-        font-size: 0.52rem;
-        padding: 1px 4px;
+        font-size: 0.5rem;
+        padding: 1px 3px;
     }
     .tuner-scale-window {
-        height: 74px;
-        padding: 4px 6px;
+        height: 72px;
+        padding: 3px 5px;
     }
     .indicator-text {
-        font-size: 0.5rem;
+        font-size: 0.48rem;
     }
     .btn-band-switch {
-        font-size: 0.52rem;
+        font-size: 0.5rem;
         padding: 1px 4px;
     }
     .dial-station-name {
-        font-size: 0.58rem;
-        max-width: 105px;
+        font-size: 0.56rem;
+        max-width: 100px;
     }
     .listeners-indicator {
-        font-size: 0.5rem;
+        font-size: 0.48rem;
     }
 
     .scale-fm .tick-major:nth-child(3) i,
@@ -853,12 +1159,12 @@
     }
 
     .band-tag {
-        font-size: 0.54rem !important;
-        width: 20px !important;
+        font-size: 0.52rem !important;
+        width: 18px !important;
     }
 
     .retro-speaker-grille {
-        padding: 0.55rem 0.8rem;
+        padding: 0.5rem 0.7rem;
     }
     .grille-acoustic-cloth {
         gap: 4px;
@@ -867,35 +1173,35 @@
         height: 4px;
     }
     .speaker-vintage-badge {
-        padding: 2px 6px;
-        bottom: 6px;
-        right: 8px;
+        padding: 2px 5px;
+        bottom: 5px;
+        right: 6px;
     }
     .badge-script {
-        font-size: 0.6rem;
+        font-size: 0.58rem;
     }
     .badge-sub {
-        font-size: 0.42rem;
+        font-size: 0.4rem;
     }
 
     .retro-push-buttons {
-        gap: 5px;
-        margin-top: 8px;
+        gap: 4px;
+        margin-top: 7px;
     }
     .btn-retro-push {
-        font-size: 0.58rem;
-        padding: 4px 8px;
+        font-size: 0.56rem;
+        padding: 4px 7px;
     }
 
     .retro-author-badge {
-        padding: 0.85rem;
+        padding: 0.75rem;
         border-radius: 14px;
     }
     .author-name-title {
-        font-size: 0.92rem;
+        font-size: 0.88rem;
     }
     .author-email-link {
-        font-size: 0.66rem;
-        padding: 4px 10px;
+        font-size: 0.64rem;
+        padding: 4px 8px;
     }
 }

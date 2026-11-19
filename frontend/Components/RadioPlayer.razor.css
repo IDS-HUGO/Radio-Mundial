@@ -1,5 +1,8 @@
 /* ==============================================================================
    Radio Mundial - Floating Glassmorphic Audio Player Capsule (Dribbble Bento Hi-Fi)
+   Dual Theme:
+   - Modo Oscuro: Translucent Graphite Glass (#13161D / rgba(19, 22, 29, 0.88))
+   - Modo Claro: Frosted Architectural White Crystal (rgba(255, 255, 255, 0.92))
    ============================================================================== */
 
 .radio-player-bar {
@@ -18,14 +21,15 @@
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.04);
     color: var(--text-main);
     font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-    transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+    transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
     padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-:global([data-theme="light"]) .radio-player-bar {
-    background: rgba(246, 246, 244, 0.92);
-    border-color: rgba(0, 0, 0, 0.08);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.03);
+[data-theme="light"] .radio-player-bar {
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(0, 0, 0, 0.09);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.04);
+    color: #0f172a;
 }
 
 .radio-player-container {
@@ -55,6 +59,13 @@
     border: 2px solid rgba(255, 107, 0, 0.4);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
     background: #0f1118;
+    transition: border-color 0.25s ease;
+}
+
+[data-theme="light"] .album-art-wrapper {
+    border-color: rgba(234, 88, 12, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
 }
 
 .album-art-wrapper.spinning {
@@ -73,8 +84,9 @@
     border: 2px solid #ff6b00;
 }
 
-:global([data-theme="light"]) .art-center-hole {
+[data-theme="light"] .art-center-hole {
     background: #ffffff;
+    border-color: #ea580c;
 }
 
 .album-art {
@@ -108,6 +120,10 @@
     letter-spacing: 0.04em;
 }
 
+[data-theme="light"] .badge-live {
+    color: #ea580c;
+}
+
 .pulsing-dot {
     width: 6px;
     height: 6px;
@@ -115,6 +131,11 @@
     background-color: #ff6b00;
     box-shadow: 0 0 8px #ff6b00;
     animation: live-dot-pulse 1.6s ease-in-out infinite;
+}
+
+[data-theme="light"] .pulsing-dot {
+    background-color: #ea580c;
+    box-shadow: 0 0 8px #ea580c;
 }
 
 @keyframes live-dot-pulse {
@@ -130,6 +151,10 @@
     font-size: 0.62rem;
 }
 
+[data-theme="light"] .badge-station-location {
+    color: #64748b;
+}
+
 .listeners-badge {
     font-family: 'JetBrains Mono', monospace;
     color: var(--text-muted);
@@ -138,6 +163,10 @@
     display: flex;
     align-items: center;
     gap: 4px;
+}
+
+[data-theme="light"] .listeners-badge {
+    color: #64748b;
 }
 
 .track-title-row {
@@ -157,6 +186,10 @@
     line-height: 1.25;
 }
 
+[data-theme="light"] .track-title {
+    color: #0f172a;
+}
+
 /* Visualizador de Ondas de Audio Animado */
 .player-wave-bars {
     display: inline-flex;
@@ -171,6 +204,10 @@
     background: #ff6b00;
     border-radius: 2px;
     animation: player-wave-jump 0.9s ease-in-out infinite alternate;
+}
+
+[data-theme="light"] .player-wave-bars span {
+    background: #ea580c;
 }
 
 .player-wave-bars span:nth-child(1) { height: 6px; animation-delay: 0.1s; }
@@ -192,6 +229,10 @@
     text-overflow: ellipsis;
 }
 
+[data-theme="light"] .track-artist {
+    color: #64748b;
+}
+
 .text-genre {
     color: #ff944d;
     font-weight: 600;
@@ -199,8 +240,16 @@
     font-size: 0.68rem;
 }
 
+[data-theme="light"] .text-genre {
+    color: #ea580c;
+}
+
 .text-locality {
     color: var(--text-muted);
+}
+
+[data-theme="light"] .text-locality {
+    color: #64748b;
 }
 
 /* 2. Controles Centrales de Reproducción */
@@ -225,10 +274,19 @@
     transition: all 0.15s ease;
 }
 
+[data-theme="light"] .btn-player-skip {
+    color: #64748b;
+}
+
 .btn-player-skip:hover {
     color: #ff6b00;
     background: rgba(255, 107, 0, 0.1);
     transform: scale(1.08);
+}
+
+[data-theme="light"] .btn-player-skip:hover {
+    color: #ea580c;
+    background: rgba(234, 88, 12, 0.1);
 }
 
 .btn-player-skip:active {
@@ -250,9 +308,18 @@
     transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.15s ease;
 }
 
+[data-theme="light"] .btn-play-pause {
+    background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+    box-shadow: 0 4px 16px rgba(234, 88, 12, 0.35);
+}
+
 .btn-play-pause:hover {
     transform: scale(1.08);
     box-shadow: 0 6px 20px rgba(255, 107, 0, 0.55);
+}
+
+[data-theme="light"] .btn-play-pause:hover {
+    box-shadow: 0 6px 20px rgba(234, 88, 12, 0.5);
 }
 
 .btn-play-pause:active {
@@ -286,9 +353,18 @@
     transition: color 0.15s ease, background-color 0.15s ease;
 }
 
+[data-theme="light"] .btn-volume-icon {
+    color: #64748b;
+}
+
 .btn-volume-icon:hover {
     color: #ff6b00;
     background: rgba(255, 107, 0, 0.1);
+}
+
+[data-theme="light"] .btn-volume-icon:hover {
+    color: #ea580c;
+    background: rgba(234, 88, 12, 0.1);
 }
 
 .volume-slider {
@@ -300,6 +376,11 @@
     border-radius: 2px;
 }
 
+[data-theme="light"] .volume-slider {
+    background: #cbd5e1;
+    accent-color: #ea580c;
+}
+
 .status-indicator {
     display: flex;
     align-items: center;
@@ -309,6 +390,10 @@
     color: var(--text-muted);
     font-weight: 600;
     white-space: nowrap;
+}
+
+[data-theme="light"] .status-indicator {
+    color: #64748b;
 }
 
 .status-dot {
@@ -334,7 +419,7 @@
 }
 
 /* -------------------------------------------------------------------------
-   Modo Móvil Flotante Compacto
+   Modo Móvil Flotante Compacto (100% Responsivo)
    ------------------------------------------------------------------------- */
 @media (max-width: 768px) {
     .radio-player-bar {

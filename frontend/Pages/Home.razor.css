@@ -1033,3 +1033,42 @@
     max-width: 100%;
     border-radius: 8px;
 }
+
+/* Tarjeta Bento de Patrocinio Lateral (300x250) */
+.studio-sidebar-sponsor-deck {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.15rem;
+    box-shadow: var(--card-shadow);
+    backdrop-filter: blur(16px);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.studio-sidebar-sponsor-deck:hover {
+    border-color: var(--border-medium);
+}
+
+.sidebar-ad-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding-top: 0.4rem;
+}
+
+.adsterra-iframe-sidebar {
+    width: 300px;
+    height: 250px;
+    max-width: 100%;
+    border-radius: 8px;
+    display: block;
+}
+
+.sponsor-ad-slot-mobile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding-top: 0.5rem;
+}

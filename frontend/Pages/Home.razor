@@ -26,6 +26,26 @@
                 {
                     <div class="sticky-radio-anchor">
                         <RetroRadio />
+
+                        <!-- Tarjeta Bento de Patrocinio Lateral 300x250 (Exclusiva Desktop: aprovecha el espacio sin molestar en móvil) -->
+                        <div class="studio-sidebar-sponsor-deck mt-3 d-none d-lg-block">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <span class="sponsor-tag">📻 PATROCINIO HI-FI</span>
+                                <span class="sponsor-badge">SPONSOR</span>
+                            </div>
+                            <div class="sidebar-ad-wrapper">
+                                <iframe src="ad-sidebar.html" 
+                                        width="300" 
+                                        height="250" 
+                                        frameborder="0" 
+                                        scrolling="no" 
+                                        class="adsterra-iframe-sidebar"
+                                        title="Patrocinio Lateral Hi-Fi"
+                                        sandbox="allow-scripts allow-same-origin allow-popups"
+                                        loading="lazy">
+                                </iframe>
+                            </div>
+                        </div>
                     </div>
                 }
                 else
@@ -379,8 +399,8 @@
                 <span class="sponsor-badge">SPONSOR</span>
             </div>
 
-            <!-- Banner Oficial 728x90 (Adsterra Sandboxed) -->
-            <div class="sponsor-ad-slot" id="radio-mundial-ad-slot">
+            <!-- Banner Oficial 728x90 para Pantallas Medianas y Grandes (Tablet / Desktop) -->
+            <div class="sponsor-ad-slot d-none d-md-flex justify-content-center" id="radio-mundial-ad-slot">
                 <iframe src="ad-banner.html" 
                         width="728" 
                         height="90" 
@@ -388,6 +408,20 @@
                         scrolling="no" 
                         class="adsterra-iframe-banner"
                         title="Patrocinio y Publicidad"
+                        sandbox="allow-scripts allow-same-origin allow-popups"
+                        loading="lazy">
+                </iframe>
+            </div>
+
+            <!-- Banner 300x250 Optimizado para Teléfonos Móviles (No se deforma, encaja nativo) -->
+            <div class="sponsor-ad-slot-mobile d-flex d-md-none justify-content-center" id="radio-mundial-ad-slot-mobile">
+                <iframe src="ad-sidebar.html" 
+                        width="300" 
+                        height="250" 
+                        frameborder="0" 
+                        scrolling="no" 
+                        class="adsterra-iframe-sidebar"
+                        title="Patrocinio y Publicidad Móvil"
                         sandbox="allow-scripts allow-same-origin allow-popups"
                         loading="lazy">
                 </iframe>
